@@ -97,3 +97,6 @@ Anti Habitsは他のユーザーから擬似的に監視されている感覚を
 - PostgreSQL
 - Tailwind CSS
 - Render
+
+## 画面遷移図
+Figma：https://www.figma.com/design/5EIKs4ZNjtIcXsfwtx5yOk/test-Project?node-id=74-2&t=NkVOgwoO1YP3TxIm-1
