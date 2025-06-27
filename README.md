@@ -98,5 +98,85 @@ Anti Habitsは他のユーザーから擬似的に監視されている感覚を
 - Tailwind CSS
 - Render
 
+## ER図
+```mermaid
+erDiagram
+    users {
+        int id PK "ID"
+        string email "メールアドレス"
+        string encrypted_password "暗号化されたパスワード"
+        string reset_password_token "パスワードリセット時に使用するトークン"
+        datetime reset_password_sent_at "パスワードリセットメールを送信した日時"
+        datetime remember_created_at "ログインを維持する機能に使用する"
+        string provider "OAuthプロバイダ名（LINE）"
+        string uid "LINEユーザーの特定に使用する"
+        string name "ユーザー表示名"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
+    }
+
+    anti_habits {
+        int id PK "ID"
+        int user_id FK "ユーザーID"
+        string title "悪習慣のタイトル"
+        text description "悪習慣の説明"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
+    }
+
+    reactions {
+        int id PK "ID"
+        int user_id FK "リアクションをしたユーザーID"
+        int anti_habit_id FK "対象の悪習慣ID"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
+    }
+
+    comments {
+        int id PK "ID"
+        int user_id FK "コメントをしたユーザーID"
+        int anti_habit_id FK "対象の悪習慣ID"
+        text body "コメント本文"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
+    }
+
+    tags {
+        bigint id PK "ID"
+        string name "タグ名"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
+    }
+
+    anti_habit_tags {
+        int id PK "ID"
+        int anti_habit_id FK "対象の悪習慣ID"
+        int tag_id FK "タグID"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
+    }
+
+    anti_habit_records {
+        int id PK "ID"
+        int anti_habit_id FK "対象の悪習慣ID"
+        date recorded_on "記録日"
+        datetime created_at "作成日時"
+        datetime updated_at "更新日時"
+    }
+
+    %% リレーション（1:N）
+    users ||--o{ anti_habits : "1:多"
+    users ||--o{ reactions : "1:多"
+    users ||--o{ comments : "1:多"
+
+    anti_habits ||--o{ reactions : "1:多"
+    anti_habits ||--o{ comments : "1:多"
+    anti_habits ||--o{ anti_habit_tags : "1:多"
+    anti_habits ||--o{ anti_habit_records : "1:多"
+
+    tags ||--o{ anti_habit_tags : "1:多"
+
+```
+
 ## 画面遷移図
 Figma：https://www.figma.com/design/5EIKs4ZNjtIcXsfwtx5yOk/test-Project?node-id=74-2&t=NkVOgwoO1YP3TxIm-1
