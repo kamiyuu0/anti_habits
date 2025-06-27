@@ -128,6 +128,7 @@ erDiagram
         int id PK "ID"
         int user_id FK "リアクションをしたユーザーID"
         int anti_habit_id FK "対象の悪習慣ID"
+        int reaction_kind "リアクションの種類"
         datetime created_at "作成日時"
         datetime updated_at "更新日時"
     }
