@@ -1,0 +1,175 @@
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col items-center">
+  <!-- ヒーローセクション -->
+  <section class="px-4 py-16 text-center w-full">
+    <div class="max-w-4xl mx-auto">
+      <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+        Anti Habits
+      </h1>
+      <p class="text-xl md:text-2xl text-gray-600 mb-8">
+        悪習慣を取り除く手助けをするサービス
+      </p>
+      <p class="text-lg text-gray-700 mb-12 leading-relaxed">
+        悪習慣を共有し、一定間隔で悪習慣をしていないか管理して目標達成を手助けします。<br>
+        他のユーザーから擬似的に監視されている感覚で、切磋琢磨しながら目標達成率を高められます。
+      </p>
+      
+      <div class="space-y-4 md:space-y-0 md:space-x-4 md:flex md:justify-center">
+        <%= link_to "はじめる", "#new_user_registration_path", 
+            class: "inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition-colors" %>
+        <%= link_to "ログイン", "new_user_session_path", 
+            class: "inline-block bg-white hover:bg-gray-50 text-blue-600 font-semibold py-3 px-8 rounded-lg border border-blue-600 transition-colors" %>
+      </div>
+    </div>
+  </section>
+
+  <!-- 悪習慣の例 -->
+  <section class="px-4 py-16 bg-white w-full">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl font-bold text-gray-900 mb-12">こんな悪習慣、ありませんか？</h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="p-6 bg-red-50 rounded-lg">
+          <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-red-600" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM13 17h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">夜更かし</h3>
+          <p class="text-gray-600">休日の前日につい夜更かししてしまう</p>
+        </div>
+        
+        <div class="p-6 bg-yellow-50 rounded-lg">
+          <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-yellow-600" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M17 2H7c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 18H7V4h10v16z"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">スマホ依存</h3>
+          <p class="text-gray-600">お風呂にスマホを持ち込んでしまう</p>
+        </div>
+        
+        <div class="p-6 bg-orange-50 rounded-lg">
+          <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-orange-600" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97L6.5 22h3l-.25-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5l1.5 6h3L21.5 14H24v-2h-3V9c0-1.1-.9-2-2-2h-1V2h-2v5h-1c-1.1 0-2 .9-2 2z"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">食べ過ぎ</h3>
+          <p class="text-gray-600">ダイエットしたいのに大盛りを頼んでしまう</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 使い方 -->
+  <section class="px-4 py-16 bg-gray-50 w-full">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-3xl font-bold text-gray-900 text-center mb-12">使い方</h2>
+      <div class="space-y-12">
+        <div class="flex flex-col md:flex-row items-center gap-8">
+          <div class="md:w-1/2">
+            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+              <span class="text-2xl font-bold text-blue-600">1</span>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-4">悪習慣を登録</h3>
+            <p class="text-gray-600">やめたい悪習慣をタイトルと説明で登録します。タグをつけて分類することも可能です。</p>
+          </div>
+          <div class="md:w-1/2 bg-white p-6 rounded-lg shadow-sm">
+            <div class="text-sm text-gray-500 mb-2">例：</div>
+            <div class="font-semibold text-gray-900 mb-2">夜更かしをやめたい</div>
+            <div class="text-gray-600 text-sm">明日も早いのについYouTubeを見て夜更かししてしまいます...</div>
+            <div class="mt-3">
+              <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">#睡眠</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-col md:flex-row-reverse items-center gap-8">
+          <div class="md:w-1/2">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+              <span class="text-2xl font-bold text-green-600">2</span>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-4">進捗を記録</h3>
+            <p class="text-gray-600">毎日LINEに通知が届くので、悪習慣を行ったかどうかを記録します。正直に報告することが大切です。</p>
+          </div>
+          <div class="md:w-1/2 bg-white p-6 rounded-lg shadow-sm">
+            <div class="text-sm text-gray-500 mb-2">今日の記録：</div>
+            <div class="space-y-2">
+              <button class="w-full p-3 bg-red-50 border border-red-200 rounded text-red-700">やってしまった 😞</button>
+              <button class="w-full p-3 bg-green-50 border border-green-200 rounded text-green-700">できた！ 🎉</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-col md:flex-row items-center gap-8">
+          <div class="md:w-1/2">
+            <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mb-4">
+              <span class="text-2xl font-bold text-purple-600">3</span>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-4">みんなで応援</h3>
+            <p class="text-gray-600">他のユーザーから応援やコメントをもらえます。みんなに見られている感覚で目標達成率がアップします。</p>
+          </div>
+          <div class="md:w-1/2 bg-white p-6 rounded-lg shadow-sm">
+            <div class="flex items-center gap-2 mb-3">
+              <div class="w-8 h-8 bg-gray-300 rounded-full"></div>
+              <span class="text-sm text-gray-600">田中さん</span>
+            </div>
+            <div class="text-sm text-gray-700 mb-2">頑張って！私も夜更かしやめたいです 💪</div>
+            <div class="flex items-center gap-2 text-xs text-gray-500">
+              <span>👍 5</span>
+              <span>💬 3</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 特徴 -->
+  <section class="px-4 py-16 bg-white w-full">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl font-bold text-gray-900 mb-12">Anti Habitsの特徴</h2>
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="p-6">
+          <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">共有で効果アップ</h3>
+          <p class="text-gray-600">他のユーザーに悪習慣を共有することで、監視されている感覚を得られ目標達成率が向上します。</p>
+        </div>
+        
+        <div class="p-6">
+          <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">応援機能</h3>
+          <p class="text-gray-600">他のユーザーからいいねやコメントで応援してもらえるので、モチベーションを維持できます。</p>
+        </div>
+        
+        <div class="p-6">
+          <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-yellow-600" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">タグで分類</h3>
+          <p class="text-gray-600">悪習慣をタグで分類して、同じような習慣で悩む人を見つけやすくできます。</p>
+        </div>
+        
+        <div class="p-6">
+          <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-purple-600" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M22 5.72l-4.6-3.86-1.29 1.53 4.6 3.86L22 5.72zM7.88 3.39L6.6 1.86 2 5.71l1.29 1.53 4.59-3.85zM12.5 8H11v6l4.75 2.85.75-1.23-4-2.37V8zM12 4c-4.97 0-9 4.03-9 9s4.02 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 16c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">LINE通知</h3>
+          <p class="text-gray-600">毎日決まった時間にLINEで通知が届くので、記録し忘れを防げます。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
