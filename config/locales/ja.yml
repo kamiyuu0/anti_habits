@@ -1,0 +1,23 @@
+ja:
+  activerecord:
+    models:
+      user: ユーザー
+    attributes:
+      user:
+        name: 名前
+        email: メールアドレス
+        password: パスワード
+        password_confirmation: パスワード確認
+    errors:
+      models:
+        user:
+          attributes:
+            password:
+              too_short: "パスワードは%{count}文字以上で入力してください"
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      blank: を入力してください
+      too_long: は%{count}文字以内で入力してください
+      taken: はすでに存在します
+      too_short: "は%{count}文字以上で入力してください"
