@@ -1,7 +1,7 @@
 <footer class="bg-white border-t border-gray-200 fixed bottom-0 left-0 right-0">
   <nav class="flex justify-around items-center py-2">
     <!-- ホーム -->
-    <%= link_to root_path, class: "flex flex-col items-center py-2 px-4 text-gray-700 hover:text-blue-600 transition-colors" do %>
+    <%= link_to (user_signed_in? ? anti_habits_path : root_path), class: "flex flex-col items-center py-2 px-4 text-gray-700 hover:text-blue-600 transition-colors" do %>
       <div class="w-6 h-6 mb-1">
         <svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full">
           <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
