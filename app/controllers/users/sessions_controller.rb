@@ -27,11 +27,11 @@ class Users::SessionsController < Devise::SessionsController
 
   def after_sign_in_path_for(resource)
     # サインイン後にリダイレクトさせたいパスを記載
-    root_path
+    anti_habits_path
   end
 
   def after_sign_out_path_for(resource)
     # TODO: サインアウト後にリダイレクトさせたいパスを記載
-    new_user_session_path
+    root_path
   end
 end
