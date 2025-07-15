@@ -1,0 +1,41 @@
+<div class="max-w-4xl mx-auto px-4 my-6 pt-20">
+  <!-- メイン投稿 -->
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+    <!-- ユーザー情報 -->
+    <div class="flex items-center justify-between mb-4">
+      <div class="flex items-center">
+        <div class="w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center mr-4">
+          <span class="text-lg font-semibold text-gray-600"><%= @anti_habit.user.name.first %></span>
+        </div>
+        <div>
+          <h3 class="font-semibold text-gray-900"><%= @anti_habit.user.name %></h3>
+        </div>
+      </div>
+      
+      <!-- 本人マーク -->
+      <% if current_user == @anti_habit.user %>
+        <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded-full">
+          あなたの投稿
+        </span>
+      <% end %>
+    </div>
+
+    <!-- タイトル -->
+    <h1 class="text-2xl font-bold text-gray-900 mb-4 leading-tight">
+      <%= @anti_habit.title %>
+    </h1>
+
+    <!-- 説明 -->
+    <div class="prose prose-sm max-w-none mb-6">
+      <p class="text-gray-700 leading-relaxed whitespace-pre-wrap"><%= @anti_habit.description %></p>
+    </div>
+    <% if current_user == @anti_habit.user %>
+      <div class="flex justify-end">
+        <%= link_to "編集", edit_anti_habit_path(@anti_habit), class: "text-blue-600 hover:underline" %>
+      </div>
+      <div class="flex justify-end mt-4">
+        <%= link_to "削除", anti_habit_path(@anti_habit), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "text-red-600 hover:underline" %>
+      </div>
+    <% end %>
+  </div>
+</div>
