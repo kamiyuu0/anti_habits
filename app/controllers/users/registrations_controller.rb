@@ -53,12 +53,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # The path used after sign up.
   def after_sign_up_path_for(resource)
     # TODO: サインアップ後にリダイレクトさせたいパスを記載
-    root_path
+    anti_habits_path
   end
 
   # The path used after sign up for inactive accounts.
   def after_inactive_sign_up_path_for(resource)
      # TODO: アクティブでないアカウントのサインアップ後にリダイレクトさせたいパスを記載
-     root_path
+     anti_habits_path
   end
 end
