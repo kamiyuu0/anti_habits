@@ -1,43 +1,27 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<div class="max-w-md mx-auto px-4 py-6 pt-20">
+  <div class="glass-card p-6 sm:p-8">
+    <h2 class="text-2xl font-bold text-white text-center mb-6 text-shadow">プロフィール編集</h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "space-y-4" }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+      <div class="form-group">
+        <%= f.label :name, "名前", class: "block text-sm font-medium text-white mb-2 glass-text-shadow" %>
+        <%= f.text_field :name, autofocus: true, class: "w-full px-4 py-3 rounded-xl bg-white/20 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-white/50 transition-all backdrop-blur-sm" %>
+      </div>
 
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
+      <div class="form-group">
+        <%= f.label :current_password, "現在のパスワード（必須）", class: "block text-sm font-medium text-white mb-2 glass-text-shadow" %>
+        <%= f.password_field :current_password, autocomplete: "current-password", class: "w-full px-4 py-3 rounded-xl bg-white/20 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-white/50 transition-all backdrop-blur-sm" %>
+      </div>
 
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-    <% if @minimum_password_length %>
-      <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
+      <div class="form-group">
+        <%= f.submit "更新", class: "w-full px-4 py-3 bg-blue-500/30 border border-blue-300/50 text-white font-semibold rounded-xl hover:bg-blue-500/40 hover:border-blue-300/60 transition-all backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-blue-300/50 glass-text-shadow" %>
+      </div>
     <% end %>
+
+    <div class="mt-6 pt-6 border-t border-white/20">
+      <%= link_to "戻る", user_path(current_user), class: "block w-full text-center px-4 py-3 text-white/80 hover:text-white transition-colors glass-text-shadow" %>
+    </div>
   </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "current-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
-<% end %>
-
-<h3>Cancel my account</h3>
-
-<div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
-
-<%= link_to "Back", :back %>
+</div>
