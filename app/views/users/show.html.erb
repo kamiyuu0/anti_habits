@@ -1,0 +1,42 @@
+<div class="max-w-4xl mx-auto px-4 py-6 pt-20">
+  <!-- マイページのタイトル -->
+  <h1 class="text-3xl font-bold text-white text-shadow mb-6">マイページ</h1>
+
+  <!-- ユーザー情報 -->
+  <div class="glass-card p-6 mb-6">
+    <div class="flex items-center justify-between mb-4">
+      <div class="flex items-center">
+        <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mr-4 border border-white/30">
+          <span class="text-xl font-semibold text-white glass-text-shadow"><%= @user.name.first %></span>
+        </div>
+        <div>
+          <h2 class="text-xl font-semibold text-white glass-text-shadow"><%= @user.name %></h2>
+        </div>
+      </div>
+      
+      <!-- ユーザー編集ボタン -->
+      <%= link_to "プロフィール編集", edit_user_registration_path, class: "glass-button px-4 py-2 text-white hover:text-white/90 transition-colors no-underline glass-text-shadow" %>
+    </div>
+  </div>
+
+  <!-- 過去の悪習慣投稿 -->
+  <div class="mb-6">
+    <h2 class="text-xl font-bold text-white text-shadow mb-4">過去の悪習慣投稿</h2>
+    
+    <div class="space-y-4">
+      <% if @anti_habits.any? %>
+        <% @anti_habits.each do |anti_habit| %>
+          <%= render 'anti_habits/anti_habit', anti_habit: anti_habit %>
+        <% end %>
+      <% else %>
+        <!-- 空の状態 -->
+        <div class="glass-card p-12 text-center">
+          <h3 class="text-white text-lg font-bold text-shadow mb-2">
+            まだ悪習慣が投稿されていません
+          </h3>
+          <p class="text-white/90 glass-text-shadow">最初の悪習慣を登録してみましょう</p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
