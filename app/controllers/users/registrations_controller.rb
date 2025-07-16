@@ -61,4 +61,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
      # TODO: アクティブでないアカウントのサインアップ後にリダイレクトさせたいパスを記載
      anti_habits_path
   end
+
+  def after_update_path_for(resource)
+    user_path(current_user)
+  end
 end
