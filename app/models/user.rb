@@ -7,6 +7,7 @@ class User < ApplicationRecord
 
   has_many :anti_habits, dependent: :destroy
   validates :name, presence: true, length: { maximum: 10 }, uniqueness: true
+  validates :password, presence: true, length: { minimum: 6 }, on: :create
 
   def set_values(omniauth)
     return if provider.to_s != omniauth["provider"].to_s || uid != omniauth["uid"]
