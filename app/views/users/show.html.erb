@@ -3,19 +3,26 @@
   <h1 class="text-3xl font-bold text-white text-shadow mb-6">マイページ</h1>
 
   <!-- ユーザー情報 -->
-  <div class="glass-card p-6 mb-6">
-    <div class="flex items-center justify-between mb-4">
+  <div class="glass-card p-4 sm:p-6 mb-6">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
       <div class="flex items-center">
-        <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mr-4 border border-white/30">
-          <span class="text-xl font-semibold text-white glass-text-shadow"><%= @user.name.first %></span>
+        <div class="w-12 h-12 sm:w-16 sm:h-16 bg-white/20 rounded-full flex items-center justify-center mr-3 sm:mr-4 border border-white/30 flex-shrink-0">
+          <span class="text-lg sm:text-xl font-semibold text-white glass-text-shadow"><%= @user.name.first %></span>
         </div>
-        <div>
-          <h2 class="text-xl font-semibold text-white glass-text-shadow"><%= @user.name %></h2>
+        <div class="min-w-0 flex-1">
+          <h2 class="text-lg sm:text-xl font-semibold text-white glass-text-shadow truncate"><%= @user.name %></h2>
         </div>
       </div>
       
       <!-- ユーザー編集ボタン -->
-      <%= link_to "プロフィール編集", edit_user_registration_path, class: "glass-button px-4 py-2 text-white hover:text-white/90 transition-colors no-underline glass-text-shadow" %>
+      <div class="flex flex-col sm:flex-col space-y-2 w-full sm:w-auto">
+        <%= link_to "プロフィール編集", edit_user_registration_path, class: "w-full glass-button px-3 sm:px-4 py-2 text-white hover:text-white/90 transition-colors no-underline glass-text-shadow text-center text-sm sm:text-base whitespace-nowrap" %>
+        <%= button_to "LINEで認証",
+          user_line_omniauth_authorize_path,
+          method: :post,
+          class: "w-full px-3 sm:px-4 py-2 bg-green-500/80 border border-green-300/50 text-white font-semibold rounded-xl hover:bg-green-500/90 hover:border-green-300/60 transition-all backdrop-blur-sm glass-text-shadow text-sm sm:text-base whitespace-nowrap",
+          data: { turbo: false } %>
+      </div>
     </div>
   </div>
 
