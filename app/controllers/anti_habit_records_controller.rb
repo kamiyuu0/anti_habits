@@ -1,0 +1,2 @@
+class AntiHabitRecordsController < ApplicationController
+end

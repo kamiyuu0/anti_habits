@@ -1,0 +1,2 @@
+module AntiHabitRecordsHelper
+end
