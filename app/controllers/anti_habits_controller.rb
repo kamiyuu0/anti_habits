@@ -20,6 +20,7 @@ class AntiHabitsController < ApplicationController
 
   def show
     @anti_habit = AntiHabit.find(params[:id])
+    @today_record = @anti_habit.today_record if current_user.own?(@anti_habit)
   end
 
   def edit

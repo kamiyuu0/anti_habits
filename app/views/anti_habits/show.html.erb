@@ -29,7 +29,31 @@
     <div class="prose prose-sm max-w-none mb-6">
       <p class="text-white/90 leading-relaxed whitespace-pre-wrap glass-text-shadow"><%= @anti_habit.description %></p>
     </div>
-    <% if current_user == @anti_habit.user %>
+    <% if current_user.own?(@anti_habit) %>
+      <!-- 記録トグル -->
+      <div class="mb-4">
+        <div class="flex items-center justify-between p-4 bg-white/10 rounded-lg border border-white/20 backdrop-blur-sm">
+          <div class="flex items-center">
+            <span class="text-white glass-text-shadow font-medium">今日の記録</span>
+          </div>
+          
+          <div class="flex items-center space-x-3">
+            <% if @today_record %>
+              <span class="text-green-300 text-sm font-medium">記録済み</span>
+              <%= button_to "記録を削除", anti_habit_record_path(@today_record), 
+                    method: :delete, 
+                    data: { turbo_confirm: "記録を削除しますか？" },
+                    class: "glass-button px-3 py-1 text-sm text-red-200 hover:text-red-100 transition-colors glass-text-shadow" %>
+            <% else %>
+              <span class="text-gray-300 text-sm font-medium">未記録</span>
+              <%= button_to "記録する", anti_habit_records_path, 
+                    params: { anti_habit_id: @anti_habit.id },
+                    class: "glass-button px-3 py-1 text-sm text-blue-200 hover:text-blue-100 transition-colors glass-text-shadow" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      
       <div class="flex justify-end space-x-4">
         <%= link_to "編集", edit_anti_habit_path(@anti_habit), class: "glass-button px-4 py-2 text-white hover:text-white/90 transition-colors no-underline glass-text-shadow" %>
         <%= link_to "削除", anti_habit_path(@anti_habit), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "glass-button px-4 py-2 text-red-200 hover:text-red-100 transition-colors no-underline glass-text-shadow" %>
