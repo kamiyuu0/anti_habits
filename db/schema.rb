@@ -10,9 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_07_16_071309) do
+ActiveRecord::Schema[7.2].define(version: 2025_07_25_014137) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "anti_habit_records", force: :cascade do |t|
+    t.date "recorded_on"
+    t.bigint "anti_habit_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["anti_habit_id"], name: "index_anti_habit_records_on_anti_habit_id"
+  end
 
   create_table "anti_habits", force: :cascade do |t|
     t.string "title"
@@ -38,5 +46,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_07_16_071309) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "anti_habit_records", "anti_habits"
   add_foreign_key "anti_habits", "users"
 end

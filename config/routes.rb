@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   root "static_pages#top"
 
   resources :anti_habits
+  resources :anti_habit_records, only: %i[create destroy]
   resources :users, only: %i[ show ]
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
