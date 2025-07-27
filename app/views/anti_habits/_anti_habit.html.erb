@@ -12,6 +12,7 @@
   <!-- タイトル -->
   <h3 class="font-semibold text-white text-lg mb-2 leading-tight text-shadow">
     <%= link_to anti_habit.title, anti_habit_path(anti_habit), class: "text-white hover:text-white/90 transition-colors no-underline" %>
+    ：連続で<%= anti_habit.consecutive_days_achieved %>日達成！！
   </h3>
 
   <!-- 説明文（省略表示） -->

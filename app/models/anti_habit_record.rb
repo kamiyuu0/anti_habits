@@ -3,5 +3,4 @@ class AntiHabitRecord < ApplicationRecord
 
   validates :recorded_on, presence: true
   validates :anti_habit_id, uniqueness: { scope: :recorded_on, message: "その日はすでに記録済みです" }
-
 end
