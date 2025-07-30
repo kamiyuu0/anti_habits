@@ -6,6 +6,9 @@ class User < ApplicationRecord
          :omniauthable, omniauth_providers: %i[line]
 
   has_many :anti_habits, dependent: :destroy
+  has_many :reactions, dependent: :destroy
+  has_many :reaction_anti_habits, through: :reactions, source: :anti_habit
+
   validates :name, presence: true, length: { maximum: 10 }, uniqueness: true
   validates :password, presence: true, length: { minimum: 6 }, on: :create
 
@@ -22,5 +25,17 @@ class User < ApplicationRecord
 
   def own?(object)
     id == object&.user_id
+  end
+
+  def reaction(anti_habit)
+    reaction_anti_habits << anti_habit
+  end
+
+  def unreaction(anti_habit)
+    reaction_anti_habits.destroy(anti_habit)
+  end
+
+  def reaction?(anti_habit)
+    reaction_anti_habits.include?(anti_habit)
   end
 end

@@ -1,0 +1,3 @@
+<%= turbo_stream.replace "unreaction-button-for-anti_habit-#{@anti_habit.id}" do %>
+  <%= render 'shared/reaction', anti_habit: @anti_habit %>
+<% end %>
