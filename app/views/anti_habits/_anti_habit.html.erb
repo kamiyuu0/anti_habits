@@ -21,4 +21,7 @@
       <%= truncate(anti_habit.description, length: 80) %>
     </p>
   <% end %>
+
+  <%= render "shared/reaction_button", anti_habit: anti_habit %>
+
 </div>
