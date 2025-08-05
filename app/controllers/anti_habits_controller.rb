@@ -21,6 +21,7 @@ class AntiHabitsController < ApplicationController
   def show
     @anti_habit = AntiHabit.find(params[:id])
     @today_record = @anti_habit.today_record if current_user.own?(@anti_habit)
+    @comments = @anti_habit.comments.includes(:user).order(created_at: :desc)
   end
 
   def edit
