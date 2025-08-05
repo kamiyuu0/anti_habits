@@ -62,4 +62,37 @@
 
     <%= render "shared/reaction_button", anti_habit: @anti_habit %>
   </div>
+
+  <!-- コメントセクション（ログイン時のみ表示） -->
+  <% if user_signed_in? %>
+    <div class="mt-8">
+      <div class="glass-card p-6">
+        <h2 class="text-xl font-bold text-white mb-6 glass-text-shadow">
+          応援メッセージ
+          <span class="text-lg font-normal text-white/80">(<%= @comments.count %>件)</span>
+        </h2>
+
+        <!-- 新規コメントフォーム -->
+        <div class="mb-6">
+          <%= render "comments/form" %>
+        </div>
+
+        <!-- 既存コメント一覧 -->
+        <div class="space-y-4">
+          <% if @comments.any? %>
+            <%= render @comments %>
+          <% else %>
+            <div class="text-center py-8">
+              <p class="text-white/60 glass-text-shadow">
+                まだ応援メッセージはありません
+              </p>
+              <p class="text-white/60 glass-text-shadow text-sm mt-2">
+                最初の応援メッセージを投稿してみませんか？
+              </p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
 </div>
