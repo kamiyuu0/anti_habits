@@ -2,7 +2,7 @@ class AntiHabitsController < ApplicationController
   before_action :authenticate_user!, except: [ :index, :show ]
 
   def index
-    @anti_habits = AntiHabit.all.includes(:user).order(created_at: :desc)
+    @anti_habits = AntiHabit.all.includes(:user, :tags).order(created_at: :desc)
   end
 
   def new
@@ -19,13 +19,14 @@ class AntiHabitsController < ApplicationController
   end
 
   def show
-    @anti_habit = AntiHabit.find(params[:id])
-    @today_record = @anti_habit.today_record if current_user.own?(@anti_habit)
+    @anti_habit = AntiHabit.includes(:tags).find(params[:id])
+    @today_record = @anti_habit.today_record if current_user&.own?(@anti_habit)
     @comments = @anti_habit.comments.includes(:user).order(created_at: :desc)
   end
 
   def edit
-    @anti_habit = current_user.anti_habits.find(params[:id])
+    @anti_habit = current_user.anti_habits.includes(:tags).find(params[:id])
+    @anti_habit.tag_names = @anti_habit.tag_names_as_string
   end
 
   def update
@@ -46,6 +47,6 @@ class AntiHabitsController < ApplicationController
   private
 
   def anti_habit_params
-    params.require(:anti_habit).permit(:title, :description)
+    params.require(:anti_habit).permit(:title, :description, :tag_names)
   end
 end
