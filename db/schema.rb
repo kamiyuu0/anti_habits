@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_08_04_135630) do
+ActiveRecord::Schema[7.2].define(version: 2025_08_05_151122) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,6 +20,16 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_04_135630) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["anti_habit_id"], name: "index_anti_habit_records_on_anti_habit_id"
+  end
+
+  create_table "anti_habit_tags", force: :cascade do |t|
+    t.bigint "anti_habit_id", null: false
+    t.bigint "tag_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["anti_habit_id", "tag_id"], name: "index_anti_habit_tags_on_anti_habit_id_and_tag_id", unique: true
+    t.index ["anti_habit_id"], name: "index_anti_habit_tags_on_anti_habit_id"
+    t.index ["tag_id"], name: "index_anti_habit_tags_on_tag_id"
   end
 
   create_table "anti_habits", force: :cascade do |t|
@@ -51,6 +61,13 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_04_135630) do
     t.index ["user_id"], name: "index_reactions_on_user_id"
   end
 
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_tags_on_name"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -67,6 +84,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_04_135630) do
   end
 
   add_foreign_key "anti_habit_records", "anti_habits"
+  add_foreign_key "anti_habit_tags", "anti_habits"
+  add_foreign_key "anti_habit_tags", "tags"
   add_foreign_key "anti_habits", "users"
   add_foreign_key "comments", "anti_habits"
   add_foreign_key "comments", "users"

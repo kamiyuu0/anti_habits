@@ -50,6 +50,20 @@
       </p>
     </div>
   </div>
+
+  <!-- タグ -->
+  <div class="space-y-2">
+    <%= form.label :tag_names, "タグ", class: "block text-sm font-medium text-white glass-text-shadow" %>
+    <%= form.text_field :tag_names, 
+        class: "glass-input w-full px-4 py-3 text-white placeholder:text-white/60 transition-colors text-base",
+        placeholder: "例：夜更かし, スマホ依存, SNS",
+        value: anti_habit.tag_names %>
+    <div class="flex justify-between items-center">
+      <p class="text-sm text-white/80 glass-text-shadow">
+        関連するキーワードをカンマ（,）区切りで入力してください
+      </p>
+    </div>
+  </div>
   <!-- 送信ボタン -->
   <div class="flex flex-col sm:flex-row gap-3 pt-4">
     <%= form.submit anti_habit.persisted? ? "更新する" : "登録する", 

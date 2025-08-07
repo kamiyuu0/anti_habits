@@ -22,6 +22,24 @@
     </p>
   <% end %>
 
+  <!-- タグ -->
+  <% if anti_habit.tags.any? %>
+    <div class="mb-3">
+      <div class="flex flex-wrap gap-1">
+        <% anti_habit.tags.limit(3).each do |tag| %>
+          <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-purple-500/30 border border-purple-300/50 text-purple-100 backdrop-blur-sm">
+            #<%= tag.name %>
+          </span>
+        <% end %>
+        <% if anti_habit.tags.count > 3 %>
+          <span class="inline-flex items-center px-2 py-1 text-xs text-white/60 font-medium">
+            +<%= anti_habit.tags.count - 3 %>
+          </span>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
   <%= render "shared/reaction_button", anti_habit: anti_habit %>
 
 </div>

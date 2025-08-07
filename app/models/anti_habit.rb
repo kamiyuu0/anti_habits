@@ -3,9 +3,15 @@ class AntiHabit < ApplicationRecord
   has_many :anti_habit_records, dependent: :destroy
   has_many :reactions, dependent: :destroy
   has_many :comments, dependent: :destroy
+  has_many :anti_habit_tags, dependent: :destroy
+  has_many :tags, through: :anti_habit_tags
 
   validates :title, presence: true, length: { maximum: 20 }
   validates :description, length: { maximum: 80 }
+
+  attr_accessor :tag_names
+
+  after_save :save_tags
 
   def today_record
     anti_habit_records.find_by(recorded_on: Time.zone.today)
@@ -34,5 +40,24 @@ class AntiHabit < ApplicationRecord
     end
 
     count
+  end
+
+  def tag_names_as_string
+    tags.pluck(:name).join(", ")
+  end
+
+  private
+
+  def save_tags
+    return unless tag_names
+
+    # 既存のタグ関連を削除
+    # TODO: 更新時、すでにあるタグは削除しないようにする
+    anti_habit_tags.destroy_all
+
+    # 新しいタグを作成・関連付け
+    names = tag_names.split(",").map(&:strip).reject(&:blank?)
+    tags_to_add = Tag.find_or_create_by_names(names)
+    self.tags = tags_to_add
   end
 end
