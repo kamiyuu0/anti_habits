@@ -40,6 +40,7 @@
     </div>
   <% end %>
 
-  <%= render "shared/reaction_button", anti_habit: anti_habit %>
-
+  <% if user_signed_in? %>
+    <%= render "shared/reaction_button", anti_habit: anti_habit %>
+  <% end %>
 </div>
