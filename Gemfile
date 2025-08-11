@@ -50,6 +50,9 @@ gem "dotenv-rails"
 gem "omniauth", "~> 1.9.1"
 gem "line-bot-api"
 
+# OGP
+gem "meta-tags"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
