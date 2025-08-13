@@ -1,0 +1,40 @@
+<% flash.each do |type, message| %>
+  <% 
+    css_classes = case type.to_s
+    when 'notice', 'success'
+      'bg-green-50 border-green-200 text-green-800'
+    when 'alert', 'error'
+      'bg-red-50 border-red-200 text-red-800'
+    when 'warning'
+      'bg-yellow-50 border-yellow-200 text-yellow-800'
+    else
+      'bg-blue-50 border-blue-200 text-blue-800'
+    end
+    
+    icon_class = case type.to_s
+    when 'notice', 'success'
+      'fas fa-check-circle text-green-500'
+    when 'alert', 'error'
+      'fas fa-exclamation-circle text-red-500'
+    when 'warning'
+      'fas fa-exclamation-triangle text-yellow-500'
+    else
+      'fas fa-info-circle text-blue-500'
+    end
+  %>
+  
+  <div class="flash-message mx-4 sm:mx-6 lg:mx-8 xl:mx-auto xl:max-w-4xl mb-4 mt-20" data-flash-type="<%= type %>">
+    <div class="<%= css_classes %> border rounded-lg p-3 sm:p-4 shadow-sm">
+      <div class="flex items-start">
+        <div class="flex-shrink-0">
+          <i class="<%= icon_class %> text-base sm:text-lg"></i>
+        </div>
+        <div class="ml-2 sm:ml-3 flex-1 min-w-0">
+          <p class="text-xs sm:text-sm font-medium break-words">
+            <%= message %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
