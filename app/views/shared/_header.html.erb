@@ -18,12 +18,13 @@
       </label>
 
       <!-- ドロップダウンメニュー -->
-      <nav class="absolute top-full right-0 mt-2 w-48 glass-card py-2 
+      <nav class="absolute top-full right-0 mt-2 w-48 bg-gray-700 border border-gray-500 rounded-lg shadow-lg py-2 
                   opacity-0 invisible scale-95 transition-all duration-200 origin-top-right
                   peer-checked:opacity-100 peer-checked:visible peer-checked:scale-100">
-        <a href="#" class="block px-4 py-2 text-sm text-white hover:bg-white/20 transition-colors rounded glass-text-shadow">お問い合わせ</a>
-        <a href="#" class="block px-4 py-2 text-sm text-white hover:bg-white/20 transition-colors rounded glass-text-shadow">利用規約</a>
-        <a href="#" class="block px-4 py-2 text-sm text-white hover:bg-white/20 transition-colors rounded glass-text-shadow">プライバシーポリシー</a>
+        <%# 一時的に非表示 %>
+        <%# <a href="#" class="block px-4 py-2 text-sm text-white hover:bg-white/20 transition-colors rounded glass-text-shadow">お問い合わせ</a> %>
+        <%# <a href="#" class="block px-4 py-2 text-sm text-white hover:bg-white/20 transition-colors rounded glass-text-shadow">利用規約</a> %>
+        <%# <a href="#" class="block px-4 py-2 text-sm text-white hover:bg-white/20 transition-colors rounded glass-text-shadow">プライバシーポリシー</a> %>
         
         <% if user_signed_in? %>
           <%= link_to 'ログアウト', destroy_user_session_path, data: { turbo_method: :delete }, class: 'block px-4 py-2 text-sm text-white hover:bg-white/20 transition-colors rounded glass-text-shadow' %>

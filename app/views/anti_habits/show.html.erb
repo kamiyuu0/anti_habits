@@ -43,7 +43,7 @@
         </div>
       </div>
     <% end %>
-    <% if current_user.own?(@anti_habit) %>
+    <% if current_user&.own?(@anti_habit) %>
       <!-- 記録トグル -->
       <div class="mb-4">
         <div class="flex items-center justify-between p-4 bg-white/10 rounded-lg border border-white/20 backdrop-blur-sm">
@@ -73,7 +73,9 @@
       </div>
     <% end %>
 
-    <%= render "shared/reaction_button", anti_habit: @anti_habit %>
+    <% if user_signed_in? %>
+      <%= render "shared/reaction_button", anti_habit: @anti_habit %>
+    <% end %>
   </div>
 
   <!-- コメントセクション（ログイン時のみ表示） -->
