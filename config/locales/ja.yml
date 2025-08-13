@@ -2,12 +2,19 @@ ja:
   activerecord:
     models:
       user: ユーザー
+      comment: コメント
+      anti_habit: 悪習慣
     attributes:
       user:
         name: 名前
         email: メールアドレス
         password: パスワード
         password_confirmation: パスワード確認
+      comment:
+        body: 応援メッセージ
+      anti_habit:
+        title: タイトル
+        description: 説明
     errors:
       models:
         user:
