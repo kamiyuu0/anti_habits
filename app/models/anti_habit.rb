@@ -8,10 +8,11 @@ class AntiHabit < ApplicationRecord
 
   validates :title, presence: true, length: { maximum: 20 }
   validates :description, length: { maximum: 80 }
+  validate :validate_tag_names
 
   attr_accessor :tag_names
 
-  after_save :save_tags
+  after_save :save_tags_without_validation
 
   def today_record
     anti_habit_records.find_by(recorded_on: Time.zone.today)
@@ -48,15 +49,28 @@ class AntiHabit < ApplicationRecord
 
   private
 
-  def save_tags
+  def validate_tag_names
+    return unless tag_names.present?
+
+    names = tag_names.split(",").map(&:strip).reject(&:blank?)
+
+    names.each do |name|
+      if name.length > 20
+        errors.add(:tag_names, "「#{name}」は20文字以内で入力してください")
+      end
+    end
+  end
+
+  def save_tags_without_validation
     return unless tag_names
+
+    names = tag_names.split(",").map(&:strip).reject(&:blank?)
 
     # 既存のタグ関連を削除
     # TODO: 更新時、すでにあるタグは削除しないようにする
     anti_habit_tags.destroy_all
 
     # 新しいタグを作成・関連付け
-    names = tag_names.split(",").map(&:strip).reject(&:blank?)
     tags_to_add = Tag.find_or_create_by_names(names)
     self.tags = tags_to_add
   end
