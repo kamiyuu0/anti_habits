@@ -45,26 +45,37 @@
     <% end %>
     <% if current_user&.own?(@anti_habit) %>
       <!-- 記録トグル -->
-      <div class="mb-4">
-        <div class="flex items-center justify-between p-4 bg-white/10 rounded-lg border border-white/20 backdrop-blur-sm">
-          <div class="flex items-center">
-            <span class="text-white glass-text-shadow font-medium">今日の記録</span>
-          </div>
-          
-          <div class="flex items-center space-x-3">
-            <% if @today_record %>
-              <span class="text-green-300 text-sm font-medium">記録済み</span>
+      <div class="mb-6">
+        <div class="text-center mb-4">
+          <span class="text-white glass-text-shadow font-medium text-lg">今日の記録：</span>
+        </div>
+        
+        <div class="flex flex-col space-y-3">
+          <% if @today_record %>
+            <!-- 記録済みの状態 - 我慢できた状態を表示 -->
+            <div class="p-4 bg-green-500/20 rounded-xl border-2 border-green-400/30 backdrop-blur-sm">
+              <div class="flex items-center justify-center space-x-2 mb-3">
+                <span class="text-2xl">💪</span>
+                <span class="text-green-200 font-bold text-lg glass-text-shadow">我慢できた</span>
+              </div>
               <%= button_to "記録を削除", anti_habit_record_path(@today_record), 
                     method: :delete, 
                     data: { turbo_confirm: "記録を削除しますか？" },
-                    class: "glass-button px-3 py-1 text-sm text-red-200 hover:text-red-100 transition-colors glass-text-shadow" %>
-            <% else %>
-              <span class="text-gray-300 text-sm font-medium">未記録</span>
-              <%= button_to "記録する", anti_habit_records_path, 
+                    class: "w-full glass-button bg-green-600/30 hover:bg-green-600/40 border border-green-400/40 px-4 py-2 text-green-100 hover:text-white transition-all duration-200 rounded-lg font-medium glass-text-shadow" %>
+            </div>
+          <% else %>
+            <!-- 我慢できたボタン -->
+            <div class="p-4 bg-green-500/10 hover:bg-green-500/20 rounded-xl border-2 border-green-400/20 hover:border-green-400/40 backdrop-blur-sm transition-all duration-200">
+              <%= button_to anti_habit_records_path, 
                     params: { anti_habit_id: @anti_habit.id },
-                    class: "glass-button px-3 py-1 text-sm text-blue-200 hover:text-blue-100 transition-colors glass-text-shadow" %>
-            <% end %>
-          </div>
+                    class: "w-full bg-transparent border-none p-0 text-left" do %>
+                <div class="flex items-center justify-center space-x-2">
+                  <span class="text-2xl">💪</span>
+                  <span class="text-green-200 font-bold text-lg glass-text-shadow">我慢できた</span>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
         </div>
       </div>
       <div class="flex justify-end space-x-4">
