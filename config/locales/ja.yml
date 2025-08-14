@@ -15,6 +15,7 @@ ja:
       anti_habit:
         title: タイトル
         description: 説明
+        tag_names: タグ
     errors:
       models:
         user:
