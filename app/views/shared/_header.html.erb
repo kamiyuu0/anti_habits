@@ -2,9 +2,10 @@
   <div class="flex items-center justify-between">
     <!-- 中央のアイコン -->
     <div class="flex items-center justify-center">
-      <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center border border-white/30 glass-icon">
-        <span class="text-white text-sm font-medium glass-text-shadow">icon</span>
-      </div>
+      <!-- モバイル用アイコン -->
+      <%= image_tag 'icon_mobile.png', alt: 'Anti Habits', class: 'h-12 block md:hidden' %>
+      <!-- デスクトップ用アイコン -->
+      <%= image_tag 'icon.png', alt: 'Anti Habits', class: 'h-12 hidden md:block' %>
     </div>
 
     <!-- 右側のハンバーガーメニュー -->
