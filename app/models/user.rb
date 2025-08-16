@@ -13,6 +13,8 @@ class User < ApplicationRecord
   validates :name, presence: true, length: { maximum: 10 }, uniqueness: true
   validates :password, presence: true, length: { minimum: 6 }, on: :create
 
+  after_validation :replace_email_taken_error
+
   def set_values(omniauth)
     return if provider.to_s != omniauth["provider"].to_s || uid != omniauth["uid"]
     credentials = omniauth["credentials"]
@@ -38,5 +40,16 @@ class User < ApplicationRecord
 
   def reaction?(anti_habit)
     reaction_anti_habits.include?(anti_habit)
+  end
+
+  private
+
+  def replace_email_taken_error
+    if errors.details[:email]&.any? { |d| d[:error] == :taken }
+      # 既存のすべてのエラーをクリア
+      errors.clear
+      # baseエラーとして追加（属性名が前に付かない）
+      errors.add(:base, "登録できませんでした。")
+    end
   end
 end
