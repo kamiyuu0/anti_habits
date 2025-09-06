@@ -1,180 +1,158 @@
-<div class="min-h-screen flex flex-col items-center pt-20">
+<div>
   <!-- ヒーローセクション -->
-  <section class="px-4 py-16 my-8 text-center w-full">
-    <div class="max-w-4xl mx-auto">
-      <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 text-shadow">
-        Anti Habits
-      </h1>
-      <p class="text-xl md:text-2xl text-white/90 mb-8 glass-text-shadow">
-        悪習慣を取り除く手助けをするサービス
-      </p>
-      <p class="text-lg text-white/80 mb-12 leading-relaxed glass-text-shadow">
-        悪習慣を共有し、一定間隔で悪習慣をしていないか管理して目標達成を手助けします。<br>
-        他のユーザーから擬似的に監視されている感覚で、切磋琢磨しながら目標達成率を高められます。
-      </p>
-      
-      <div class="space-y-4 md:space-y-0 md:space-x-4 md:flex md:justify-center">
-        <%= link_to "はじめる", new_user_registration_path, 
-            class: "inline-block glass-button bg-blue-500/30 border border-blue-300/50 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 hover:bg-blue-500/40 no-underline" %>
-        <%= link_to "ログイン", new_user_session_path, 
-            class: "inline-block glass-button bg-white/20 border border-white/30 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 hover:bg-white/30 no-underline" %>
-      </div>
-      
-      <div class="mt-8 flex justify-center">
-        <%= link_to "悪習慣一覧を見る", anti_habits_path, 
-            class: "inline-block glass-button bg-gray-500/20 border border-gray-300/30 text-white/80 font-medium py-2 px-6 rounded-lg transition-all duration-300 hover:bg-gray-500/30 hover:text-white no-underline" %>
+  <div class="hero min-h-screen">
+    <div class="hero-content text-center">
+      <div class="max-w-md">
+        <h1 class="text-5xl font-bold">Anti Habits</h1>
+        <p class="py-6">悪習慣を取り除く手助けをするサービス</p>
+        <p class="pb-6">
+          悪習慣を共有し、一定間隔で悪習慣をしていないか管理して目標達成を手助けします。<br>
+          他のユーザーから擬似的に監視されている感覚で、切磋琢磨しながら目標達成率を高められます。
+        </p>
+        <%= link_to "はじめる", new_user_registration_path, class: "btn btn-primary" %>
+        <%= link_to "ログイン", new_user_session_path, class: "btn btn-outline ml-4" %>
+        <div class="mt-4">
+          <%= link_to "悪習慣一覧を見る", anti_habits_path, class: "link" %>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
 
   <!-- 悪習慣の例 -->
-  <section class="px-4 py-16 w-full">
-    <div class="max-w-4xl mx-auto text-center">
-      <h2 class="text-3xl font-bold text-white mb-12 text-shadow">こんな悪習慣、ありませんか？</h2>
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="glass-card p-6">
-          <div class="w-16 h-16 bg-red-500/30 border border-red-300/50 rounded-full flex items-center justify-center mx-auto mb-4 backdrop-blur-sm">
-            <svg class="w-8 h-8 text-red-200" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM13 17h-2v-6h2v6zm0-8h-2V7h2v2z"/>
-            </svg>
-          </div>
-          <h3 class="text-lg font-semibold text-white mb-2 glass-text-shadow">夜更かし</h3>
-          <p class="text-white/80 glass-text-shadow">休日の前日につい夜更かししてしまう</p>
+  <div class="py-16">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold">こんな悪習慣、ありませんか？</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto px-4">
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title">夜更かし</h2>
+          <p>休日の前日につい夜更かししてしまう</p>
         </div>
-        
-        <div class="glass-card p-6">
-          <div class="w-16 h-16 bg-yellow-500/30 border border-yellow-300/50 rounded-full flex items-center justify-center mx-auto mb-4 backdrop-blur-sm">
-            <svg class="w-8 h-8 text-yellow-200" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M17 2H7c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 18H7V4h10v16z"/>
-            </svg>
-          </div>
-          <h3 class="text-lg font-semibold text-white mb-2 glass-text-shadow">スマホ依存</h3>
-          <p class="text-white/80 glass-text-shadow">お風呂にスマホを持ち込んでしまう</p>
+      </div>
+      
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title">スマホ依存</h2>
+          <p>お風呂にスマホを持ち込んでしまう</p>
         </div>
-        
-        <div class="glass-card p-6">
-          <div class="w-16 h-16 bg-orange-500/30 border border-orange-300/50 rounded-full flex items-center justify-center mx-auto mb-4 backdrop-blur-sm">
-            <svg class="w-8 h-8 text-orange-200" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97L6.5 22h3l-.25-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5l1.5 6h3L21.5 14H24v-2h-3V9c0-1.1-.9-2-2-2h-1V2h-2v5h-1c-1.1 0-2 .9-2 2z"/>
-            </svg>
-          </div>
-          <h3 class="text-lg font-semibold text-white mb-2 glass-text-shadow">食べ過ぎ</h3>
-          <p class="text-white/80 glass-text-shadow">ダイエットしたいのに大盛りを頼んでしまう</p>
+      </div>
+      
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title">食べ過ぎ</h2>
+          <p>ダイエットしたいのに大盛りを頼んでしまう</p>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
   <!-- 使い方 -->
-  <section class="px-4 py-16 w-full">
-    <div class="max-w-4xl mx-auto">
-      <h2 class="text-3xl font-bold text-white text-center mb-12 text-shadow">使い方</h2>
-      <div class="space-y-12">
-        <div class="flex flex-col md:flex-row items-center gap-8">
-          <div class="md:w-1/2">
-            <div class="w-16 h-16 bg-blue-500/30 border border-blue-300/50 rounded-full flex items-center justify-center mb-4 backdrop-blur-sm">
-              <span class="text-2xl font-bold text-blue-200">1</span>
-            </div>
-            <h3 class="text-xl font-semibold text-white mb-4 glass-text-shadow">悪習慣を登録</h3>
-            <p class="text-white/80 glass-text-shadow">やめたい悪習慣をタイトルと説明で登録します。タグをつけて分類することも可能です。</p>
+  <div class="py-16">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold">使い方</h2>
+    </div>
+    <div class="max-w-6xl mx-auto px-4 space-y-16">
+      <!-- ステップ1 -->
+      <div class="hero">
+        <div class="hero-content flex-col lg:flex-row">
+          <div>
+            <h1 class="text-5xl font-bold">1</h1>
+            <h3 class="text-2xl font-bold py-6">悪習慣を登録</h3>
+            <p>やめたい悪習慣をタイトルと説明で登録します。タグをつけて分類することも可能です。</p>
           </div>
-          <div class="md:w-1/2 glass-card p-6">
-            <div class="text-sm text-white/70 mb-2 glass-text-shadow">例：</div>
-            <div class="font-semibold text-white mb-2 glass-text-shadow">夜更かしをやめたい</div>
-            <div class="text-white/80 text-sm glass-text-shadow">明日も早いのについYouTubeを見て夜更かししてしまいます...</div>
-            <div class="mt-3">
-              <span class="inline-block bg-blue-500/30 border border-blue-300/50 text-blue-100 text-xs px-2 py-1 rounded backdrop-blur-sm">#睡眠</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="flex flex-col md:flex-row-reverse items-center gap-8">
-          <div class="md:w-1/2">
-            <div class="w-16 h-16 bg-green-500/30 border border-green-300/50 rounded-full flex items-center justify-center mb-4 backdrop-blur-sm">
-              <span class="text-2xl font-bold text-green-200">2</span>
-            </div>
-            <h3 class="text-xl font-semibold text-white mb-4 glass-text-shadow">進捗を記録</h3>
-            <p class="text-white/80 glass-text-shadow">毎日LINEに通知が届くので、悪習慣を行ったかどうかを記録します。正直に報告することが大切です。</p>
-          </div>
-          <div class="md:w-1/2 glass-card p-6">
-            <div class="text-sm text-white/70 mb-2 glass-text-shadow">今日の記録：</div>
-            <div class="space-y-2">
-              <button class="w-full p-3 bg-red-500/30 border border-red-300/50 rounded text-red-200 backdrop-blur-sm">やってしまった 😞</button>
-              <button class="w-full p-3 bg-green-500/30 border border-green-300/50 rounded text-green-200 backdrop-blur-sm">我慢できた 💪</button>
+          <div class="card bg-base-100 shadow-xl">
+            <div class="card-body">
+              <p class="text-sm opacity-70">例：</p>
+              <h2 class="card-title">夜更かしをやめたい</h2>
+              <p>明日も早いのについYouTubeを見て夜更かししてしまいます...</p>
+              <div class="card-actions">
+                <div class="badge badge-outline">#睡眠</div>
+              </div>
             </div>
           </div>
         </div>
+      </div>
 
-        <div class="flex flex-col md:flex-row items-center gap-8">
-          <div class="md:w-1/2">
-            <div class="w-16 h-16 bg-purple-500/30 border border-purple-300/50 rounded-full flex items-center justify-center mb-4 backdrop-blur-sm">
-              <span class="text-2xl font-bold text-purple-200">3</span>
-            </div>
-            <h3 class="text-xl font-semibold text-white mb-4 glass-text-shadow">みんなで応援</h3>
-            <p class="text-white/80 glass-text-shadow">他のユーザーから応援やコメントをもらえます。みんなに見られている感覚で目標達成率がアップします。</p>
+      <!-- ステップ2 -->
+      <div class="hero">
+        <div class="hero-content flex-col lg:flex-row-reverse">
+          <div>
+            <h1 class="text-5xl font-bold">2</h1>
+            <h3 class="text-2xl font-bold py-6">進捗を記録</h3>
+            <p>毎日LINEに通知が届くので、悪習慣を行ったかどうかを記録します。正直に報告することが大切です。</p>
           </div>
-          <div class="md:w-1/2 glass-card p-6">
-            <div class="flex items-center gap-2 mb-3">
-              <div class="w-8 h-8 bg-white/20 border border-white/30 rounded-full"></div>
-              <span class="text-sm text-white/80 glass-text-shadow">田中さん</span>
+          <div class="card bg-base-100 shadow-xl">
+            <div class="card-body">
+              <p class="text-sm opacity-70 mb-4">今日の記録：</p>
+              <div class="space-y-2">
+                <button class="btn btn-block">やってしまった 😞</button>
+                <button class="btn btn-block">我慢できた 💪</button>
+              </div>
             </div>
-            <div class="text-sm text-white/90 mb-2 glass-text-shadow">頑張って！私も夜更かしやめたいです 💪</div>
-            <div class="flex items-center gap-2 text-xs text-white/70">
-              <span>👍 5</span>
-              <span>💬 3</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ステップ3 -->
+      <div class="hero">
+        <div class="hero-content flex-col lg:flex-row">
+          <div>
+            <h1 class="text-5xl font-bold">3</h1>
+            <h3 class="text-2xl font-bold py-6">みんなで応援</h3>
+            <p>他のユーザーから応援やコメントをもらえます。みんなに見られている感覚で目標達成率がアップします。</p>
+          </div>
+          <div class="card bg-base-100 shadow-xl">
+            <div class="card-body">
+              <div class="flex items-center gap-3 mb-3">
+                <i class="fas fa-user text-sm"></i>
+                <span>田中さん</span>
+              </div>
+              <p class="mb-3">頑張って！私も夜更かしやめたいです 💪</p>
+              <div class="flex gap-4">
+                <span>👍 5</span>
+                <span>💬 3</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
   <!-- 特徴 -->
-  <section class="px-4 py-16 w-full">
-    <div class="max-w-4xl mx-auto text-center">
-      <h2 class="text-3xl font-bold text-white mb-12 text-shadow">Anti Habitsの特徴</h2>
-      <div class="grid md:grid-cols-2 gap-8">
-        <div class="glass-card p-6">
-          <div class="w-16 h-16 bg-blue-500/30 border border-blue-300/50 rounded-full flex items-center justify-center mx-auto mb-4 backdrop-blur-sm">
-            <svg class="w-8 h-8 text-blue-200" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-            </svg>
-          </div>
-          <h3 class="text-xl font-semibold text-white mb-3 glass-text-shadow">共有で効果アップ</h3>
-          <p class="text-white/80 glass-text-shadow">他のユーザーに悪習慣を共有することで、監視されている感覚を得られ目標達成率が向上します。</p>
+  <div class="py-16">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold">Anti Habitsの特徴</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto px-4">
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title">共有で効果アップ</h2>
+          <p>他のユーザーに悪習慣を共有することで、監視されている感覚を得られ目標達成率が向上します。</p>
         </div>
-        
-        <div class="glass-card p-6">
-          <div class="w-16 h-16 bg-green-500/30 border border-green-300/50 rounded-full flex items-center justify-center mx-auto mb-4 backdrop-blur-sm">
-            <svg class="w-8 h-8 text-green-200" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-            </svg>
-          </div>
-          <h3 class="text-xl font-semibold text-white mb-3 glass-text-shadow">応援機能</h3>
-          <p class="text-white/80 glass-text-shadow">他のユーザーからいいねやコメントで応援してもらえるので、モチベーションを維持できます。</p>
+      </div>
+      
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title">応援機能</h2>
+          <p>他のユーザーからいいねやコメントで応援してもらえるので、モチベーションを維持できます。</p>
         </div>
-        
-        <div class="glass-card p-6">
-          <div class="w-16 h-16 bg-yellow-500/30 border border-yellow-300/50 rounded-full flex items-center justify-center mx-auto mb-4 backdrop-blur-sm">
-            <svg class="w-8 h-8 text-yellow-200" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
-            </svg>
-          </div>
-          <h3 class="text-xl font-semibold text-white mb-3 glass-text-shadow">タグで分類</h3>
-          <p class="text-white/80 glass-text-shadow">悪習慣をタグで分類して、同じような習慣で悩む人を見つけやすくできます。</p>
+      </div>
+      
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title">タグで分類</h2>
+          <p>悪習慣をタグで分類して、同じような習慣で悩む人を見つけやすくできます。</p>
         </div>
-        
-        <div class="glass-card p-6">
-          <div class="w-16 h-16 bg-purple-500/30 border border-purple-300/50 rounded-full flex items-center justify-center mx-auto mb-4 backdrop-blur-sm">
-            <svg class="w-8 h-8 text-purple-200" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M22 5.72l-4.6-3.86-1.29 1.53 4.6 3.86L22 5.72zM7.88 3.39L6.6 1.86 2 5.71l1.29 1.53 4.59-3.85zM12.5 8H11v6l4.75 2.85.75-1.23-4-2.37V8zM12 4c-4.97 0-9 4.03-9 9s4.02 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 16c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/>
-            </svg>
-          </div>
-          <h3 class="text-xl font-semibold text-white mb-3 glass-text-shadow">LINE通知</h3>
-          <p class="text-white/80 glass-text-shadow">毎日決まった時間にLINEで通知が届くので、記録し忘れを防げます。</p>
+      </div>
+      
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title">LINE通知</h2>
+          <p>毎日決まった時間にLINEで通知が届くので、記録し忘れを防げます。</p>
         </div>
       </div>
     </div>
-  </section>
-
+  </div>
 </div>
