@@ -1,34 +1,39 @@
-<div class="max-w-4xl mx-auto px-4 py-6 pt-20">
+<div class="container mx-auto max-w-4xl px-4 py-8">
   <!-- マイページのタイトル -->
-  <h1 class="text-3xl font-bold text-white text-shadow mb-6">マイページ</h1>
+  <div class="text-center mb-8">
+    <h1 class="text-3xl font-bold text-base-content">マイページ</h1>
+  </div>
 
   <!-- ユーザー情報 -->
-  <div class="glass-card p-4 sm:p-6 mb-6">
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
-      <div class="flex items-center">
-        <div class="w-12 h-12 sm:w-16 sm:h-16 bg-white/20 rounded-full flex items-center justify-center mr-3 sm:mr-4 border border-white/30 flex-shrink-0">
-          <span class="text-lg sm:text-xl font-semibold text-white glass-text-shadow"><%= @user.name.first %></span>
+  <div class="card bg-base-100 shadow-xl mb-8">
+    <div class="card-body">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div class="flex items-center gap-4">
+          <div class="flex items-center">
+            <i class="fas fa-user text-2xl mr-3"></i>
+          </div>
+          <div>
+            <h2 class="text-xl font-semibold text-base-content"><%= @user.name %></h2>
+          </div>
         </div>
-        <div class="min-w-0 flex-1">
-          <h2 class="text-lg sm:text-xl font-semibold text-white glass-text-shadow truncate"><%= @user.name %></h2>
+        
+        <!-- ユーザー編集ボタン -->
+        <div class="flex flex-col gap-2 w-full sm:w-auto">
+          <%= link_to "プロフィール編集", edit_user_registration_path, 
+              class: "btn btn-outline btn-sm w-full" %>
+          <%= button_to "LINEで認証",
+            user_line_omniauth_authorize_path,
+            method: :post,
+            class: "btn btn-success btn-sm w-full",
+            data: { turbo: false } %>
         </div>
-      </div>
-      
-      <!-- ユーザー編集ボタン -->
-      <div class="flex flex-col sm:flex-col space-y-2 w-full sm:w-auto">
-        <%= link_to "プロフィール編集", edit_user_registration_path, class: "w-full glass-button px-3 sm:px-4 py-2 text-white hover:text-white/90 transition-colors no-underline glass-text-shadow text-center text-sm sm:text-base whitespace-nowrap" %>
-        <%= button_to "LINEで認証",
-          user_line_omniauth_authorize_path,
-          method: :post,
-          class: "w-full px-3 sm:px-4 py-2 bg-green-500/80 border border-green-300/50 text-white font-semibold rounded-xl hover:bg-green-500/90 hover:border-green-300/60 transition-all backdrop-blur-sm glass-text-shadow text-sm sm:text-base whitespace-nowrap",
-          data: { turbo: false } %>
       </div>
     </div>
   </div>
 
   <!-- 過去の悪習慣投稿 -->
-  <div class="mb-6">
-    <h2 class="text-xl font-bold text-white text-shadow mb-4">過去の悪習慣投稿</h2>
+  <div class="mb-8">
+    <h2 class="text-2xl font-bold text-base-content mb-6">過去の悪習慣投稿</h2>
     
     <div class="space-y-4">
       <% if @anti_habits.any? %>
@@ -37,11 +42,16 @@
         <% end %>
       <% else %>
         <!-- 空の状態 -->
-        <div class="glass-card p-12 text-center">
-          <h3 class="text-white text-lg font-bold text-shadow mb-2">
-            まだ悪習慣が投稿されていません
-          </h3>
-          <p class="text-white/90 glass-text-shadow">最初の悪習慣を登録してみましょう</p>
+        <div class="card bg-base-100 shadow-md">
+          <div class="card-body text-center py-12">
+            <div class="mb-4">
+              <i class="fas fa-plus-circle text-4xl text-primary"></i>
+            </div>
+            <h3 class="text-lg font-bold text-base-content mb-2">
+              まだ悪習慣が投稿されていません
+            </h3>
+            <p class="text-base-content/70 mb-4">最初の悪習慣を登録してみましょう</p>
+          </div>
         </div>
       <% end %>
     </div>

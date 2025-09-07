@@ -1,101 +1,119 @@
-<div class="max-w-4xl mx-auto px-4 my-6 pt-20">
+<div class="container mx-auto px-4 py-6">
   <!-- メイン投稿 -->
-  <div class="glass-card p-6 mb-6">
-    <!-- ユーザー情報 -->
-    <div class="flex items-center justify-between mb-4">
-      <div class="flex items-center">
-        <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mr-4 border border-white/30">
-          <span class="text-lg font-semibold text-white glass-text-shadow"><%= @anti_habit.user.name.first %></span>
-        </div>
-        <div>
-          <h3 class="font-semibold text-white glass-text-shadow"><%= @anti_habit.user.name %></h3>
-        </div>
-      </div>
-      
-      <!-- 本人マーク -->
-      <% if current_user == @anti_habit.user %>
-        <span class="bg-blue-500/30 border border-blue-300/50 text-blue-100 text-xs font-medium px-3 py-1 rounded-full backdrop-blur-sm">
-          あなたの投稿
-        </span>
-      <% end %>
-    </div>
-
-    <!-- タイトル -->
-    <h1 class="text-2xl font-bold text-white mb-4 leading-tight text-shadow">
-      <%= @anti_habit.title %>
-      ：連続で<%= @anti_habit.consecutive_days_achieved %>日達成！！
-    </h1>
-
-    <!-- 説明 -->
-    <div class="prose prose-sm max-w-none mb-6">
-      <p class="text-white/90 leading-relaxed whitespace-pre-wrap glass-text-shadow"><%= @anti_habit.description %></p>
-    </div>
-
-    <!-- タグ -->
-    <% if @anti_habit.tags.any? %>
-      <div class="mb-6">
-        <div class="flex flex-wrap gap-2">
-          <% @anti_habit.tags.each do |tag| %>
-            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-purple-500/30 border border-purple-300/50 text-purple-100 backdrop-blur-sm">
-              #<%= tag.name %>
-            </span>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
-    <% if current_user&.own?(@anti_habit) %>
-      <!-- 記録トグル -->
-      <div class="mb-6">
-        <div class="text-center mb-4">
-          <span class="text-white glass-text-shadow font-medium text-lg">今日の記録：</span>
+  <div class="card bg-base-100 shadow-xl rounded-2xl border border-base-300 mb-8">
+    <div class="card-body p-8">
+      <!-- ユーザー情報 -->
+      <div class="flex items-center justify-between mb-6">
+        <div class="flex items-center">
+            <i class="fas fa-user text-lg mr-3"></i>
+            <div>
+              <h3 class="font-semibold text-lg"><%= @anti_habit.user.name %></h3>
+            </div>
         </div>
         
-        <div class="flex flex-col space-y-3">
-          <% if @today_record %>
-            <!-- 記録済みの状態 - 我慢できた状態を表示 -->
-            <div class="p-4 bg-green-500/20 rounded-xl border-2 border-green-400/30 backdrop-blur-sm">
-              <div class="flex items-center justify-center space-x-2 mb-3">
-                <span class="text-2xl">💪</span>
-                <span class="text-green-200 font-bold text-lg glass-text-shadow">我慢できた</span>
-              </div>
-              <%= button_to "記録を削除", anti_habit_record_path(@today_record), 
-                    method: :delete, 
-                    data: { turbo_confirm: "記録を削除しますか？" },
-                    class: "w-full glass-button bg-green-600/30 hover:bg-green-600/40 border border-green-400/40 px-4 py-2 text-green-100 hover:text-white transition-all duration-200 rounded-lg font-medium glass-text-shadow" %>
-            </div>
-          <% else %>
-            <!-- 我慢できたボタン -->
-            <div class="p-4 bg-green-500/10 hover:bg-green-500/20 rounded-xl border-2 border-green-400/20 hover:border-green-400/40 backdrop-blur-sm transition-all duration-200">
-              <%= button_to anti_habit_records_path, 
-                    params: { anti_habit_id: @anti_habit.id },
-                    class: "w-full bg-transparent border-none p-0 text-left" do %>
-                <div class="flex items-center justify-center space-x-2">
-                  <span class="text-2xl">💪</span>
-                  <span class="text-green-200 font-bold text-lg glass-text-shadow">我慢できた</span>
-                </div>
-              <% end %>
-            </div>
-          <% end %>
+        <!-- 本人マーク -->
+        <% if current_user == @anti_habit.user %>
+          <div class="badge badge-info">
+            あなたの投稿
+          </div>
+        <% end %>
+      </div>
+
+      <!-- タイトル -->
+      <div class="mb-6">
+        <h1 class="text-3xl font-bold mb-2">
+          <%= @anti_habit.title %>
+        </h1>
+        <div class="badge badge-success badge-lg">
+          連続<%= @anti_habit.consecutive_days_achieved %>日達成！
         </div>
       </div>
-      <div class="flex justify-end space-x-4">
-        <%= link_to "編集", edit_anti_habit_path(@anti_habit), class: "glass-button px-4 py-2 text-white hover:text-white/90 transition-colors no-underline glass-text-shadow" %>
-        <%= link_to "削除", anti_habit_path(@anti_habit), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "glass-button px-4 py-2 text-red-200 hover:text-red-100 transition-colors no-underline glass-text-shadow" %>
-      </div>
-    <% end %>
 
-    <% if user_signed_in? %>
-      <%= render "shared/reaction_button", anti_habit: @anti_habit %>
-    <% end %>
+      <!-- 説明 -->
+      <div class="mb-6">
+        <div class="prose max-w-none">
+          <p class="text-base-content/80 leading-relaxed whitespace-pre-wrap"><%= @anti_habit.description %></p>
+        </div>
+      </div>
+
+      <!-- タグ -->
+      <% if @anti_habit.tags.any? %>
+        <div class="mb-6">
+          <div class="flex flex-wrap gap-2">
+            <% @anti_habit.tags.each do |tag| %>
+              <div class="badge badge-outline badge-primary">
+                #<%= tag.name %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
+      <!-- 記録トグル（本人のみ） -->
+      <% if current_user&.own?(@anti_habit) %>
+        <div class="mb-6">
+          <div class="text-center mb-4">
+            <span class="text-lg font-medium">今日の記録：</span>
+          </div>
+          
+          <div class="flex flex-col space-y-4">
+            <% if @today_record %>
+              <!-- 記録済みの状態 -->
+              <div class="alert alert-success flex flex-col items-center justify-center text-center">
+                <div class="flex items-center space-x-2">
+                  <span class="text-2xl">💪</span>
+                  <span class="font-bold text-lg">我慢できた</span>
+                </div>
+                <%= button_to "記録を削除", anti_habit_record_path(@today_record), 
+                      method: :delete, 
+                      data: { turbo_confirm: "記録を削除しますか？" },
+                      class: "btn btn-neutral btn-sm mt-3" %>
+              </div>
+            <% else %>
+              <!-- 我慢できたボタン -->
+              <div class="card bg-success/10 border border-success/20 hover:bg-success/20 transition-colors cursor-pointer">
+                <%= button_to anti_habit_records_path, 
+                      params: { anti_habit_id: @anti_habit.id },
+                      class: "w-full bg-transparent border-none p-0" do %>
+                  <div class="card-body flex items-center justify-center p-6">
+                    <div class="flex items-center space-x-2">
+                      <span class="text-2xl">💪</span>
+                      <span class="font-bold text-lg text-success">我慢できた</span>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+        <!-- 編集・削除ボタン -->
+        <div class="card-actions justify-end">
+          <%= link_to "編集", edit_anti_habit_path(@anti_habit), class: "btn btn-outline btn-primary" %>
+          <%= link_to "削除", anti_habit_path(@anti_habit), 
+                data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, 
+                class: "btn btn-outline btn-error" %>
+        </div>
+      <% end %>
+
+      <!-- リアクションボタン -->
+      <% if user_signed_in? %>
+        <div class="mt-4">
+          <%= render "shared/reaction_button", anti_habit: @anti_habit %>
+        </div>
+      <% end %>
+    </div>
   </div>
 
   <!-- コメントセクション（ログイン時のみ表示） -->
   <% if user_signed_in? %>
-    <div class="mt-8">
-      <div class="glass-card p-6">
-        <h2 class="text-xl font-bold text-white mb-6 glass-text-shadow">
+    <div class="card bg-base-100 shadow-xl rounded-2xl border border-base-300">
+      <div class="card-body p-8">
+        <h2 class="card-title text-2xl mb-6">
           応援メッセージ
-          <span class="text-lg font-normal text-white/80">(<%= @comments.count %>件)</span>
+          <div class="badge badge-neutral">
+            <%= @comments.count %>件
+          </div>
         </h2>
 
         <!-- 新規コメントフォーム -->
@@ -108,13 +126,17 @@
           <% if @comments.any? %>
             <%= render @comments %>
           <% else %>
-            <div class="text-center py-8">
-              <p class="text-white/60 glass-text-shadow">
-                まだ応援メッセージはありません
-              </p>
-              <p class="text-white/60 glass-text-shadow text-sm mt-2">
-                最初の応援メッセージを投稿してみませんか？
-              </p>
+            <div class="hero min-h-32">
+              <div class="hero-content text-center">
+                <div>
+                  <p class="text-base-content/60 mb-2">
+                    まだ応援メッセージはありません
+                  </p>
+                  <p class="text-base-content/60 text-sm">
+                    最初の応援メッセージを投稿してみませんか？
+                  </p>
+                </div>
+              </div>
             </div>
           <% end %>
         </div>
