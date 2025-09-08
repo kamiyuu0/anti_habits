@@ -21,7 +21,7 @@ ja:
         user:
           attributes:
             password:
-              too_short: "パスワードは%{count}文字以上で入力してください"
+              too_short: "は%{count}文字以上で入力してください"
             password_confirmation:
               confirmation: "とパスワードの入力が一致しません"
   errors:
