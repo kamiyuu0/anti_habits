@@ -55,8 +55,8 @@ class AntiHabit < ApplicationRecord
     names = tag_names.split(",").map(&:strip).reject(&:blank?)
 
     names.each do |name|
-      if name.length > 20
-        errors.add(:tag_names, "「#{name}」は20文字以内で入力してください")
+      if name.length > 15
+        errors.add(:tag_names, "「#{name}」は15文字以内で入力してください")
       end
     end
   end
