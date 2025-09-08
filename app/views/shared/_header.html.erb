@@ -1,7 +1,9 @@
 <div class="navbar bg-base-100">
   <div class="navbar-start">
     <div class="btn btn-ghost text-xl cursor-default">
-      <span class="inline ml-2">Anti Habits</span>
+      <%= link_to (user_signed_in? ? anti_habits_path : root_path) do %>
+        <span class="inline ml-2">Anti Habits</span>
+      <% end %>
     </div>
   </div>
   
