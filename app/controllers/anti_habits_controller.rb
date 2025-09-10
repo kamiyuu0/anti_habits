@@ -2,7 +2,19 @@ class AntiHabitsController < ApplicationController
   before_action :authenticate_user!, except: [ :index, :show ]
 
   def index
-    @anti_habits = AntiHabit.all.includes(:user, :tags).order(created_at: :desc)
+    @tag_name = params[:tag].presence
+
+    @anti_habits =
+      if @tag_name
+        AntiHabit
+          .includes(:user, :tags)
+          .tagged_with(@tag_name)
+          .order(created_at: :desc)
+      else
+        AntiHabit
+          .includes(:user, :tags)
+          .order(created_at: :desc)
+      end
   end
 
   def new

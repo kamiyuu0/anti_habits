@@ -1,8 +1,17 @@
 <div class="container mx-auto px-4 py-6">
   <div class="mb-8">
-    <h1 class="text-4xl font-bold text-center mb-4">悪習慣一覧</h1>
+    <h1 class="text-4xl font-bold text-center mb-4">
+      悪習慣一覧<br class="sm:hidden"><%= @tag_name.presence ? " (#{@tag_name})" : "" %>
+    </h1>
+    <% if @tag_name.presence %>
+      <div class="mt-2 mb-2 text-center">
+        <%= link_to "タグフィルタを解除", anti_habits_path, class: "btn btn-sm" %>
+      </div>
+    <% end %>
     <p class="text-center text-base-content/70">みんなが克服したい悪習慣を見てみましょう</p>
   </div>
+
+
 
   <!-- 悪習慣一覧 -->
   <div class="space-y-6">

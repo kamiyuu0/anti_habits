@@ -37,7 +37,9 @@
         <div class="flex flex-wrap gap-2">
           <% anti_habit.tags.limit(3).each do |tag| %>
             <div class="badge badge-outline badge-primary">
-              #<%= tag.name %>
+              <%= link_to anti_habits_path(tag: tag.name) do %>
+                #<%= tag.name %>
+              <% end %>
             </div>
           <% end %>
           <% if anti_habit.tags.count > 3 %>

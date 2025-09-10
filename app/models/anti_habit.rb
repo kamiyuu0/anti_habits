@@ -10,6 +10,10 @@ class AntiHabit < ApplicationRecord
   validates :description, length: { maximum: 80 }
   validate :validate_tag_names
 
+  scope :tagged_with, ->(name) {
+    joins(:tags).where(tags: { name: name })
+  }
+
   attr_accessor :tag_names
 
   after_save :save_tags_without_validation
