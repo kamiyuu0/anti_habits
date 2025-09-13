@@ -34,6 +34,10 @@ class AntiHabitsController < ApplicationController
     @anti_habit = AntiHabit.includes(:tags).find(params[:id])
     @today_record = @anti_habit.today_record if current_user&.own?(@anti_habit)
     @comments = @anti_habit.comments.includes(:user).order(created_at: :desc)
+
+    # タグの設定
+    @url = "https://res.cloudinary.com/antihabits/image/upload/l_text:Sawarabi%20Gothic_50_solid:#{@anti_habit.title},co_rgb:333,w_500,c_fit/v1757602327/anti_habits_dynamic_ogp_zyyjyk.png"
+    set_meta_tags(og: { image: @url }, twitter: { image: @url })
   end
 
   def edit
