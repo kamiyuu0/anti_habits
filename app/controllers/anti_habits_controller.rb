@@ -35,8 +35,18 @@ class AntiHabitsController < ApplicationController
     @today_record = @anti_habit.today_record if current_user&.own?(@anti_habit)
     @comments = @anti_habit.comments.includes(:user).order(created_at: :desc)
 
+    # font sizeの計算
+    font_size = if @anti_habit.title.length > 15
+                  "25"
+    elsif @anti_habit.title.length > 10
+                  "30"
+    else
+                  "50"
+    end
+
+
     # タグの設定
-    @url = "https://res.cloudinary.com/antihabits/image/upload/l_text:Sawarabi%20Gothic_50_solid:#{@anti_habit.title},co_rgb:333,w_500,c_fit/v1757602327/anti_habits_dynamic_ogp_zyyjyk.png"
+    @url = "https://res.cloudinary.com/antihabits/image/upload/l_text:Sawarabi%20Gothic_#{font_size}_solid:#{@anti_habit.title},co_rgb:333,w_500,c_fit/v1757602327/anti_habits_dynamic_ogp_zyyjyk.png"
     set_meta_tags(og: { image: @url }, twitter: { image: @url })
   end
 
