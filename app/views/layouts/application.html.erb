@@ -21,6 +21,18 @@
     <%= display_meta_tags(default_meta_tags) %>
   </head>
 
+  <% if Rails.env.production? %>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7D7PDP4R2S"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-7D7PDP4R2S');
+    </script>
+  <% end %>
+
   <body class="">
     <%= render "shared/header" %>
     <main class="pb-16 min-h-screen bg-base-200">
