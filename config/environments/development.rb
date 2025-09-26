@@ -8,6 +8,9 @@ Rails.application.configure do
     Bullet.console       = true
     Bullet.rails_logger  = true
     Bullet.add_footer    = true
+
+    # タグのない悪習慣詳細ページでも使われないEager Loadingの警告を無視するように設定
+    Bullet.add_safelist type: :unused_eager_loading, class_name: "AntiHabit", association: :anti_habit_tags
   end
 
   # 開発環境でLINE認証を使用するための設定
