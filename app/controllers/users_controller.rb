@@ -6,6 +6,6 @@ class UsersController < ApplicationController
     end
 
     @user = current_user
-    @anti_habits = current_user.anti_habits.order(created_at: :desc)
+    @anti_habits = current_user.anti_habits.includes(:tags, :reactions, :comments).order(created_at: :desc)
   end
 end

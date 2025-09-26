@@ -50,6 +50,7 @@ gem "dotenv-rails"
 gem "omniauth", "~> 1.9.1"
 gem "line-bot-api"
 
+
 # OGP
 gem "meta-tags"
 
@@ -65,6 +66,8 @@ group :development, :test do
 
   gem "rspec-rails"
   gem "factory_bot_rails"
+
+  gem "bullet"
 end
 
 group :development do

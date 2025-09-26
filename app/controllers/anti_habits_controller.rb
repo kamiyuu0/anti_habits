@@ -7,12 +7,12 @@ class AntiHabitsController < ApplicationController
     @anti_habits =
       if @tag_name
         AntiHabit
-          .includes(:user, :tags)
+          .includes(:user, :tags, :reactions, :comments)
           .tagged_with(@tag_name)
           .order(created_at: :desc)
       else
         AntiHabit
-          .includes(:user, :tags)
+          .includes(:user, :tags, :reactions, :comments)
           .order(created_at: :desc)
       end
   end
