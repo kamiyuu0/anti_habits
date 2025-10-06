@@ -109,7 +109,7 @@
           <%= render "shared/reaction_button", anti_habit: @anti_habit %>
           <div class="flex items-center space-x-1">
             <i class="fas fa-comment"></i>
-            <%= @anti_habit.comments.size %>
+            <%= @anti_habit.comments_count %>
           </div>
         </div>
       <% end %>
@@ -123,7 +123,7 @@
         <h2 class="card-title text-2xl mb-6">
           応援メッセージ
           <div class="badge badge-neutral">
-            <%= @comments.count %>件
+            <%= @anti_habit.comments_count %>件
           </div>
         </h2>
 
