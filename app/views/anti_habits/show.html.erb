@@ -109,7 +109,7 @@
           <%= render "shared/reaction_button", anti_habit: @anti_habit %>
           <div class="flex items-center space-x-1">
             <i class="fas fa-comment"></i>
-            <%= @anti_habit.comments_count %>
+            <span id="comments-count"><%= @anti_habit.comments_count %></span>件
           </div>
         </div>
       <% end %>
@@ -123,33 +123,35 @@
         <h2 class="card-title text-2xl mb-6">
           応援メッセージ
           <div class="badge badge-neutral">
-            <%= @anti_habit.comments_count %>件
+            <span id="comments-count2"><%= @anti_habit.comments_count %></span>件
           </div>
         </h2>
 
         <!-- 新規コメントフォーム -->
         <div class="mb-6">
-          <%= render "comments/form" %>
+          <%= render "comments/form", comment: Comment.new, anti_habit: @anti_habit %>
         </div>
 
         <!-- 既存コメント一覧 -->
         <div class="space-y-4">
-          <% if @comments.any? %>
-            <%= render @comments %>
-          <% else %>
-            <div class="hero min-h-32">
-              <div class="hero-content text-center">
-                <div>
-                  <p class="text-base-content/60 mb-2">
-                    まだ応援メッセージはありません
-                  </p>
-                  <p class="text-base-content/60 text-sm">
-                    最初の応援メッセージを投稿してみませんか？
-                  </p>
+          <div id="comments-list">
+            <% if @comments.any? %>
+              <%= render @comments %>
+            <% else %>
+              <div class="hero min-h-32">
+                <div class="hero-content text-center">
+                  <div>
+                    <p class="text-base-content/60 mb-2">
+                      まだ応援メッセージはありません
+                    </p>
+                    <p class="text-base-content/60 text-sm">
+                      最初の応援メッセージを投稿してみませんか？
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          <% end %>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>

@@ -1,36 +1,38 @@
-<%= form_with model: [@anti_habit, @comment || Comment.new], local: true, class: "space-y-4" do |form| %>
-  <!-- エラーメッセージ -->
-  <% if @comment&.errors&.any? %>
-    <div class="alert alert-error flex items-center">
-      <i class="fas fa-exclamation-circle shrink-0 text-lg mr-3"></i>
-      <div>
-        <h3 class="font-bold">入力内容を確認してください</h3>
+<div id="comment-form">
+  <%= form_with model: [anti_habit, comment || Comment.new], local: false, class: "space-y-4" do |form| %>
+    <!-- エラーメッセージ -->
+    <% if comment&.errors&.any? %>
+      <div class="alert alert-error flex items-center">
+        <i class="fas fa-exclamation-circle shrink-0 text-lg mr-3"></i>
         <div>
-          <% @comment.errors.full_messages.each do |message| %>
-            <div><%= message %></div>
-          <% end %>
+          <h3 class="font-bold">入力内容を確認してください</h3>
+          <div>
+            <% comment.errors.full_messages.each do |message| %>
+              <div><%= message %></div>
+            <% end %>
+          </div>
         </div>
       </div>
+    <% end %>
+
+    <!-- コメント入力 -->
+    <div class="form-control">
+      <div class="label">
+        <span class="label-text">応援メッセージ</span>
+      </div>
+      <%= form.text_area :body, 
+          rows: 4,
+          class: "textarea textarea-bordered w-full",
+          placeholder: "頑張っていますね！応援しています！",
+          maxlength: 500 %>
+      <div class="label">
+        <span class="label-text-alt">最大500文字</span>
+      </div>
+    </div>
+
+    <!-- 送信ボタン -->
+    <div class="form-control">
+      <%= form.submit "応援メッセージを送る", class: "btn btn-success" %>
     </div>
   <% end %>
-
-  <!-- コメント入力 -->
-  <div class="form-control">
-    <div class="label">
-      <span class="label-text">応援メッセージ</span>
-    </div>
-    <%= form.text_area :body, 
-        rows: 4,
-        class: "textarea textarea-bordered w-full",
-        placeholder: "頑張っていますね！応援しています！",
-        maxlength: 500 %>
-    <div class="label">
-      <span class="label-text-alt">最大500文字</span>
-    </div>
-  </div>
-
-  <!-- 送信ボタン -->
-  <div class="form-control">
-    <%= form.submit "応援メッセージを送る", class: "btn btn-success" %>
-  </div>
-<% end %>
+</div>
