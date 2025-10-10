@@ -1,0 +1,23 @@
+<% if @comment.errors.present? %>
+  <%# エラーメッセージを表示 %>
+  <%= turbo_stream.replace "comment-form" do %>
+    <%= render 'comments/form', comment: @comment, anti_habit: @comment.anti_habit %>
+  <% end %>
+<% else %>
+  <%# リストの一番上に追加 %>
+  <%= turbo_stream.prepend "comments-list" do %>
+    <%= render 'comments/comment', comment: @comment %>
+  <% end %>
+  <%# formを空で更新 %>
+  <%= turbo_stream.replace "comment-form" do %>
+    <%= render 'comments/form', comment: Comment.new, anti_habit: @comment.anti_habit %>
+  <% end %>
+  <%# コメント数を更新 %>
+  <%= turbo_stream.update "comments-count" do %>
+    <%= @comment.anti_habit.comments_count %>
+  <% end %>
+  <%# コメント数を更新 %>
+  <%= turbo_stream.update "comments-count2" do %>
+    <%= @comment.anti_habit.comments_count %>
+  <% end %>
+<% end %>
