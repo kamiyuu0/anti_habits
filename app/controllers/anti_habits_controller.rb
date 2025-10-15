@@ -10,10 +10,12 @@ class AntiHabitsController < ApplicationController
           .includes(:user, :tags, :reactions, :comments)
           .tagged_with(@tag_name)
           .order(created_at: :desc)
+          .page(params[:page])
       else
         AntiHabit
           .includes(:user, :tags, :reactions, :comments)
           .order(created_at: :desc)
+          .page(params[:page])
       end
   end
 
