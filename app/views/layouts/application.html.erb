@@ -34,7 +34,9 @@
   <% end %>
 
   <body class="">
-    <%= render "shared/header" %>
+    <div class="sticky lg:top-0 z-2">
+      <%= render 'shared/header' %>
+    </div>
     <main class="pb-16 min-h-screen bg-base-200">
       <%= render "shared/flash_messages" %>
       <%= yield %>
