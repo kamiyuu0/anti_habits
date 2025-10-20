@@ -10,13 +10,20 @@
               <h3 class="font-semibold text-lg"><%= @anti_habit.user.name %></h3>
             </div>
         </div>
-        
-        <!-- 本人マーク -->
-        <% if current_user == @anti_habit.user %>
-          <div class="badge badge-info text-[8px] sm:text-sm">
-            あなたの投稿
-          </div>
-        <% end %>
+
+        <!-- 本人マーク・非公開バッジ -->
+        <div class="flex gap-2">
+          <% if current_user == @anti_habit.user %>
+            <div class="badge badge-info text-[8px] sm:text-sm">
+              あなたの投稿
+            </div>
+            <% if !@anti_habit.is_public %>
+              <div class="badge badge-warning text-[8px] sm:text-sm">
+                非公開
+              </div>
+            <% end %>
+          <% end %>
+        </div>
       </div>
 
       <!-- タイトル -->
@@ -91,20 +98,22 @@
 
         <!-- 編集・削除ボタン -->
         <div class="card-actions justify-end">
-          <%= link_to "Xでシェアする",
-                      "https://twitter.com/intent/tweet?url=#{root_url}anti_habits/#{@anti_habit.id}&text=#{CGI.escape("Anti Habitsで悪習慣を登録！")}%0A#{CGI.escape("悪習慣を辞められるか監視してください！")}\n&hashtags=#{CGI.escape("AntiHabits")}",
-                      target: "_blank",
-                      rel: "noopener noreferrer",
-                      class: "btn btn-outline btn-neutral" %>
+          <% if @anti_habit.is_public %>
+            <%= link_to "Xでシェアする",
+                        "https://twitter.com/intent/tweet?url=#{root_url}anti_habits/#{@anti_habit.id}&text=#{CGI.escape("Anti Habitsで悪習慣を登録！")}%0A#{CGI.escape("悪習慣を辞められるか監視してください！")}\n&hashtags=#{CGI.escape("AntiHabits")}",
+                        target: "_blank",
+                        rel: "noopener noreferrer",
+                        class: "btn btn-outline btn-neutral" %>
+          <% end %>
           <%= link_to "編集", edit_anti_habit_path(@anti_habit), class: "btn btn-outline btn-primary" %>
-          <%= link_to "削除", anti_habit_path(@anti_habit), 
-                data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, 
+          <%= link_to "削除", anti_habit_path(@anti_habit),
+                data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" },
                 class: "btn btn-outline btn-error" %>
         </div>
       <% end %>
 
-      <!-- リアクションボタン -->
-      <% if user_signed_in? %>
+      <!-- リアクションボタン（公開時のみ表示） -->
+      <% if user_signed_in? && @anti_habit.is_public %>
         <div class="flex items-center mt-4 space-x-4">
           <%= render "shared/reaction_button", anti_habit: @anti_habit %>
           <div class="flex items-center space-x-1">
@@ -116,8 +125,8 @@
     </div>
   </div>
 
-  <!-- コメントセクション（ログイン時のみ表示） -->
-  <% if user_signed_in? %>
+  <!-- コメントセクション（公開かつログイン時のみ表示） -->
+  <% if user_signed_in? && @anti_habit.is_public %>
     <div class="card bg-base-100 shadow-xl rounded-2xl border border-base-300">
       <div class="card-body p-8">
         <h2 class="card-title text-2xl mb-6">
