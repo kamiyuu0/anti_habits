@@ -50,12 +50,23 @@
     <div class="label">
       <span class="label-text">タグ</span>
     </div>
-    <%= form.text_field :tag_names, 
+    <%= form.text_field :tag_names,
         class: "input input-bordered w-full",
         placeholder: "例：夜更かし, スマホ依存, SNS",
         value: anti_habit.tag_names %>
     <div class="label">
       <span class="label-text-alt whitespace-normal break-all">関連するキーワードをカンマ（,）区切りで入力してください</span>
+    </div>
+  </div>
+
+  <!-- 公開設定 -->
+  <div class="form-control">
+    <label class="label cursor-pointer justify-start gap-4">
+      <%= form.check_box :is_public, class: "checkbox checkbox-primary" %>
+      <span class="label-text">この悪習慣を公開する</span>
+    </label>
+    <div class="py-1">
+      <span class="text-s opacity-70 whitespace-normal break-all">チェックを外すと、あなただけが閲覧できる非公開の悪習慣になります</span>
     </div>
   </div>
 
