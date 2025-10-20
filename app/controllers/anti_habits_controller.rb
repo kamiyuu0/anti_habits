@@ -7,12 +7,14 @@ class AntiHabitsController < ApplicationController
     @anti_habits =
       if @tag_name
         AntiHabit
+          .publicly_visible
           .includes(:user, :tags, :reactions, :comments)
           .tagged_with(@tag_name)
           .order(created_at: :desc)
           .page(params[:page])
       else
         AntiHabit
+          .publicly_visible
           .includes(:user, :tags, :reactions, :comments)
           .order(created_at: :desc)
           .page(params[:page])
@@ -34,6 +36,12 @@ class AntiHabitsController < ApplicationController
 
   def show
     @anti_habit = AntiHabit.includes(:tags).find(params[:id])
+
+    unless @anti_habit.is_public || current_user&.own?(@anti_habit)
+      redirect_to anti_habits_path, alert: "このページにアクセスする権限がありません。"
+      return
+    end
+
     @today_record = @anti_habit.today_record if current_user&.own?(@anti_habit)
     @comments = @anti_habit.comments.includes(:user).order(created_at: :desc)
 
@@ -75,6 +83,6 @@ class AntiHabitsController < ApplicationController
   private
 
   def anti_habit_params
-    params.require(:anti_habit).permit(:title, :description, :tag_names)
+    params.require(:anti_habit).permit(:title, :description, :tag_names, :is_public)
   end
 end

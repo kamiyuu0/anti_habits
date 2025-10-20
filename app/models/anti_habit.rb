@@ -13,6 +13,7 @@ class AntiHabit < ApplicationRecord
   scope :tagged_with, ->(name) {
     joins(:tags).where(tags: { name: name })
   }
+  scope :publicly_visible, -> { where(is_public: true) }
 
   attr_accessor :tag_names
 

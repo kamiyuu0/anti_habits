@@ -8,6 +8,13 @@
             <span class="font-semibold"><%= anti_habit.user.name %></span>
           </div>
       </div>
+
+      <!-- 非公開バッジ（作成者本人のみ表示） -->
+      <% if current_user&.own?(anti_habit) && !anti_habit.is_public %>
+        <div class="badge badge-warning text-[8px] sm:text-sm">
+          非公開
+        </div>
+      <% end %>
     </div>
 
     <!-- タイトル -->
