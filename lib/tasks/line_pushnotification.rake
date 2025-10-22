@@ -6,7 +6,7 @@ namespace :line_pushnotification do
     )
 
     message = Line::Bot::V2::MessagingApi::TextMessage.new( # No need to pass `type: "text"`
-      text: "今日の悪習慣進捗を登録しましょう \n https://anti-habits.onrender.com/"
+      text: "今日の悪習慣進捗を登録しましょう \n https://anti-habits.com/"
     )
 
     User.all.each do |user|
