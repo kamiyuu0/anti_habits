@@ -1,6 +1,10 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
+
+    config.hosts << "www.anti-habits.com"
+  config.hosts << "anti-habits.com"
+  config.hosts << "anti-habits.onrender.com"
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
@@ -82,7 +86,7 @@ Rails.application.configure do
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
 
-  config.action_mailer.default_url_options = { host: "anti-habits.onrender.com", protocol: "https" }
+  config.action_mailer.default_url_options = { host: "anti-habits.com", protocol: "https" }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_options = { from: ENV["GMAIL_USERNAME"] }
   config.action_mailer.smtp_settings = {
