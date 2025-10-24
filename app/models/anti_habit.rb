@@ -85,6 +85,6 @@ class AntiHabit < ApplicationRecord
   end
 
   def self.ransackable_associations(auth_object = nil)
-    []
+    [ "tags" ]
   end
 end

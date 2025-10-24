@@ -20,6 +20,8 @@ class AntiHabitsController < ApplicationController
           .order(created_at: :desc)
           .page(params[:page])
       end
+
+    @all_tags = Tag.order(:name)
   end
 
   def new
