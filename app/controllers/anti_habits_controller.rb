@@ -3,17 +3,18 @@ class AntiHabitsController < ApplicationController
 
   def index
     @tag_name = params[:tag].presence
+    @q = AntiHabit.ransack(params[:q])
 
     @anti_habits =
       if @tag_name
-        AntiHabit
+        @q.result
           .publicly_visible
           .includes(:user, :tags, :reactions, :comments)
           .tagged_with(@tag_name)
           .order(created_at: :desc)
           .page(params[:page])
       else
-        AntiHabit
+        @q.result
           .publicly_visible
           .includes(:user, :tags, :reactions, :comments)
           .order(created_at: :desc)

@@ -11,6 +11,24 @@
     <p class="text-center text-base-content/70">みんなが克服したい悪習慣を見てみましょう</p>
   </div>
 
+  <!-- 検索フォーム -->
+  <div class="mb-6">
+    <%= search_form_for @q, url: anti_habits_path, method: :get, class: "max-w-2xl mx-auto" do |f| %>
+      <div class="join w-full">
+        <%= f.search_field :title_or_description_cont,
+            placeholder: "タイトルか説明文で検索...",
+            class: "input input-bordered join-item w-full",
+            value: params.dig(:q, :title_or_description_cont) %>
+        <%= f.submit "検索", class: "btn btn-primary join-item" %>
+      </div>
+      <% if params[:q].present? %>
+        <div class="mt-2 text-center">
+          <%= link_to "検索をクリア", anti_habits_path(tag: @tag_name), class: "btn btn-sm btn-ghost" %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+
 
 
   <!-- 悪習慣一覧 -->

@@ -79,4 +79,12 @@ class AntiHabit < ApplicationRecord
     tags_to_add = Tag.find_or_create_by_names(names)
     self.tags = tags_to_add
   end
+
+  def self.ransackable_attributes(auth_object = nil)
+    [ "title", "description" ]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    []
+  end
 end
