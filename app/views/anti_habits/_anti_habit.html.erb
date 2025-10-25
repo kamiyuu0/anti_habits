@@ -44,7 +44,7 @@
         <div class="flex flex-wrap gap-2">
           <% anti_habit.tags.first(3).each do |tag| %>
             <div class="badge badge-outline badge-primary">
-              <%= link_to anti_habits_path(tag: tag.name) do %>
+              <%= link_to anti_habits_path(q: { tags_name_in: tag.name }) do %>
                 #<%= tag.name %>
               <% end %>
             </div>

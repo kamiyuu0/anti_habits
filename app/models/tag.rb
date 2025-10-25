@@ -9,4 +9,10 @@ class Tag < ApplicationRecord
   def self.find_or_create_by_names(names)
     names.map { |name| find_or_create_by(name: name.strip) if name.strip.present? }.compact
   end
+
+  private
+
+  def self.ransackable_attributes(auth_object = nil)
+    [ "name" ]
+  end
 end

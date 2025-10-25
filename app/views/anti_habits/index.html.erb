@@ -1,14 +1,36 @@
 <div class="container mx-auto px-4 py-6">
   <div class="mb-8">
-    <h1 class="text-4xl font-bold text-center mb-4">
-      悪習慣一覧<br class="sm:hidden"><%= @tag_name.presence ? " (#{@tag_name})" : "" %>
-    </h1>
-    <% if @tag_name.presence %>
-      <div class="mt-2 mb-2 text-center">
-        <%= link_to "タグフィルタを解除", anti_habits_path, class: "btn btn-sm" %>
-      </div>
-    <% end %>
+    <h1 class="text-4xl font-bold text-center mb-4">悪習慣一覧</h1>
     <p class="text-center text-base-content/70">みんなが克服したい悪習慣を見てみましょう</p>
+  </div>
+
+  <!-- 検索フォーム -->
+  <div class="mb-6">
+    <div class="card bg-base-100 shadow-lg">
+      <div class="card-body">
+        <%= search_form_for @q, url: anti_habits_path, method: :get, class: "space-y-4" do |f| %>
+          <div class="join w-full">
+            <%= f.search_field :title_or_description_cont,
+                placeholder: "タイトルか説明文で検索...",
+                class: "input input-bordered join-item w-full",
+                value: params.dig(:q, :title_or_description_cont) %>
+            <%= f.submit "検索", class: "btn btn-primary join-item" %>
+          </div>
+          <div class="mt-4">
+            <%= f.label :tags_name_in, "タグで絞り込み", class: "label-text mb-2 block" %>
+            <%= f.select :tags_name_in, 
+                        options_for_select([["指定なし", ""]] + @all_tags.map { |tag| [tag.name, tag.name] }, params.dig(:q, :tags_name_in)), 
+                        { include_blank: false },
+                        { class: "select select-bordered w-full" } %>
+          </div>
+          <% if params[:q].present? %>
+            <div class="mt-2 text-center">
+              <%= link_to "検索をクリア", anti_habits_path, class: "btn btn-sm btn-ghost" %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
   </div>
 
 
@@ -30,9 +52,19 @@
               </svg>
             </div>
             <h3 class="text-2xl font-bold mb-4">
-              まだ悪習慣が投稿されていません
+              <% if params[:q].present? %>
+                検索結果が見つかりませんでした
+              <% else %>
+                まだ悪習慣が投稿されていません
+              <% end %>
             </h3>
-            <p class="mb-6">最初の悪習慣を登録して、目標達成への第一歩を踏み出しましょう</p>
+            <p class="mb-6">
+              <% if params[:q].present? %>
+                検索条件を変更して再度お試しください
+              <% else %>
+                最初の悪習慣を登録して、目標達成への第一歩を踏み出しましょう
+              <% end %>
+            </p>
           </div>
         </div>
       </div>

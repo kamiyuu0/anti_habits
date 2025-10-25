@@ -2,23 +2,15 @@ class AntiHabitsController < ApplicationController
   before_action :authenticate_user!, except: [ :index, :show ]
 
   def index
-    @tag_name = params[:tag].presence
+    @q = AntiHabit.ransack(params[:q])
 
-    @anti_habits =
-      if @tag_name
-        AntiHabit
-          .publicly_visible
-          .includes(:user, :tags, :reactions, :comments)
-          .tagged_with(@tag_name)
-          .order(created_at: :desc)
-          .page(params[:page])
-      else
-        AntiHabit
-          .publicly_visible
-          .includes(:user, :tags, :reactions, :comments)
-          .order(created_at: :desc)
-          .page(params[:page])
-      end
+    @anti_habits = @q.result
+      .publicly_visible
+      .includes(:user, :tags, :reactions, :comments)
+      .order(created_at: :desc)
+      .page(params[:page])
+
+    @all_tags = Tag.order(:name)
   end
 
   def new
