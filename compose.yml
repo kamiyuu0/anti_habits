@@ -14,6 +14,19 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+  redis:
+    image: redis:7-alpine
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    healthcheck:  # 追加
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
   web:
     build:
       context: .
@@ -27,12 +40,32 @@ services:
       - node_modules:/myapp/node_modules
     environment:
       TZ: Asia/Tokyo
+      REDIS_URL: redis://redis:6379/0
     ports:
       - "3000:3000"
     depends_on:
       db:
         condition: service_healthy
+      redis:
+        condition: service_started
+  sidekiq:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: bash -c "bundle install && bundle exec sidekiq"
+    volumes:
+      - .:/myapp
+      - bundle_data:/usr/local/bundle:cached
+    environment:
+      TZ: Asia/Tokyo
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
 volumes:
   bundle_data:
   postgresql_data:
   node_modules:
+  redis_data:
