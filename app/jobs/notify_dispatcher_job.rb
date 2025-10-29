@@ -17,10 +17,8 @@ class NotifyDispatcherJob < ApplicationJob
       anti_habit.today_record.nil?
     end
 
-    target_users = User.where(id: target_anti_habits.pluck(:user_id).uniq, provider: "line")
-
-    target_users.find_each do |user|
-      NotifyLineJob.perform_later(user.id)
+    target_anti_habits.find_each do |anti_habit|
+      NotifyLineJob.perform_later(anti_habit.user_id, anti_habit.id)
     end
   end
 end
