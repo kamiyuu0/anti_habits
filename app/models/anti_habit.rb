@@ -5,6 +5,7 @@ class AntiHabit < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :anti_habit_tags, dependent: :destroy
   has_many :tags, through: :anti_habit_tags
+  has_one :notification_setting, dependent: :destroy
 
   validates :title, presence: true, length: { maximum: 20 }
   validates :description, length: { maximum: 80 }
