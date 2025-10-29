@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_10_28_132101) do
+ActiveRecord::Schema[7.2].define(version: 2025_10_29_073431) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -60,6 +60,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_28_132101) do
     t.bigint "anti_habit_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "notification_enabled", default: false
     t.index ["anti_habit_id"], name: "index_notification_settings_on_anti_habit_id"
   end
 
