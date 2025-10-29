@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   resources :anti_habits do
     resources :comments, only: %i[ create ]
+    resource :notification_setting, only: %i[ new create edit update ]
   end
   resources :anti_habit_records, only: %i[ create destroy ]
   resources :reactions, only: %i[ create destroy ]
