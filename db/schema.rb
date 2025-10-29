@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_10_19_143858) do
+ActiveRecord::Schema[7.2].define(version: 2025_10_29_073431) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -53,6 +53,17 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_19_143858) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
+  create_table "notification_settings", force: :cascade do |t|
+    t.time "notification_time"
+    t.boolean "notify_on_reaction"
+    t.boolean "notify_on_comment"
+    t.bigint "anti_habit_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "notification_enabled", default: false
+    t.index ["anti_habit_id"], name: "index_notification_settings_on_anti_habit_id"
+  end
+
   create_table "reactions", force: :cascade do |t|
     t.integer "reaction_kind", default: 0
     t.bigint "anti_habit_id", null: false
@@ -91,6 +102,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_19_143858) do
   add_foreign_key "anti_habits", "users"
   add_foreign_key "comments", "anti_habits"
   add_foreign_key "comments", "users"
+  add_foreign_key "notification_settings", "anti_habits"
   add_foreign_key "reactions", "anti_habits"
   add_foreign_key "reactions", "users"
 end
