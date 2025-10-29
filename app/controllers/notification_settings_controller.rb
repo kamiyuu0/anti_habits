@@ -34,6 +34,6 @@ class NotificationSettingsController < ApplicationController
   private
 
   def notification_setting_params
-    params.require(:notification_setting).permit(:notification_time, :notify_on_reaction, :notify_on_comment)
+    params.require(:notification_setting).permit(:notification_time, :notification_enabled, :notify_on_reaction, :notify_on_comment)
   end
 end
