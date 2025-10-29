@@ -98,6 +98,26 @@
 
         <!-- 編集・削除ボタン -->
         <div class="card-actions justify-end">
+          <%# マジックナンバー後で修正 %>
+          <% if current_user.provider == "line" %>
+            <%= link_to "LINE通知設定", @anti_habit.notification_setting.present? ? edit_anti_habit_notification_setting_path(@anti_habit) : new_anti_habit_notification_setting_path(@anti_habit), class: "btn btn-outline btn-primary" %>
+          <% else %>
+            <!-- Open the modal using ID.showModal() method -->
+            <button class="btn btn-outline btn-primary" onclick="my_modal_2.showModal()">LINE通知設定</button>
+            <dialog id="my_modal_2" class="modal">
+              <div class="modal-box">
+                <p class="py-4">LINE通知にするにはLINE認証してください。</p>
+                <%= button_to "LINEで認証",
+                  user_line_omniauth_authorize_path,
+                  method: :post,
+                  class: "btn btn-success btn-sm w-full",
+                  data: { turbo: false } %>
+              </div>
+              <form method="dialog" class="modal-backdrop">
+                <button></button>
+              </form>
+            </dialog>
+          <% end %>
           <% if @anti_habit.is_public %>
             <%= link_to "Xでシェアする",
                         "https://twitter.com/intent/tweet?url=#{root_url}anti_habits/#{@anti_habit.id}&text=#{CGI.escape("Anti Habitsで悪習慣を登録！")}%0A#{CGI.escape("悪習慣を辞められるか監視してください！")}\n&hashtags=#{CGI.escape("AntiHabits")}",
