@@ -2,8 +2,8 @@ class NotifyDispatcherJob < ApplicationJob
   queue_as :default
 
   def perform
-    now = Time.current.in_time_zone("Asia/Tokyo").change(sec: 0)
-    target_time = Time.parse("2000-01-01 #{now.strftime('%H:%M')}:00") #pgのtime型のデフォルト年月日は2000-01-01
+    now = Time.current.utc.change(sec: 0)
+    target_time = Time.parse("2000-01-01 #{now.strftime('%H:%M')}:00") # pgのtime型のデフォルト年月日は2000-01-01
 
     #TODO:リファクタリング
     target_anti_habits = AntiHabit.joins(:notification_setting)
