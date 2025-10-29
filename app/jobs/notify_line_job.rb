@@ -13,7 +13,7 @@ class NotifyLineJob < ApplicationJob
 
   private
 
-  #TODO:リファクタリング
+  # TODO:リファクタリング
   def line_notification(uid)
     require "line/bot"
     client = Line::Bot::V2::MessagingApi::ApiClient.new(
