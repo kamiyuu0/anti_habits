@@ -17,7 +17,7 @@ class NotifyDispatcherJob < ApplicationJob
       anti_habit.today_record.nil?
     end
 
-    target_anti_habits.find_each do |anti_habit|
+    target_anti_habits.each do |anti_habit|
       NotifyLineJob.perform_later(anti_habit.user_id, anti_habit.id)
     end
   end
