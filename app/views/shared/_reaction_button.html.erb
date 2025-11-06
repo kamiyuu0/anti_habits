@@ -15,3 +15,9 @@
 <% else %>
   <%= render "shared/reaction_zen", anti_habit: anti_habit %>
 <% end %>
+
+<% if current_user.reaction?(anti_habit, :fire) %>
+  <%= render "shared/unreaction_fire", anti_habit: anti_habit %>
+<% else %>
+  <%= render "shared/reaction_fire", anti_habit: anti_habit %>
+<% end %>
