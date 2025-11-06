@@ -1,4 +1,0 @@
-<%= link_to reactions_path(anti_habit_id: anti_habit.id), id: "reaction-button-for-anti_habit-#{anti_habit.id}", data: { turbo_method: :post }, class: "badge badge-dash badge-base" do %>
-  👀
-  <%= anti_habit.reactions.size %>
-<% end %>

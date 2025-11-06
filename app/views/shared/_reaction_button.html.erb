@@ -1,5 +1,5 @@
-<% if current_user.reaction?(anti_habit) %>
-  <%= render "shared/unreaction", anti_habit: anti_habit %>
+<% if current_user.reaction?(anti_habit, :watching) %>
+  <%= render "shared/unreaction_watching", anti_habit: anti_habit %>
 <% else %>
-  <%= render "shared/reaction", anti_habit: anti_habit %>
+  <%= render "shared/reaction_watching", anti_habit: anti_habit %>
 <% end %>

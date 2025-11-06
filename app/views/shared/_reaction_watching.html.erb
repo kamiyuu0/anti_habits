@@ -1,0 +1,7 @@
+<%= form_with url: anti_habit_reactions_path(anti_habit), method: :post, id: "reaction-watching-form-for-anti_habit-#{anti_habit.id}", class: "inline", data: { turbo_stream: true } do |form| %>
+  <%= form.hidden_field "reaction[reaction_kind]", value: :watching %>
+  <%= button_tag type: "submit", class: "badge badge-dash badge-base" do %>
+    👀
+    <%= anti_habit.reactions.watching.size %>
+  <% end %>
+<% end %>
