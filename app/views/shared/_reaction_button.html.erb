@@ -3,3 +3,9 @@
 <% else %>
   <%= render "shared/reaction_watching", anti_habit: anti_habit %>
 <% end %>
+
+<% if current_user.reaction?(anti_habit, :fighting) %>
+  <%= render "shared/unreaction_fighting", anti_habit: anti_habit %>
+<% else %>
+  <%= render "shared/reaction_fighting", anti_habit: anti_habit %>
+<% end %>

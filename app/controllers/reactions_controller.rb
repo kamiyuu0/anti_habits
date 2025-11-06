@@ -4,7 +4,11 @@ class ReactionsController < ApplicationController
     @anti_habit = AntiHabit.find(params[:anti_habit_id])
     current_user.reaction(@anti_habit, reaction_params[:reaction_kind])
     respond_to do |format|
-      format.turbo_stream { render "create_watching" }
+      if reaction_params[:reaction_kind] == "watching"
+        format.turbo_stream { render "create_watching" }
+      elsif reaction_params[:reaction_kind] == "fighting"
+        format.turbo_stream { render "create_fighting" }
+      end
     end
   end
 
@@ -12,7 +16,11 @@ class ReactionsController < ApplicationController
     @anti_habit = AntiHabit.find(params[:anti_habit_id])
     current_user.unreaction(@anti_habit, reaction_params[:reaction_kind])
     respond_to do |format|
-      format.turbo_stream { render "destroy_watching" }
+      if reaction_params[:reaction_kind] == "watching"
+        format.turbo_stream { render "destroy_watching" }
+      elsif reaction_params[:reaction_kind] == "fighting"
+        format.turbo_stream { render "destroy_fighting" }
+      end
     end
   end
 
