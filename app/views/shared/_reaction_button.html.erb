@@ -1,5 +1,23 @@
-<% if current_user.reaction?(anti_habit) %>
-  <%= render "shared/unreaction", anti_habit: anti_habit %>
+<% if current_user.reaction?(anti_habit, :watching) %>
+  <%= render "shared/unreaction_watching", anti_habit: anti_habit %>
 <% else %>
-  <%= render "shared/reaction", anti_habit: anti_habit %>
+  <%= render "shared/reaction_watching", anti_habit: anti_habit %>
+<% end %>
+
+<% if current_user.reaction?(anti_habit, :fighting) %>
+  <%= render "shared/unreaction_fighting", anti_habit: anti_habit %>
+<% else %>
+  <%= render "shared/reaction_fighting", anti_habit: anti_habit %>
+<% end %>
+
+<% if current_user.reaction?(anti_habit, :zen) %>
+  <%= render "shared/unreaction_zen", anti_habit: anti_habit %>
+<% else %>
+  <%= render "shared/reaction_zen", anti_habit: anti_habit %>
+<% end %>
+
+<% if current_user.reaction?(anti_habit, :fire) %>
+  <%= render "shared/unreaction_fire", anti_habit: anti_habit %>
+<% else %>
+  <%= render "shared/reaction_fire", anti_habit: anti_habit %>
 <% end %>
