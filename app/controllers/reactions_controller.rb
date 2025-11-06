@@ -8,6 +8,8 @@ class ReactionsController < ApplicationController
         format.turbo_stream { render "create_watching" }
       elsif reaction_params[:reaction_kind] == "fighting"
         format.turbo_stream { render "create_fighting" }
+      elsif reaction_params[:reaction_kind] == "zen"
+        format.turbo_stream { render "create_zen" }
       end
     end
   end
@@ -20,6 +22,8 @@ class ReactionsController < ApplicationController
         format.turbo_stream { render "destroy_watching" }
       elsif reaction_params[:reaction_kind] == "fighting"
         format.turbo_stream { render "destroy_fighting" }
+      elsif reaction_params[:reaction_kind] == "zen"
+        format.turbo_stream { render "destroy_zen" }
       end
     end
   end
