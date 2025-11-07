@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   }
 
   root "static_pages#top"
+  get "terms" => "static_pages#terms"
 
   resources :anti_habits do
     resources :comments, only: %i[ create ]
