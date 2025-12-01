@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   end
   resources :anti_habit_records, only: %i[ create destroy ]
   resources :users, only: %i[ show ]
+  get "tags", to: "tags#index"
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
