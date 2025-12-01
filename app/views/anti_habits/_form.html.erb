@@ -46,7 +46,10 @@
   </div>
 
   <!-- タグ -->
-  <div class="form-control">
+  <div class="form-control" 
+       data-controller="tagify"
+       data-tagify-tags-url-value="<%= tags_path %>"
+       data-tagify-initial-value-value="<%= anti_habit.tag_names %>">
     <div class="label">
       <span class="label-text">タグ</span>
     </div>
@@ -55,7 +58,7 @@
         placeholder: "例：夜更かし, スマホ依存, SNS",
         value: anti_habit.tag_names %>
     <div class="label">
-      <span class="label-text-alt whitespace-normal break-all">関連するキーワードをカンマ（,）区切りで入力してください</span>
+      <span class="label-text-alt whitespace-normal break-all">15文字以内の関連するキーワードを入力してください。既存のタグから選択することもできます。</span>
     </div>
   </div>
 
