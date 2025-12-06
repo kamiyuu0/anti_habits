@@ -1,5 +1,5 @@
 class AntiHabitsController < ApplicationController
-  before_action :authenticate_user!, except: [ :index, :show ]
+  before_action :authenticate_user!, except: [ :index, :show, :autocomplete ]
 
   def index
     @q = AntiHabit.ransack(params[:q])
@@ -11,6 +11,19 @@ class AntiHabitsController < ApplicationController
       .page(params[:page])
 
     @all_tags = Tag.order(:name)
+  end
+
+  def autocomplete
+    query = params[:q].to_s.strip
+    @anti_habits = if query.present?
+      AntiHabit.ransack(title_cont: query).result
+        .publicly_visible
+        .limit(10)
+        .order(created_at: :desc)
+    else
+      AntiHabit.none
+    end
+    render partial: "autocomplete_result", layout: false
   end
 
   def new

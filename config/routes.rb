@@ -10,6 +10,9 @@ Rails.application.routes.draw do
   get "privacy" => "static_pages#privacy"
 
   resources :anti_habits do
+    collection do
+      get :autocomplete
+    end
     resources :comments, only: %i[ create ]
     resource :notification_setting, only: %i[ new create edit update ]
     resources :reactions, only: %i[ create destroy ]
