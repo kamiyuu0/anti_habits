@@ -9,12 +9,27 @@
     <div class="card bg-base-100 shadow-lg">
       <div class="card-body">
         <%= search_form_for @q, url: anti_habits_path, method: :get, class: "space-y-4" do |f| %>
-          <div class="join w-full">
-            <%= f.search_field :title_or_description_cont,
-                placeholder: "タイトルか説明文で検索...",
-                class: "input input-bordered join-item w-full",
-                value: params.dig(:q, :title_or_description_cont) %>
-            <%= f.submit "検索", class: "btn btn-primary join-item" %>
+          <div class="relative" 
+               data-controller="autocomplete" 
+               data-autocomplete-url-value="<%= autocomplete_anti_habits_path %>" 
+               data-autocomplete-min-length-value="1" 
+               role="combobox">
+            <div class="join w-full">
+              <%= f.search_field :title_or_description_cont,
+                  placeholder: "タイトルか説明文で検索...",
+                  class: "input input-bordered join-item w-full",
+                  value: params.dig(:q, :title_or_description_cont),
+                  data: { 
+                    autocomplete_target: "input",
+                    action: "input->autocomplete#onInput keydown->autocomplete#onKeydown blur->autocomplete#onBlur"
+                  },
+                  autocomplete: "off" %>
+              <%= f.submit "検索", class: "btn btn-primary join-item" %>
+            </div>
+            <ul class="list-group absolute z-10 w-full top-full mt-1 max-h-60 overflow-y-auto bg-base-100 shadow-lg rounded-lg border border-base-300" 
+                data-autocomplete-target="results" 
+                data-action="click->autocomplete#selectOption"
+                hidden></ul>
           </div>
           <div class="mt-4">
             <%= f.label :tags_name_in, "タグで絞り込み", class: "label-text mb-2 block" %>
