@@ -18,12 +18,49 @@ class AntiHabit < ApplicationRecord
 
   attr_accessor :tag_names
 
-  def self.top_consecutive_achievers(limit: 3)
-    publicly_visible
+  def self.top_consecutive_achievers_with_ranks
+    # 公開されている悪習慣で連続達成日数が1以上のものを取得
+    candidates = publicly_visible
       .includes(:user)
       .select { |anti_habit| anti_habit.consecutive_days_achieved > 0 }
-      .sort_by { |anti_habit| -anti_habit.consecutive_days_achieved }
-      .take(limit)
+
+    # 連続達成日数でグループ化し、降順でソート
+    grouped = candidates
+      .group_by(&:consecutive_days_achieved) # 連続達成日数とAntiHabit配列のハッシュ
+      .sort_by { |days, _| -days }
+
+    # 順位付きデータを作成
+    ranked_data = []
+    current_rank = 1
+
+    grouped.each do |days, anti_habits|
+      ranked_data << {
+        rank: current_rank,
+        consecutive_days: days,
+        anti_habits: anti_habits.sort_by { |ah| ah.created_at }
+      }
+      current_rank += anti_habits.size
+    end
+
+    # フィルタリングロジック
+    # 1位の人数をチェック
+    first_place_count = ranked_data.first&.dig(:anti_habits)&.size || 0
+
+    if first_place_count >= 3
+      # 1位が3名以上なら1位のみ表示
+      ranked_data.select { |data| data[:rank] == 1 }
+    else
+      # 1位が3名未満の場合、1位+2位の合計をチェック
+      first_two_count = ranked_data.take(2).sum { |data| data[:anti_habits].size }
+
+      if first_two_count >= 3
+        # 1位+2位が3名以上なら2位まで表示
+        ranked_data.select { |data| data[:rank] <= 2 }
+      else
+        # それ以外は3位まで表示
+        ranked_data.select { |data| data[:rank] <= 3 }
+      end
+    end
   end
 
   after_save :save_tags_without_validation
