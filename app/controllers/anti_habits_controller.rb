@@ -11,6 +11,7 @@ class AntiHabitsController < ApplicationController
       .page(params[:page])
 
     @all_tags = Tag.order(:name)
+    @top_consecutive_achievers = AntiHabit.top_consecutive_achievers(limit: 3)
   end
 
   def autocomplete

@@ -18,6 +18,14 @@ class AntiHabit < ApplicationRecord
 
   attr_accessor :tag_names
 
+  def self.top_consecutive_achievers(limit: 3)
+    publicly_visible
+      .includes(:user)
+      .select { |anti_habit| anti_habit.consecutive_days_achieved > 0 }
+      .sort_by { |anti_habit| -anti_habit.consecutive_days_achieved }
+      .take(limit)
+  end
+
   after_save :save_tags_without_validation
 
   def today_record
