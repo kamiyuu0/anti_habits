@@ -47,18 +47,18 @@ class AntiHabit < ApplicationRecord
     first_place_count = ranked_data.first&.dig(:anti_habits)&.size || 0
 
     if first_place_count >= 3
-      # 1位が3名以上なら1位のみ表示
-      ranked_data.select { |data| data[:rank] == 1 }
+      # 1位が3名以上なら1位のみ表示（インデックス0のみ）
+      ranked_data.take(1)
     else
       # 1位が3名未満の場合、1位+2位の合計をチェック
       first_two_count = ranked_data.take(2).sum { |data| data[:anti_habits].size }
 
       if first_two_count >= 3
-        # 1位+2位が3名以上なら2位まで表示
-        ranked_data.select { |data| data[:rank] <= 2 }
+        # 1位+2位が3名以上なら上位2つの順位グループを表示（インデックス0-1）
+        ranked_data.take(2)
       else
-        # それ以外は3位まで表示
-        ranked_data.select { |data| data[:rank] <= 3 }
+        # それ以外は上位3つの順位グループを表示（インデックス0-2）
+        ranked_data.take(3)
       end
     end
   end
