@@ -48,7 +48,55 @@
     </div>
   </div>
 
+  <!-- 連続達成ランキング -->
+  <% if @top_consecutive_achievers.present? %>
+    <div class="mb-8">
+      <div class="card bg-base-100 shadow-lg">
+        <div class="card-body">
+          <h2 class="card-title text-2xl mb-4">
+            🏆 連続達成ランキング TOP3
+          </h2>
+          <div class="space-y-4">
+            <% @top_consecutive_achievers.each do |rank_data| %>
+              <% rank_data[:anti_habits].each do |anti_habit| %>
+                <div class="flex items-center gap-4 p-4 bg-base-200 rounded-lg hover:bg-base-300 transition-colors">
+                  <!-- ランキング順位 -->
+                  <div class="flex-shrink-0">
+                    <% case rank_data[:rank] %>
+                    <% when 1 %>
+                      <span class="text-4xl">🥇</span>
+                    <% when 2 %>
+                      <span class="text-4xl">🥈</span>
+                    <% when 3 %>
+                      <span class="text-4xl">🥉</span>
+                    <% end %>
+                  </div>
 
+                  <!-- 悪習慣情報 -->
+                  <div class="flex-grow">
+                    <%= link_to anti_habit_path(anti_habit), class: "hover:underline" do %>
+                      <h3 class="font-bold text-lg"><%= anti_habit.title %></h3>
+                    <% end %>
+                    <p class="text-sm text-base-content/70">
+                      <%= anti_habit.user.name %>さん
+                    </p>
+                  </div>
+
+                  <!-- 連続達成日数 -->
+                  <div class="flex-shrink-0 text-right">
+                    <div class="stat-value text-3xl text-primary">
+                      <%= anti_habit.consecutive_days_achieved %>
+                    </div>
+                    <div class="stat-desc">日連続</div>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
 
   <!-- 悪習慣一覧 -->
   <div class="space-y-6">
