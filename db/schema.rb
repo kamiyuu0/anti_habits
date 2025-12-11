@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_10_29_073431) do
+ActiveRecord::Schema[7.2].define(version: 2025_12_10_142250) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -40,6 +40,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_29_073431) do
     t.datetime "updated_at", null: false
     t.integer "comments_count", default: 0, null: false
     t.boolean "is_public", default: true, null: false
+    t.integer "goal_days"
+    t.boolean "goal_achieved", default: false, null: false
     t.index ["user_id"], name: "index_anti_habits_on_user_id"
   end
 

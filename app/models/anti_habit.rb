@@ -10,6 +10,13 @@ class AntiHabit < ApplicationRecord
   validates :title, presence: true, length: { maximum: 20 }
   validates :description, length: { maximum: 80 }
   validate :validate_tag_names
+  validates :goal_days,
+    numericality: {
+      only_integer: true,
+      greater_than_or_equal_to: 1,
+      less_than_or_equal_to: 365,
+      allow_nil: true
+    }
 
   scope :tagged_with, ->(name) {
     joins(:tags).where(tags: { name: name })
