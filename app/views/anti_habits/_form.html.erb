@@ -62,6 +62,21 @@
     </div>
   </div>
 
+  <!-- 目標達成日数 -->
+  <div class="form-control">
+    <div class="label">
+      <span class="label-text">目標達成日数（任意）</span>
+    </div>
+    <%= form.number_field :goal_days,
+        class: "input input-bordered w-full",
+        placeholder: "例：30",
+        min: 1,
+        max: 365 %>
+    <div class="label">
+      <span class="label-text-alt whitespace-normal break-all">達成したい連続日数を1〜365日の範囲で入力してください。未入力の場合は目標なしとして記録されます。</span>
+    </div>
+  </div>
+
   <!-- 公開設定 -->
   <div class="form-control">
     <label class="label cursor-pointer justify-start gap-4">
