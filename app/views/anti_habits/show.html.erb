@@ -31,8 +31,24 @@
         <h1 class="text-3xl font-bold mb-2">
           <%= @anti_habit.title %>
         </h1>
-        <div class="badge badge-success badge-lg">
-          連続<%= @anti_habit.consecutive_days_achieved %>日達成！
+
+        <div class="flex flex-wrap gap-2">
+          <div class="badge badge-success badge-lg">
+            連続<%= @anti_habit.consecutive_days_achieved %>日達成！
+          </div>
+
+          <% if @anti_habit.goal_days.present? %>
+            <div class="badge badge-outline badge-lg">
+              目標：<%= @anti_habit.goal_days %>日
+            </div>
+          <% end %>
+
+          <% if @anti_habit.goal_achieved? %>
+            <div class="badge badge-warning badge-lg flex items-center gap-1">
+              <i class="fas fa-trophy text-sm"></i>
+              目標達成
+            </div>
+          <% end %>
         </div>
       </div>
 
