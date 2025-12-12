@@ -24,10 +24,17 @@
           <%= anti_habit.title %>
         <% end %>
       </h3>
-      <div class="flex justify-start">
+      <div class="flex justify-start gap-2">
         <div class="badge badge-success badge-lg">
           連続<%= anti_habit.consecutive_days_achieved %>日達成！
         </div>
+
+        <% if anti_habit.goal_achieved? %>
+          <div class="badge badge-warning badge-lg flex items-center gap-1">
+            <i class="fas fa-trophy text-xs"></i>
+            目標達成
+          </div>
+        <% end %>
       </div>
     </div>
 

@@ -10,6 +10,13 @@ class AntiHabit < ApplicationRecord
   validates :title, presence: true, length: { maximum: 20 }
   validates :description, length: { maximum: 80 }
   validate :validate_tag_names
+  validates :goal_days,
+    numericality: {
+      only_integer: true,
+      greater_than_or_equal_to: 1,
+      less_than_or_equal_to: 365,
+      allow_nil: true
+    }
 
   scope :tagged_with, ->(name) {
     joins(:tags).where(tags: { name: name })
@@ -64,6 +71,7 @@ class AntiHabit < ApplicationRecord
   end
 
   after_save :save_tags_without_validation
+  after_save :check_and_update_goal_achievement
 
   def today_record
     anti_habit_records.find_by(recorded_on: Time.zone.today)
@@ -92,6 +100,12 @@ class AntiHabit < ApplicationRecord
     end
 
     count
+  end
+
+  # 目標達成済みかどうかを返す
+  def goal_reached?
+    return false if goal_days.nil?
+    consecutive_days_achieved >= goal_days
   end
 
   def tag_names_as_string
@@ -132,5 +146,21 @@ class AntiHabit < ApplicationRecord
 
   def self.ransackable_associations(auth_object = nil)
     [ "tags" ]
+  end
+
+  def check_and_update_goal_achievement
+    # 目標日数が変更された場合、達成フラグをリセット
+    if saved_change_to_goal_days?
+      update_column(:goal_achieved, false)
+    end
+
+    return if goal_days.nil?
+
+    # 常に最新の連続達成日数で判定し、フラグを更新
+    if goal_reached?
+      update_column(:goal_achieved, true)
+    else
+      update_column(:goal_achieved, false)
+    end
   end
 end

@@ -89,6 +89,6 @@ class AntiHabitsController < ApplicationController
   private
 
   def anti_habit_params
-    params.require(:anti_habit).permit(:title, :description, :tag_names, :is_public)
+    params.require(:anti_habit).permit(:title, :description, :tag_names, :is_public, :goal_days)
   end
 end
