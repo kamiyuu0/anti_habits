@@ -123,7 +123,7 @@ class AntiHabit < ApplicationRecord
     {
       data: (start_date..end_date).map do |date|
         count = recorded_dates.include?(date) ? 1 : 0
-        [date.to_s, count]
+        [ date.to_s, count ]
       end
     }
   end
