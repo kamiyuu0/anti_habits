@@ -51,6 +51,11 @@ class AntiHabitsController < ApplicationController
     @today_record = @anti_habit.today_record if current_user&.own?(@anti_habit)
     @comments = @anti_habit.comments.includes(:user).order(created_at: :desc)
 
+    # ヒートマップデータの生成（本人のみ）
+    if current_user&.own?(@anti_habit)
+      @calendar_data = @anti_habit.calendar_data(days: 90)
+    end
+
     # font sizeの計算
     font_size = if @anti_habit.title.length > 15
                   "25"

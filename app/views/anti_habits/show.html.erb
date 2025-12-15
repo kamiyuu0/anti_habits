@@ -52,6 +52,71 @@
         </div>
       </div>
 
+      <!-- ヒートマップセクション（本人のみ、PCのみ表示） -->
+      <% if current_user&.own?(@anti_habit) && @calendar_data.present? %>
+        <div class="mb-6 hidden md:block">
+          <div class="card bg-base-100 border border-base-300 rounded-lg">
+            <div class="card-body p-4 sm:p-6">
+              <h2 class="card-title text-lg sm:text-xl mb-4">
+                <i class="fas fa-calendar-check mr-2"></i>
+                活動記録（過去3ヶ月間）
+              </h2>
+              <%
+                start_date = (Time.zone.today - 89.days).to_s
+                end_date = Time.zone.today.to_s
+              %>
+              <%= calendar_chart @calendar_data,
+                height: '180px',
+                options: {
+                  tooltip: {
+                    position: 'top',
+                    formatter: RailsCharts.js("(params) => params.data[0]")
+                  },
+                  visualMap: {
+                    show: false,
+                    min: 0,
+                    max: 1,
+                    inRange: {
+                      color: ['#ebedf0', '#216e39']
+                    }
+                  },
+                  calendar: {
+                    top: 30,
+                    left: 'center',
+                    right: 10,
+                    cellSize: ['auto', 13],
+                    range: [start_date, end_date],
+                    itemStyle: {
+                      borderWidth: 3,
+                      borderColor: '#fff'
+                    },
+                    yearLabel: {
+                      show: false
+                    },
+                    monthLabel: {
+                      nameMap: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+                      fontSize: 10
+                    },
+                    dayLabel: {
+                      firstDay: 1,
+                      nameMap: ['日', '月', '火', '水', '木', '金', '土'],
+                      fontSize: 10
+                    },
+                    splitLine: {
+                      show: true,
+                      lineStyle: {
+                        color: '#f0f0f0',
+                        width: 1
+                      }
+                    }
+                  }
+                }
+              %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
       <!-- 説明 -->
       <div class="mb-6">
         <div class="prose max-w-none">

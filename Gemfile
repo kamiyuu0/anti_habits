@@ -53,6 +53,7 @@ gem "line-bot-api"
 
 # OGP
 gem "meta-tags"
+gem "rails_charts"
 
 # pagenation
 gem "kaminari"

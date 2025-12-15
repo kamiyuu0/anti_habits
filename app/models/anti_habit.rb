@@ -108,6 +108,26 @@ class AntiHabit < ApplicationRecord
     consecutive_days_achieved >= goal_days
   end
 
+  # ヒートマップ用のカレンダーデータを生成
+  def calendar_data(days: 90)
+    end_date = Time.zone.today
+    start_date = end_date - (days - 1).days
+
+    # 記録された日付を一括取得（N+1回避）
+    recorded_dates = anti_habit_records
+      .where(recorded_on: start_date..end_date)
+      .pluck(:recorded_on)
+      .to_set
+
+    # rails_charts用のデータ形式
+    {
+      data: (start_date..end_date).map do |date|
+        count = recorded_dates.include?(date) ? 1 : 0
+        [ date.to_s, count ]
+      end
+    }
+  end
+
   def tag_names_as_string
     tags.pluck(:name).join(", ")
   end
