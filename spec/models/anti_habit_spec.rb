@@ -238,4 +238,103 @@ RSpec.describe AntiHabit, type: :model do
       end
     end
   end
+
+  describe '#consecutive_days_achieved' do
+    let(:user) { create(:user) }
+    let(:anti_habit) { create(:anti_habit, user: user) }
+
+    context '記録がない場合' do
+      it '0を返す' do
+        expect(anti_habit.consecutive_days_achieved).to eq(0)
+      end
+    end
+
+    context '今日のみ記録がある場合' do
+      it '1を返す' do
+        travel_to Time.zone.today do
+          create(:anti_habit_record, anti_habit: anti_habit, recorded_on: Time.zone.today)
+          expect(anti_habit.consecutive_days_achieved).to eq(1)
+        end
+      end
+    end
+
+    context '昨日のみ記録がある場合' do
+      it '1を返す' do
+        travel_to Time.zone.today do
+          create(:anti_habit_record, anti_habit: anti_habit, recorded_on: Time.zone.yesterday)
+          expect(anti_habit.consecutive_days_achieved).to eq(1)
+        end
+      end
+    end
+
+    context '今日と昨日に連続記録がある場合' do
+      it '2を返す' do
+        travel_to Time.zone.today do
+          create(:anti_habit_record, anti_habit: anti_habit, recorded_on: Time.zone.today)
+          create(:anti_habit_record, anti_habit: anti_habit, recorded_on: Time.zone.yesterday)
+          expect(anti_habit.consecutive_days_achieved).to eq(2)
+        end
+      end
+    end
+
+    context '3日連続で記録がある場合' do
+      it '3を返す' do
+        travel_to Time.zone.today do
+          create(:anti_habit_record, anti_habit: anti_habit, recorded_on: Time.zone.today)
+          create(:anti_habit_record, anti_habit: anti_habit, recorded_on: Time.zone.yesterday)
+          create(:anti_habit_record, anti_habit: anti_habit, recorded_on: 2.days.ago)
+          expect(anti_habit.consecutive_days_achieved).to eq(3)
+        end
+      end
+    end
+
+    context '今日なし、昨日のみ記録がある場合' do
+      it '1を返す' do
+        travel_to Time.zone.today do
+          create(:anti_habit_record, anti_habit: anti_habit, recorded_on: Time.zone.yesterday)
+          expect(anti_habit.consecutive_days_achieved).to eq(1)
+        end
+      end
+    end
+
+    context '途中で途切れている場合' do
+      it '途切れる前までの日数を返す' do
+        travel_to Time.zone.today do
+          create(:anti_habit_record, anti_habit: anti_habit, recorded_on: Time.zone.today)
+          create(:anti_habit_record, anti_habit: anti_habit, recorded_on: Time.zone.yesterday)
+          # 2日前は記録なし（途切れている）
+          create(:anti_habit_record, anti_habit: anti_habit, recorded_on: 3.days.ago)
+          expect(anti_habit.consecutive_days_achieved).to eq(2)
+        end
+      end
+    end
+
+    context '一昨日まで連続、昨日なし、今日ありの場合' do
+      it '1を返す（連続が途切れている）' do
+        travel_to Time.zone.today do
+          create(:anti_habit_record, anti_habit: anti_habit, recorded_on: Time.zone.today)
+          # 昨日なし
+          create(:anti_habit_record, anti_habit: anti_habit, recorded_on: 2.days.ago)
+          expect(anti_habit.consecutive_days_achieved).to eq(1)
+        end
+      end
+    end
+
+    context '過去に長期連続、最近途切れた場合' do
+      it '最近の連続日数のみを返す' do
+        travel_to Time.zone.today do
+          # 最近の連続: 今日と昨日
+          create(:anti_habit_record, anti_habit: anti_habit, recorded_on: Time.zone.today)
+          create(:anti_habit_record, anti_habit: anti_habit, recorded_on: Time.zone.yesterday)
+          # 2日前なし（途切れている）
+          # 過去の長期連続
+          create(:anti_habit_record, anti_habit: anti_habit, recorded_on: 3.days.ago)
+          create(:anti_habit_record, anti_habit: anti_habit, recorded_on: 4.days.ago)
+          create(:anti_habit_record, anti_habit: anti_habit, recorded_on: 5.days.ago)
+          create(:anti_habit_record, anti_habit: anti_habit, recorded_on: 6.days.ago)
+          expect(anti_habit.consecutive_days_achieved).to eq(2)
+        end
+      end
+    end
+  end
 end
