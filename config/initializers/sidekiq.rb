@@ -19,6 +19,11 @@ end
 if File.exist?(Rails.root.join("config", "sidekiq.yml"))
   sidekiq_config = YAML.load_file(Rails.root.join("config", "sidekiq.yml"))
   if sidekiq_config[:cron]
-    Sidekiq::Cron::Job.load_from_hash sidekiq_config[:cron]
+    begin
+      Sidekiq::Cron::Job.load_from_hash sidekiq_config[:cron]
+    rescue RedisClient::CannotConnectError, Socket::ResolutionError => e
+      # CI環境など、Redisが利用できない場合はcronジョブの設定をスキップ
+      Rails.logger.warn("Redis connection failed during Sidekiq cron setup: #{e.message}")
+    end
   end
 end
