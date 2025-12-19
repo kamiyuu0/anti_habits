@@ -510,4 +510,152 @@ RSpec.describe AntiHabit, type: :model do
       end
     end
   end
+
+  describe 'callbacks' do
+    describe 'save_tags_without_validation' do
+      let(:user) { create(:user) }
+
+      context 'tag_namesが設定されている場合' do
+        it '保存後にタグが関連付けられる' do
+          anti_habit = create(:anti_habit, user: user)
+          anti_habit.tag_names = 'タグ1,タグ2,タグ3'
+          anti_habit.save
+
+          expect(anti_habit.tags.count).to eq(3)
+          expect(anti_habit.tags.pluck(:name)).to contain_exactly('タグ1', 'タグ2', 'タグ3')
+        end
+      end
+
+      context 'タグが既に存在する場合' do
+        it '新規作成せずに既存のタグを使用する' do
+          existing_tag = Tag.create!(name: '既存タグ')
+          initial_tag_count = Tag.count
+
+          anti_habit = create(:anti_habit, user: user)
+          anti_habit.tag_names = '既存タグ,新規タグ'
+          anti_habit.save
+
+          expect(Tag.count).to eq(initial_tag_count + 1) # 新規タグのみ追加
+          expect(anti_habit.tags).to include(existing_tag)
+        end
+      end
+
+      context '既存のタグ関連がある場合' do
+        it '更新時に既存のタグ関連を削除して新しいタグを設定する' do
+          tag1 = Tag.create!(name: 'タグ1')
+          anti_habit = create(:anti_habit, user: user, tags: [ tag1 ])
+
+          anti_habit.tag_names = 'タグ2,タグ3'
+          anti_habit.save
+
+          expect(anti_habit.tags.count).to eq(2)
+          expect(anti_habit.tags.pluck(:name)).to contain_exactly('タグ2', 'タグ3')
+          expect(anti_habit.tags).not_to include(tag1)
+        end
+      end
+
+      context 'tag_namesが空白を含む場合' do
+        it '空白をトリムして保存する' do
+          anti_habit = create(:anti_habit, user: user)
+          anti_habit.tag_names = ' タグ1 , タグ2 , タグ3 '
+          anti_habit.save
+
+          expect(anti_habit.tags.pluck(:name)).to contain_exactly('タグ1', 'タグ2', 'タグ3')
+        end
+      end
+
+      context 'tag_namesがnilの場合' do
+        it 'タグの関連付けを変更しない' do
+          tag = Tag.create!(name: 'タグ1')
+          anti_habit = create(:anti_habit, user: user, tags: [ tag ])
+          anti_habit.title = '新しいタイトル'
+          anti_habit.save
+
+          expect(anti_habit.tags).to include(tag)
+        end
+      end
+    end
+
+    describe 'check_and_update_goal_achievement' do
+      let(:user) { create(:user) }
+
+      context 'goal_daysが変更された場合' do
+        it 'goal_achievedがfalseにリセットされる' do
+          travel_to Time.zone.today do
+            anti_habit = create(:anti_habit, user: user, goal_days: 3)
+            3.times { |i| create(:anti_habit_record, anti_habit: anti_habit, recorded_on: i.days.ago) }
+            anti_habit.reload
+            expect(anti_habit.goal_achieved).to be true
+
+            # goal_daysを変更
+            anti_habit.update(goal_days: 5)
+            expect(anti_habit.goal_achieved).to be false
+          end
+        end
+      end
+
+      context '連続達成日数が目標に達している場合' do
+        it 'goal_achievedがtrueになる' do
+          travel_to Time.zone.today do
+            anti_habit = create(:anti_habit, user: user, goal_days: 3)
+            3.times { |i| create(:anti_habit_record, anti_habit: anti_habit, recorded_on: i.days.ago) }
+
+            anti_habit.save
+            anti_habit.reload
+            expect(anti_habit.goal_achieved).to be true
+          end
+        end
+      end
+
+      context '連続達成日数が目標に達していない場合' do
+        it 'goal_achievedがfalseになる' do
+          travel_to Time.zone.today do
+            anti_habit = create(:anti_habit, user: user, goal_days: 5)
+            2.times { |i| create(:anti_habit_record, anti_habit: anti_habit, recorded_on: i.days.ago) }
+
+            anti_habit.save
+            anti_habit.reload
+            expect(anti_habit.goal_achieved).to be false
+          end
+        end
+      end
+
+      context 'goal_daysがnilの場合' do
+        it 'goal_achievedの更新をスキップする' do
+          anti_habit = create(:anti_habit, user: user, goal_days: nil)
+          anti_habit.reload
+          # goal_daysがnilの場合は更新処理が行われない
+          expect(anti_habit.goal_achieved).to be false
+        end
+      end
+
+      context '目標達成後に記録を追加した場合' do
+        it 'goal_achievedがtrueのままになる' do
+          travel_to Time.zone.today do
+            anti_habit = create(:anti_habit, user: user, goal_days: 3)
+            5.times { |i| create(:anti_habit_record, anti_habit: anti_habit, recorded_on: i.days.ago) }
+
+            anti_habit.save
+            anti_habit.reload
+            expect(anti_habit.goal_achieved).to be true
+          end
+        end
+      end
+
+      context '目標達成後に連続が途切れた場合' do
+        it 'goal_achievedがfalseになる' do
+          travel_to Time.zone.today do
+            anti_habit = create(:anti_habit, user: user, goal_days: 3)
+            # 今日と昨日のみ記録（連続2日）
+            create(:anti_habit_record, anti_habit: anti_habit, recorded_on: Time.zone.today)
+            create(:anti_habit_record, anti_habit: anti_habit, recorded_on: Time.zone.yesterday)
+
+            anti_habit.save
+            anti_habit.reload
+            expect(anti_habit.goal_achieved).to be false
+          end
+        end
+      end
+    end
+  end
 end
