@@ -78,10 +78,13 @@ jobs:
       - name: Install Node dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Build assets
+      - name: Build CSS assets
         run: bin/rails tailwindcss:build
         env:
           RAILS_ENV: test
+
+      - name: Build JavaScript assets
+        run: yarn build
 
       - name: Run tests
         env:
