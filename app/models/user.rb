@@ -9,6 +9,8 @@ class User < ApplicationRecord
   has_many :reactions, dependent: :destroy
   has_many :reaction_anti_habits, through: :reactions, source: :anti_habit
   has_many :comments, dependent: :destroy
+  has_many :bookmarks, dependent: :destroy
+  has_many :bookmarked_anti_habits, through: :bookmarks, source: :anti_habit
 
   validates :name, presence: true, length: { maximum: 10 }, uniqueness: true
   validates :password, presence: true, length: { minimum: 6 }, on: :create
@@ -43,6 +45,25 @@ class User < ApplicationRecord
 
   def reaction?(anti_habit, reaction_kind)
     reactions.exists?(anti_habit: anti_habit, reaction_kind: reaction_kind)
+  end
+
+  def bookmark(anti_habit)
+    existing_bookmark = bookmarks.find_by(anti_habit: anti_habit)
+    return existing_bookmark if existing_bookmark
+
+    bookmarks.create!(anti_habit: anti_habit)
+  end
+
+  def unbookmark(anti_habit)
+    bookmarks.find_by(anti_habit: anti_habit)&.destroy
+  end
+
+  def bookmarked?(anti_habit)
+    bookmarks.exists?(anti_habit: anti_habit)
+  end
+
+  def can_bookmark?(anti_habit)
+    anti_habit.is_public? && !own?(anti_habit)
   end
 
   private

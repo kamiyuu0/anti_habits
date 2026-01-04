@@ -1,0 +1,5 @@
+<% if current_user.bookmarked?(anti_habit) %>
+  <%= render "shared/unbookmark", anti_habit: anti_habit %>
+<% else %>
+  <%= render "shared/bookmark", anti_habit: anti_habit %>
+<% end %>
