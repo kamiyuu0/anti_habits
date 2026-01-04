@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :reaction do
-    reaction_kind { 1 }
-    anti_habit { nil }
-    user { nil }
+    association :anti_habit
+    association :user
+    reaction_kind { :watching }
   end
 end

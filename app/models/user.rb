@@ -30,16 +30,19 @@ class User < ApplicationRecord
     id == object&.user_id
   end
 
-  def reaction(anti_habit)
-    reaction_anti_habits << anti_habit
+  def reaction(anti_habit, reaction_kind)
+    existing_reaction = reactions.find_by(anti_habit: anti_habit, reaction_kind: reaction_kind)
+    return existing_reaction if existing_reaction
+
+    reactions.create!(anti_habit: anti_habit, reaction_kind: reaction_kind)
   end
 
-  def unreaction(anti_habit)
-    reaction_anti_habits.destroy(anti_habit)
+  def unreaction(anti_habit, reaction_kind)
+    reactions.find_by(anti_habit: anti_habit, reaction_kind: reaction_kind)&.destroy
   end
 
-  def reaction?(anti_habit)
-    reaction_anti_habits.include?(anti_habit)
+  def reaction?(anti_habit, reaction_kind)
+    reactions.exists?(anti_habit: anti_habit, reaction_kind: reaction_kind)
   end
 
   private

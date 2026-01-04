@@ -50,8 +50,21 @@ gem "dotenv-rails"
 gem "omniauth", "~> 1.9.1"
 gem "line-bot-api"
 
+
 # OGP
 gem "meta-tags"
+gem "rails_charts"
+
+# pagenation
+gem "kaminari"
+
+# 検索
+gem "ransack"
+
+# 非同期まわり
+gem "redis", ">= 4.0.1"
+gem "sidekiq"
+gem "sidekiq-cron"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -65,6 +78,8 @@ group :development, :test do
 
   gem "rspec-rails"
   gem "factory_bot_rails"
+
+  gem "bullet"
 end
 
 group :development do
@@ -76,4 +91,8 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+  # Code coverage
+  gem "simplecov", require: false
+  # Test matchers
+  gem "shoulda-matchers", "~> 6.0"
 end

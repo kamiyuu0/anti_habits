@@ -1,40 +1,32 @@
 <% flash.each do |type, message| %>
   <% 
-    css_classes = case type.to_s
+    alert_class = case type.to_s
     when 'notice', 'success'
-      'bg-green-50 border-green-200 text-green-800'
+      'alert-success'
     when 'alert', 'error'
-      'bg-red-50 border-red-200 text-red-800'
+      'alert-error'
     when 'warning'
-      'bg-yellow-50 border-yellow-200 text-yellow-800'
+      'alert-warning'
     else
-      'bg-blue-50 border-blue-200 text-blue-800'
+      'alert-info'
     end
     
     icon_class = case type.to_s
     when 'notice', 'success'
-      'fas fa-check-circle text-green-500'
+      'fas fa-check-circle'
     when 'alert', 'error'
-      'fas fa-exclamation-circle text-red-500'
+      'fas fa-times-circle'
     when 'warning'
-      'fas fa-exclamation-triangle text-yellow-500'
+      'fas fa-exclamation-triangle'
     else
-      'fas fa-info-circle text-blue-500'
+      'fas fa-info-circle'
     end
   %>
   
-  <div class="flash-message mx-4 sm:mx-6 lg:mx-8 xl:mx-auto xl:max-w-4xl mb-4 mt-20" data-flash-type="<%= type %>">
-    <div class="<%= css_classes %> border rounded-lg p-3 sm:p-4 shadow-sm">
-      <div class="flex items-start">
-        <div class="flex-shrink-0">
-          <i class="<%= icon_class %> text-base sm:text-lg"></i>
-        </div>
-        <div class="ml-2 sm:ml-3 flex-1 min-w-0">
-          <p class="text-xs sm:text-sm font-medium break-words">
-            <%= message %>
-          </p>
-        </div>
+  <div class="container mx-auto px-4 py-2">
+      <div class="alert <%= alert_class %> shadow-lg flex items-center">
+        <i class="<%= icon_class %> shrink-0 text-lg mr-3"></i>
+        <span><%= message %></span>
       </div>
-    </div>
   </div>
 <% end %>

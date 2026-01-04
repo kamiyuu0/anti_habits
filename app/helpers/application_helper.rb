@@ -1,5 +1,5 @@
 module ApplicationHelper
-  def default_meta_tags
+  def default_meta_tags(url: "https://res.cloudinary.com/antihabits/image/upload/v1757773129/anti_habits_static_ogp_zg7q8j.png")
     {
       site: "Anti Habits",
       title: "Anti Habits",
@@ -13,12 +13,12 @@ module ApplicationHelper
         description: :description,
         type: "website",
         url: request.original_url,
-        image: image_url("Anti_Habits.png"),
+        image: url,
         locale: "ja-JP"
       },
         twitter: {
         card: "summary_large_image",
-        image: image_url("Anti_Habits.png")
+        image: url
       }
     }
   end

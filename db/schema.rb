@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_08_05_151122) do
+ActiveRecord::Schema[7.2].define(version: 2025_12_10_142250) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -38,6 +38,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_05_151122) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "comments_count", default: 0, null: false
+    t.boolean "is_public", default: true, null: false
+    t.integer "goal_days"
+    t.boolean "goal_achieved", default: false, null: false
     t.index ["user_id"], name: "index_anti_habits_on_user_id"
   end
 
@@ -49,6 +53,17 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_05_151122) do
     t.datetime "updated_at", null: false
     t.index ["anti_habit_id"], name: "index_comments_on_anti_habit_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "notification_settings", force: :cascade do |t|
+    t.time "notification_time"
+    t.boolean "notify_on_reaction"
+    t.boolean "notify_on_comment"
+    t.bigint "anti_habit_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "notification_enabled", default: false
+    t.index ["anti_habit_id"], name: "index_notification_settings_on_anti_habit_id"
   end
 
   create_table "reactions", force: :cascade do |t|
@@ -89,6 +104,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_05_151122) do
   add_foreign_key "anti_habits", "users"
   add_foreign_key "comments", "anti_habits"
   add_foreign_key "comments", "users"
+  add_foreign_key "notification_settings", "anti_habits"
   add_foreign_key "reactions", "anti_habits"
   add_foreign_key "reactions", "users"
 end
