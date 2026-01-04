@@ -1,22 +1,18 @@
-<div class="glass-card p-4 mb-3 overflow-hidden">
-  <!-- ユーザー情報 -->
-  <div class="flex items-start justify-between mb-3">
-    <div class="flex items-center min-w-0 flex-1">
-      <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center mr-3 border border-white/30 flex-shrink-0">
-        <span class="text-sm font-semibold text-white glass-text-shadow"><%= comment.user.name.first %></span>
+<div class="card bg-base-100 shadow-md mb-6">
+  <div class="card-body">
+    <!-- ユーザー情報 -->
+    <div class="flex items-center gap-3 mb-3">
+      <div class="flex items-center">
+                    <i class="fas fa-user text-lg mr-3"></i>
       </div>
-      <div class="min-w-0 flex-1">
-        <h4 class="font-medium text-white glass-text-shadow truncate"><%= comment.user.name %></h4>
+      <div class="flex-1">
+        <h4 class="font-semibold text-base-content"><%= comment.user.name %></h4>
       </div>
     </div>
-  </div>
 
-  <!-- コメント内容 -->
-  <div class="ml-10">
-    <div class="max-w-full overflow-hidden">
-      <p class="text-white/90 leading-relaxed whitespace-pre-wrap break-words glass-text-shadow text-sm">
-        <%= comment.body %>
-      </p>
+    <!-- コメント内容 -->
+    <div class="ml-5">
+      <p class="text-base-content/80 leading-relaxed whitespace-pre-wrap"><%= comment.body %></p>
     </div>
   </div>
 </div>

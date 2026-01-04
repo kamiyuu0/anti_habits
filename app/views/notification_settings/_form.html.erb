@@ -1,0 +1,57 @@
+<%= form_with model: [@anti_habit, @notification_setting], url: anti_habit_notification_setting_path(@anti_habit), local: true, class: "space-y-4" do |form| %>
+  <!-- エラーメッセージ -->
+  <% if @notification_setting&.errors&.any? %>
+    <div class="alert alert-error flex items-center">
+      <i class="fas fa-exclamation-circle shrink-0 text-lg mr-3"></i>
+      <div>
+        <h3 class="font-bold">入力内容を確認してください</h3>
+        <div>
+          <% @notification_setting.errors.full_messages.each do |message| %>
+            <div><%= message %></div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+<!-- 通知時刻（5分刻み） -->
+<div class="form-control">
+    <div class="label">
+        <span class="label-text">通知時刻</span>
+    </div>
+    <div class="flex gap-2 items-center">
+        <%= form.time_select :notification_time, minute_step: 5, include_seconds: false, order: [:hour, :minute] %>
+    </div>
+    <div class="label">
+        <span class="label-text-alt">5分刻みで選択してください</span>
+    </div>
+</div>
+
+<div class="form-control">
+    <label class="label cursor-pointer">
+        <%= form.check_box :notification_enabled, checked: @notification_setting.new_record? ? true : @notification_setting.notification_enabled, class: "checkbox" %>
+        <span class="label-text ml-2">LINE通知を有効にする</span>
+    </label>
+</div>
+
+<!-- 反応で通知（チェックボックス） -->
+<div class="form-control">
+    <label class="label cursor-pointer">
+        <%= form.check_box :notify_on_reaction, class: "checkbox" %>
+        <span class="label-text ml-2">いいねやリアクションで通知(未実装)</span>
+    </label>
+</div>
+
+<!-- コメントで通知（チェックボックス） -->
+<div class="form-control">
+    <label class="label cursor-pointer">
+        <%= form.check_box :notify_on_comment, class: "checkbox" %>
+        <span class="label-text ml-2">コメントで通知(未実装)</span>
+    </label>
+</div>
+
+  <!-- 送信ボタン -->
+  <div class="form-control">
+    <%= form.submit "通知設定を作成", class: "btn btn-success" %>
+  </div>
+<% end %>

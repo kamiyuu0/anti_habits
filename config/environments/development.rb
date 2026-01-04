@@ -1,6 +1,20 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
+  config.after_initialize do
+    Bullet.enable        = true
+    Bullet.alert         = true
+    Bullet.bullet_logger = true
+    Bullet.console       = true
+    Bullet.rails_logger  = true
+    Bullet.add_footer    = true
+
+    # タグのない悪習慣詳細ページでも使われないEager Loadingの警告を無視するように設定
+    Bullet.add_safelist type: :unused_eager_loading, class_name: "AntiHabit", association: :anti_habit_tags
+    Bullet.add_safelist type: :unused_eager_loading, class_name: "AntiHabit", association: :reactions
+    Bullet.add_safelist type: :unused_eager_loading, class_name: "AntiHabit", association: :comments
+  end
+
   # 開発環境でLINE認証を使用するための設定
   config.hosts.clear
   # Settings specified here will take precedence over those in config/application.rb.
@@ -44,6 +58,17 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
 
   config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address:              "smtp.gmail.com",
+    port:                 587,
+    domain:               "localhost",
+    user_name:            ENV["GMAIL_USERNAME"],
+    password:             ENV["GMAIL_PASSWORD"],
+    authentication:       "plain",
+    enable_starttls_auto: true
+  }
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log

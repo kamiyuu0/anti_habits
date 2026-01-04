@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html data-theme="nord">
   <head>
-    <title><%= content_for(:title) || "Myapp" %></title>
+    <title><%= "Anti Habits" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#edeff4">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -20,9 +21,24 @@
     <%= display_meta_tags(default_meta_tags) %>
   </head>
 
-  <body class="bg-glassmorphism">
-    <%= render "shared/header" %>
-    <main class="pb-16">
+  <% if Rails.env.production? %>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7D7PDP4R2S"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-7D7PDP4R2S');
+    </script>
+  <% end %>
+
+  <body class="">
+    <div class="sticky lg:top-0 z-2">
+      <%= render 'shared/header' %>
+    </div>
+    <main class="pb-16 min-h-screen bg-base-200">
+      <%= render "shared/flash_messages" %>
       <%= yield %>
     </main>
     <%= render "shared/footer" %>

@@ -1,0 +1,32 @@
+<% flash.each do |type, message| %>
+  <% 
+    alert_class = case type.to_s
+    when 'notice', 'success'
+      'alert-success'
+    when 'alert', 'error'
+      'alert-error'
+    when 'warning'
+      'alert-warning'
+    else
+      'alert-info'
+    end
+    
+    icon_class = case type.to_s
+    when 'notice', 'success'
+      'fas fa-check-circle'
+    when 'alert', 'error'
+      'fas fa-times-circle'
+    when 'warning'
+      'fas fa-exclamation-triangle'
+    else
+      'fas fa-info-circle'
+    end
+  %>
+  
+  <div class="container mx-auto px-4 py-2">
+      <div class="alert <%= alert_class %> shadow-lg flex items-center">
+        <i class="<%= icon_class %> shrink-0 text-lg mr-3"></i>
+        <span><%= message %></span>
+      </div>
+  </div>
+<% end %>
