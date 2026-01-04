@@ -7,6 +7,16 @@
     </button>
   <% end %>
 
+  <!-- ブックマーク（ログイン時のみ） -->
+  <% if user_signed_in? %>
+    <%= link_to bookmarks_path do %>
+      <button>
+        <i class="fas fa-bookmark text-lg"></i>
+        <span class="dock-label">ブックマーク</span>
+      </button>
+    <% end %>
+  <% end %>
+
   <!-- 新規登録 / 新規投稿 -->
   <% if user_signed_in? %>
     <%= link_to new_anti_habit_path do %>

@@ -1,0 +1,5 @@
+<%= form_with url: anti_habit_bookmarks_path(anti_habit), method: :post, id: "bookmark-button-for-anti_habit-#{anti_habit.id}", class: "inline", data: { turbo_stream: true } do |form| %>
+  <%= button_tag type: "submit", class: "btn btn-ghost btn-sm" do %>
+    <i class="far fa-bookmark"></i>
+  <% end %>
+<% end %>

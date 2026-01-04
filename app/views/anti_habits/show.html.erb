@@ -221,6 +221,9 @@
             <i class="fas fa-comment"></i>
             <span id="comments-count"><%= @anti_habit.comments_count %></span>件
           </div>
+          <% if current_user.can_bookmark?(@anti_habit) %>
+            <%= render "shared/bookmark_button", anti_habit: @anti_habit %>
+          <% end %>
         </div>
       <% end %>
     </div>
