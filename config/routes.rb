@@ -16,9 +16,11 @@ Rails.application.routes.draw do
     resources :comments, only: %i[ create ]
     resource :notification_setting, only: %i[ new create edit update ]
     resources :reactions, only: %i[ create destroy ]
+    resources :bookmarks, only: %i[ create destroy ]
   end
   resources :anti_habit_records, only: %i[ create destroy ]
   resources :users, only: %i[ show ]
+  resources :bookmarks, only: %i[ index ]
   get "tags", to: "tags#index"
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
