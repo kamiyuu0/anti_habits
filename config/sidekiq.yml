@@ -1,0 +1,8 @@
+:concurrency: 5
+:queues:
+  - default
+
+:cron:
+  notify_dispatcher:
+    cron: "*/5 * * * *" # 毎5分
+    class: "NotifyDispatcherJob"

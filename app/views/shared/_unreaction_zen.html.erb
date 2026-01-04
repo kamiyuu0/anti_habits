@@ -1,0 +1,7 @@
+<%= form_with url: anti_habit_reaction_path(anti_habit, current_user.reactions.find_by(anti_habit_id: anti_habit.id)), method: :delete, id: "unreaction-zen-form-for-anti_habit-#{anti_habit.id}", class: "inline", data: { turbo_stream: true } do |form| %>
+  <%= form.hidden_field "reaction[reaction_kind]", value: :zen %>
+  <%= button_tag type: "submit", class: "badge badge-outline badge-primary" do %>
+    🧘‍♀️
+    <%= anti_habit.reactions.zen.size %>
+  <% end %>
+<% end %>

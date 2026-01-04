@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :anti_habit_record do
-    recorded_on { "2025-07-25" }
-    anti_habit { nil }
+    association :anti_habit
+    recorded_on { Time.zone.today }
   end
 end

@@ -1,0 +1,6 @@
+<% @anti_habits.each do |anti_habit| %>
+  <li class="list-group-item px-4 py-2 hover:bg-base-200 cursor-pointer" role="option" data-autocomplete-value="<%= anti_habit.title %>" data-autocomplete-label="<%= anti_habit.title %>">
+    <%= anti_habit.title %>
+  </li>
+<% end %>
+

@@ -1,22 +1,30 @@
-<div class="max-w-md mx-auto px-4 py-6 pt-20">
-  <div class="glass-card p-6 sm:p-8">
-    <h2 class="text-2xl font-bold text-white text-center mb-6 text-shadow">プロフィール編集</h2>
-
-    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "space-y-4" }) do |f| %>
-      <%= render "devise/shared/error_messages", resource: resource %>
-
-      <div class="form-group">
-        <%= f.label :name, "名前", class: "block text-sm font-medium text-white mb-2 glass-text-shadow" %>
-        <%= f.text_field :name, autofocus: true, class: "w-full px-4 py-3 rounded-xl bg-white/20 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-white/50 transition-all backdrop-blur-sm" %>
+<div class="container mx-auto max-w-md px-4 py-8">
+  <div class="card bg-base-100 shadow-xl">
+    <div class="card-body">
+      <div class="text-center mb-6">
+        <h2 class="text-2xl font-bold text-base-content">プロフィール編集</h2>
       </div>
 
-      <div class="form-group">
-        <%= f.submit "更新", class: "w-full px-4 py-3 bg-blue-500/30 border border-blue-300/50 text-white font-semibold rounded-xl hover:bg-blue-500/40 hover:border-blue-300/60 transition-all backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-blue-300/50 glass-text-shadow" %>
-      </div>
-    <% end %>
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "space-y-4" }) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
 
-    <div class="mt-6 pt-6 border-t border-white/20">
-      <%= link_to "戻る", user_path(current_user), class: "block w-full text-center px-4 py-3 text-white/80 hover:text-white transition-colors glass-text-shadow" %>
+        <div class="form-control">
+          <div class="label">
+            <span class="label-text">名前</span>
+          </div>
+          <%= f.text_field :name, autofocus: true, class: "input input-bordered w-full" %>
+        </div>
+
+        <div class="form-control mt-6">
+          <%= f.submit "更新", class: "btn btn-primary w-full" %>
+        </div>
+      <% end %>
+
+      <div class="divider"></div>
+      
+      <div class="form-control">
+        <%= link_to "戻る", user_path(current_user), class: "btn btn-outline w-full" %>
+      </div>
     </div>
   </div>
 </div>
