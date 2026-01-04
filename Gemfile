@@ -47,7 +47,7 @@ gem "devise-i18n"
 gem "omniauth-line"
 gem "omniauth-rails_csrf_protection"
 gem "dotenv-rails"
-gem "omniauth", "~> 1.9.1"
+gem "omniauth", "~> 2.1.4"
 gem "line-bot-api"
 
 
@@ -63,7 +63,7 @@ gem "ransack"
 
 # 非同期まわり
 gem "redis", ">= 4.0.1"
-gem "sidekiq"
+gem "sidekiq", "~> 8.0"
 gem "sidekiq-cron"
 
 group :development, :test do
