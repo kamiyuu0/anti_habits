@@ -129,7 +129,7 @@ RSpec.describe "AntiHabits", type: :request do
 
         it '422ステータスを返す' do
           post anti_habits_path, params: invalid_params
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
         end
       end
 
@@ -144,7 +144,7 @@ RSpec.describe "AntiHabits", type: :request do
 
         it '422ステータスを返す' do
           post anti_habits_path, params: invalid_params
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
         end
       end
 
@@ -160,7 +160,7 @@ RSpec.describe "AntiHabits", type: :request do
 
         it '422ステータスを返す' do
           post anti_habits_path, params: invalid_params
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
         end
       end
 
@@ -168,13 +168,13 @@ RSpec.describe "AntiHabits", type: :request do
         it '0日の場合はバリデーションエラー' do
           params = { anti_habit: { title: '禁煙', goal_days: 0 } }
           post anti_habits_path, params: params
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
         end
 
         it '366日の場合はバリデーションエラー' do
           params = { anti_habit: { title: '禁煙', goal_days: 366 } }
           post anti_habits_path, params: params
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
         end
 
         it 'nilの場合は有効' do
