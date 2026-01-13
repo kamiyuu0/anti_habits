@@ -35,7 +35,7 @@
 </div>
 
 <!-- 反応で通知（チェックボックス） -->
-<div class="form-control">
+<div class="form-control hidden">
     <label class="label cursor-pointer">
         <%= form.check_box :notify_on_reaction, class: "checkbox" %>
         <span class="label-text ml-2">いいねやリアクションで通知(未実装)</span>
@@ -43,7 +43,7 @@
 </div>
 
 <!-- コメントで通知（チェックボックス） -->
-<div class="form-control">
+<div class="form-control hidden">
     <label class="label cursor-pointer">
         <%= form.check_box :notify_on_comment, class: "checkbox" %>
         <span class="label-text ml-2">コメントで通知(未実装)</span>
