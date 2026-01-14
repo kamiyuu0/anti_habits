@@ -1,3 +1,6 @@
+# Anti Habits
+<img src=https://res.cloudinary.com/antihabits/image/upload/v1757773129/anti_habits_static_ogp_zg7q8j.png width=800>
+
 ## ■　サービス概要
 Anti Habitsは悪習慣を取り除く手助けをするサービスです。
 悪習慣を共有し、一定間隔で悪習慣をしていないか管理して目標達成を手助けします。
