@@ -13,6 +13,7 @@ Rails.application.configure do
     Bullet.add_safelist type: :unused_eager_loading, class_name: "AntiHabit", association: :anti_habit_tags
     Bullet.add_safelist type: :unused_eager_loading, class_name: "AntiHabit", association: :reactions
     Bullet.add_safelist type: :unused_eager_loading, class_name: "AntiHabit", association: :comments
+    Bullet.add_safelist type: :unused_eager_loading, class_name: "AntiHabit", association: :user
   end
 
   # 開発環境でLINE認証を使用するための設定
