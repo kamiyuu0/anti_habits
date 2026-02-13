@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :comment do
-    anti_habit { nil }
-    user { nil }
+    association :anti_habit
+    association :user
+    body { "テストコメント" }
   end
 end
