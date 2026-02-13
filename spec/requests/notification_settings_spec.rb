@@ -59,7 +59,6 @@ RSpec.describe "NotificationSettings", type: :request do
         post anti_habit_notification_setting_path(anti_habit), params: valid_params
         expect(flash[:notice]).to eq('通知設定を保存しました。')
       end
-
     end
   end
 
@@ -110,7 +109,6 @@ RSpec.describe "NotificationSettings", type: :request do
         patch anti_habit_notification_setting_path(anti_habit), params: { notification_setting: { notify_on_reaction: true } }
         expect(flash[:notice]).to eq('通知設定を更新しました。')
       end
-
     end
   end
 end
