@@ -9,6 +9,7 @@ RSpec.describe AntiHabit, type: :model do
     it { should have_many(:anti_habit_tags).dependent(:destroy) }
     it { should have_many(:tags).through(:anti_habit_tags) }
     it { should have_one(:notification_setting).dependent(:destroy) }
+    it { should have_many(:bookmarks).dependent(:destroy) }
   end
 
   describe 'validations' do
