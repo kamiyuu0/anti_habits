@@ -20,6 +20,11 @@ ja:
         title: タイトル
         description: 説明
         tag_names: タグ
+      notification_setting:
+        notification_time: 通知時刻
+        notification_enabled: LINE通知
+        notify_on_reaction: リアクション通知
+        notify_on_comment: コメント通知
     errors:
       models:
         user:
