@@ -23,6 +23,9 @@ class AntiHabit < ApplicationRecord
     joins(:tags).where(tags: { name: name })
   }
   scope :publicly_visible, -> { where(is_public: true) }
+  scope :recent, -> { order(created_at: :desc) }
+  scope :with_tags, -> { includes(:tags) }
+  scope :with_associations, -> { includes(:user, :tags, :reactions, :comments) }
 
   attr_accessor :tag_names
 

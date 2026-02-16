@@ -4,8 +4,8 @@ class BookmarksController < ApplicationController
   def index
     @bookmarked_anti_habits = current_user
       .bookmarked_anti_habits
-      .where(is_public: true)
-      .includes(:user, :tags, :reactions, :comments)
+      .publicly_visible
+      .with_associations
       .order("bookmarks.created_at DESC")
       .page(params[:page])
   end

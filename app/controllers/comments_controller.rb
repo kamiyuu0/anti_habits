@@ -11,7 +11,7 @@ class CommentsController < ApplicationController
   private
 
   def set_anti_habit
-    @anti_habit = AntiHabit.includes(:tags).find(params[:anti_habit_id])
+    @anti_habit = AntiHabit.with_tags.find(params[:anti_habit_id])
   end
 
   def comment_params

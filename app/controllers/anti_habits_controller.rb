@@ -6,8 +6,8 @@ class AntiHabitsController < ApplicationController
 
     @anti_habits = @q.result
       .publicly_visible
-      .includes(:user, :tags, :reactions, :comments)
-      .order(created_at: :desc)
+      .with_associations
+      .recent
       .page(params[:page])
 
     @all_tags = Tag.order(:name)
@@ -20,7 +20,7 @@ class AntiHabitsController < ApplicationController
       AntiHabit.ransack(title_cont: query).result
         .publicly_visible
         .limit(10)
-        .order(created_at: :desc)
+        .recent
     else
       AntiHabit.none
     end
@@ -41,7 +41,7 @@ class AntiHabitsController < ApplicationController
   end
 
   def show
-    @anti_habit = AntiHabit.includes(:tags).find(params[:id])
+    @anti_habit = AntiHabit.with_tags.find(params[:id])
 
     unless @anti_habit.is_public || current_user&.own?(@anti_habit)
       redirect_to anti_habits_path, alert: "このページにアクセスする権限がありません。"
@@ -72,7 +72,7 @@ class AntiHabitsController < ApplicationController
   end
 
   def edit
-    @anti_habit = current_user.anti_habits.includes(:tags).find(params[:id])
+    @anti_habit = current_user.anti_habits.with_tags.find(params[:id])
     @anti_habit.tag_names = @anti_habit.tag_names_as_string
   end
 
