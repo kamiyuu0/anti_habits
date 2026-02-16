@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_01_04_071922) do
+ActiveRecord::Schema[7.2].define(version: 2026_02_16_142830) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -66,13 +66,13 @@ ActiveRecord::Schema[7.2].define(version: 2026_01_04_071922) do
   end
 
   create_table "notification_settings", force: :cascade do |t|
-    t.time "notification_time"
-    t.boolean "notify_on_reaction"
-    t.boolean "notify_on_comment"
+    t.time "notification_time", null: false
+    t.boolean "notify_on_reaction", default: false, null: false
+    t.boolean "notify_on_comment", default: false, null: false
     t.bigint "anti_habit_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "notification_enabled", default: false
+    t.boolean "notification_enabled", default: false, null: false
     t.index ["anti_habit_id"], name: "index_notification_settings_on_anti_habit_id"
   end
 
