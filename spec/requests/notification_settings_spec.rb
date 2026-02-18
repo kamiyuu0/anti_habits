@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "NotificationSettings", type: :request do
   let(:user) { create(:user) }
+  let(:other_user) { create(:user) }
   let(:anti_habit) { create(:anti_habit, user: user) }
 
   describe "GET /anti_habits/:anti_habit_id/notification_setting/new (new)" do
@@ -12,12 +13,21 @@ RSpec.describe "NotificationSettings", type: :request do
       end
     end
 
-    context '認証済みユーザー' do
+    context '認証済みユーザー（オーナー）' do
       before { sign_in user }
 
       it '200ステータスを返す' do
         get new_anti_habit_notification_setting_path(anti_habit)
         expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context '他人のAntiHabitの場合' do
+      before { sign_in other_user }
+
+      it 'リダイレクトされる' do
+        get new_anti_habit_notification_setting_path(anti_habit)
+        expect(response).to redirect_to(anti_habits_path)
       end
     end
   end
@@ -41,7 +51,7 @@ RSpec.describe "NotificationSettings", type: :request do
       end
     end
 
-    context '認証済みユーザー' do
+    context '認証済みユーザー（オーナー）' do
       before { sign_in user }
 
       it '有効なパラメータで通知設定を作成できる' do
@@ -60,6 +70,21 @@ RSpec.describe "NotificationSettings", type: :request do
         expect(flash[:notice]).to eq('通知設定を保存しました。')
       end
     end
+
+    context '他人のAntiHabitの場合' do
+      before { sign_in other_user }
+
+      it '通知設定を作成できない' do
+        expect {
+          post anti_habit_notification_setting_path(anti_habit), params: valid_params
+        }.not_to change(NotificationSetting, :count)
+      end
+
+      it 'リダイレクトされる' do
+        post anti_habit_notification_setting_path(anti_habit), params: valid_params
+        expect(response).to redirect_to(anti_habits_path)
+      end
+    end
   end
 
   describe "GET /anti_habits/:anti_habit_id/notification_setting/edit (edit)" do
@@ -72,12 +97,21 @@ RSpec.describe "NotificationSettings", type: :request do
       end
     end
 
-    context '認証済みユーザー' do
+    context '認証済みユーザー（オーナー）' do
       before { sign_in user }
 
       it '200ステータスを返す' do
         get edit_anti_habit_notification_setting_path(anti_habit)
         expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context '他人のAntiHabitの場合' do
+      before { sign_in other_user }
+
+      it 'リダイレクトされる' do
+        get edit_anti_habit_notification_setting_path(anti_habit)
+        expect(response).to redirect_to(anti_habits_path)
       end
     end
   end
@@ -92,7 +126,7 @@ RSpec.describe "NotificationSettings", type: :request do
       end
     end
 
-    context '認証済みユーザー' do
+    context '認証済みユーザー（オーナー）' do
       before { sign_in user }
 
       it '有効なパラメータで通知設定を更新できる' do
@@ -108,6 +142,20 @@ RSpec.describe "NotificationSettings", type: :request do
       it '成功メッセージが表示される' do
         patch anti_habit_notification_setting_path(anti_habit), params: { notification_setting: { notify_on_reaction: true } }
         expect(flash[:notice]).to eq('通知設定を更新しました。')
+      end
+    end
+
+    context '他人のAntiHabitの場合' do
+      before { sign_in other_user }
+
+      it '通知設定を更新できない' do
+        patch anti_habit_notification_setting_path(anti_habit), params: { notification_setting: { notify_on_reaction: true } }
+        expect(notification_setting.reload.notify_on_reaction).to be false
+      end
+
+      it 'リダイレクトされる' do
+        patch anti_habit_notification_setting_path(anti_habit), params: { notification_setting: { notify_on_reaction: true } }
+        expect(response).to redirect_to(anti_habits_path)
       end
     end
   end
