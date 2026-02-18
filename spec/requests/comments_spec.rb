@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Comments", type: :request do
   let(:user) { create(:user) }
+  let(:other_user) { create(:user) }
   let(:anti_habit) { create(:anti_habit, is_public: true) }
 
   describe "POST /anti_habits/:anti_habit_id/comments (create)" do
@@ -51,6 +52,21 @@ RSpec.describe "Comments", type: :request do
         it 'リダイレクトされる' do
           post anti_habit_comments_path(anti_habit_id: 0), params: { comment: { body: 'テストコメント' } }
           expect(response).to redirect_to(anti_habits_path)
+        end
+      end
+
+      context '他人の非公開AntiHabitの場合' do
+        let(:private_anti_habit) { create(:anti_habit, user: other_user, is_public: false) }
+
+        it 'コメントできない（403 Forbidden）' do
+          expect {
+            post anti_habit_comments_path(private_anti_habit), params: { comment: { body: 'テストコメント' } }
+          }.not_to change(Comment, :count)
+        end
+
+        it '403ステータスを返す' do
+          post anti_habit_comments_path(private_anti_habit), params: { comment: { body: 'テストコメント' } }
+          expect(response).to have_http_status(:forbidden)
         end
       end
     end

@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Reactions", type: :request do
   let(:user) { create(:user) }
+  let(:other_user) { create(:user) }
   let(:anti_habit) { create(:anti_habit, is_public: true) }
 
   describe "POST /anti_habits/:anti_habit_id/reactions (create)" do
@@ -28,6 +29,23 @@ RSpec.describe "Reactions", type: :request do
             expect(response.media_type).to eq(Mime[:turbo_stream].to_s)
           end
         end
+      end
+    end
+
+    context '他人の非公開AntiHabitの場合' do
+      let(:private_anti_habit) { create(:anti_habit, user: other_user, is_public: false) }
+
+      before { sign_in user }
+
+      it 'リアクションを追加できない（403 Forbidden）' do
+        expect {
+          post anti_habit_reactions_path(private_anti_habit), params: { reaction: { reaction_kind: 'watching' } }, as: :turbo_stream
+        }.not_to change(Reaction, :count)
+      end
+
+      it '403ステータスを返す' do
+        post anti_habit_reactions_path(private_anti_habit), params: { reaction: { reaction_kind: 'watching' } }, as: :turbo_stream
+        expect(response).to have_http_status(:forbidden)
       end
     end
   end
@@ -60,6 +78,24 @@ RSpec.describe "Reactions", type: :request do
             expect(response.media_type).to eq(Mime[:turbo_stream].to_s)
           end
         end
+      end
+    end
+
+    context '他人の非公開AntiHabitの場合' do
+      let(:private_anti_habit) { create(:anti_habit, user: other_user, is_public: false) }
+      let!(:reaction) { create(:reaction, user: user, anti_habit: private_anti_habit, reaction_kind: :watching) }
+
+      before { sign_in user }
+
+      it 'リアクションを削除できない（403 Forbidden）' do
+        expect {
+          delete anti_habit_reaction_path(private_anti_habit, reaction), params: { reaction: { reaction_kind: 'watching' } }, as: :turbo_stream
+        }.not_to change(Reaction, :count)
+      end
+
+      it '403ステータスを返す' do
+        delete anti_habit_reaction_path(private_anti_habit, reaction), params: { reaction: { reaction_kind: 'watching' } }, as: :turbo_stream
+        expect(response).to have_http_status(:forbidden)
       end
     end
   end
