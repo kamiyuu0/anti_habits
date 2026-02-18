@@ -12,6 +12,7 @@ class CommentsController < ApplicationController
 
   def set_anti_habit
     @anti_habit = AntiHabit.with_tags.find(params[:anti_habit_id])
+    head :forbidden unless @anti_habit.is_public || current_user.own?(@anti_habit)
   end
 
   def comment_params
