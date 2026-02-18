@@ -63,7 +63,7 @@ gem "ransack"
 
 # 非同期まわり
 gem "redis", ">= 4.0.1"
-gem "sidekiq", "~> 8.0"
+gem "sidekiq", "~> 8.1"
 gem "sidekiq-cron"
 
 group :development, :test do
