@@ -1,7 +1,8 @@
 class ReactionsController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_anti_habit
+
   def create
-    @anti_habit = AntiHabit.find(params[:anti_habit_id])
     current_user.reaction(@anti_habit, reaction_params[:reaction_kind])
     respond_to do |format|
       if reaction_params[:reaction_kind] == "watching"
@@ -17,7 +18,6 @@ class ReactionsController < ApplicationController
   end
 
   def destroy
-    @anti_habit = AntiHabit.find(params[:anti_habit_id])
     current_user.unreaction(@anti_habit, reaction_params[:reaction_kind])
     respond_to do |format|
       if reaction_params[:reaction_kind] == "watching"
@@ -33,6 +33,11 @@ class ReactionsController < ApplicationController
   end
 
   private
+
+  def set_anti_habit
+    @anti_habit = AntiHabit.find(params[:anti_habit_id])
+    head :forbidden unless @anti_habit.is_public || current_user.own?(@anti_habit)
+  end
 
   def reaction_params
     params.require(:reaction).permit(:reaction_kind)
