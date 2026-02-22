@@ -57,10 +57,10 @@ https://anti-habits.com/
     <th>ランキング</th>
   </tr>
   <tr>
-    <td><img width="800" alt="Image" src="https://github.com/user-attachments/assets/0cb8bd91-27f4-4f4c-9e38-92feaaf973d2" /></td>
+    <td><img width="800" alt="Image" src="https://github.com/user-attachments/assets/c58eb07a-84fb-4ae8-b23e-e583ecfc9dd3" /></td>
   </tr>
   <tr>
-    <td>ユーザーの投稿の中で連続で悪習慣を行わなかった日数のランキングを表示します。</td>
+    <td>ユーザーの投稿の中で今週に悪習慣を行わなかった日数のランキングを表示します。</td>
   </tr>
 </table>
 
