@@ -3,6 +3,12 @@ require "line/bot"
 class NotifyLineJob < ApplicationJob
   queue_as :default
 
+  class LineApiClientError < StandardError; end
+  class LineApiServerError < StandardError; end
+
+  discard_on LineApiClientError
+  retry_on LineApiServerError, wait: :polynomially_longer, attempts: 5
+
   def perform(user_id, anti_habit_id)
     user = User.find(user_id)
     anti_habit = AntiHabit.find(anti_habit_id)
@@ -22,6 +28,12 @@ class NotifyLineJob < ApplicationJob
       to: uid,
       messages: [ message ]
     )
-    client.push_message_with_http_info(push_message_request: request)
+    _body, status_code, _headers = client.push_message_with_http_info(push_message_request: request)
+
+    if status_code >= 500 || status_code == 429
+      raise LineApiServerError, "LINE API server error: #{status_code}"
+    elsif status_code >= 400
+      raise LineApiClientError, "LINE API client error: #{status_code}"
+    end
   end
 end
