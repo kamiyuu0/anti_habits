@@ -339,25 +339,41 @@ RSpec.describe AntiHabit, type: :model do
     end
   end
 
-  describe '.top_consecutive_achievers_with_ranks' do
+  describe '.top_weekly_achievers_with_ranks' do
     let(:user1) { create(:user) }
     let(:user2) { create(:user) }
     let(:user3) { create(:user) }
     let(:user4) { create(:user) }
     let(:user5) { create(:user) }
 
+    # 日曜日に固定（月曜始まりの週が月〜日の7日間になる）
+    let(:this_sunday) { Date.new(2024, 1, 7) }
+
     context 'データがない場合' do
       it '空の配列を返す' do
-        result = AntiHabit.top_consecutive_achievers_with_ranks
-        expect(result).to eq([])
+        travel_to this_sunday do
+          result = AntiHabit.top_weekly_achievers_with_ranks
+          expect(result).to eq([])
+        end
       end
     end
 
-    context '連続達成日数が0の場合' do
+    context '今週の達成がない場合' do
       it '結果に含まれない' do
-        travel_to Time.zone.today do
+        travel_to this_sunday do
           create(:anti_habit, user: user1, is_public: true)
-          result = AntiHabit.top_consecutive_achievers_with_ranks
+          result = AntiHabit.top_weekly_achievers_with_ranks
+          expect(result).to eq([])
+        end
+      end
+    end
+
+    context '今週のレコードのみカウントされる' do
+      it '先週のレコードは除外される' do
+        travel_to this_sunday do
+          anti_habit = create(:anti_habit, user: user1, is_public: true)
+          create(:anti_habit_record, anti_habit: anti_habit, recorded_on: 7.days.ago)
+          result = AntiHabit.top_weekly_achievers_with_ranks
           expect(result).to eq([])
         end
       end
@@ -365,14 +381,14 @@ RSpec.describe AntiHabit, type: :model do
 
     context '非公開のanti_habitは含まれない' do
       it '公開されているもののみを対象とする' do
-        travel_to Time.zone.today do
+        travel_to this_sunday do
           public_anti_habit = create(:anti_habit, user: user1, is_public: true)
           create(:anti_habit_record, anti_habit: public_anti_habit, recorded_on: Time.zone.today)
 
           private_anti_habit = create(:anti_habit, user: user2, is_public: false)
           create(:anti_habit_record, anti_habit: private_anti_habit, recorded_on: Time.zone.today)
 
-          result = AntiHabit.top_consecutive_achievers_with_ranks
+          result = AntiHabit.top_weekly_achievers_with_ranks
           expect(result.size).to eq(1)
           expect(result[0][:anti_habits]).to include(public_anti_habit)
           expect(result[0][:anti_habits]).not_to include(private_anti_habit)
@@ -382,8 +398,8 @@ RSpec.describe AntiHabit, type: :model do
 
     context '1位が3名以上の場合' do
       it '1位のみを表示する' do
-        travel_to Time.zone.today do
-          # 1位: 5日連続（3名）
+        travel_to this_sunday do
+          # 1位: 今週5日達成（3名）
           anti_habit1 = create(:anti_habit, user: user1, is_public: true)
           anti_habit2 = create(:anti_habit, user: user2, is_public: true)
           anti_habit3 = create(:anti_habit, user: user3, is_public: true)
@@ -391,14 +407,14 @@ RSpec.describe AntiHabit, type: :model do
             5.times { |i| create(:anti_habit_record, anti_habit: ah, recorded_on: i.days.ago) }
           end
 
-          # 2位: 3日連続（1名）
+          # 2位: 今週3日達成（1名）
           anti_habit4 = create(:anti_habit, user: user4, is_public: true)
           3.times { |i| create(:anti_habit_record, anti_habit: anti_habit4, recorded_on: i.days.ago) }
 
-          result = AntiHabit.top_consecutive_achievers_with_ranks
+          result = AntiHabit.top_weekly_achievers_with_ranks
           expect(result.size).to eq(1)
           expect(result[0][:rank]).to eq(1)
-          expect(result[0][:consecutive_days]).to eq(5)
+          expect(result[0][:weekly_days]).to eq(5)
           expect(result[0][:anti_habits].size).to eq(3)
         end
       end
@@ -406,32 +422,32 @@ RSpec.describe AntiHabit, type: :model do
 
     context '1位が3名未満で、1位+2位が3名以上の場合' do
       it '1位と2位を表示する' do
-        travel_to Time.zone.today do
-          # 1位: 5日連続（2名）
+        travel_to this_sunday do
+          # 1位: 今週5日達成（2名）
           anti_habit1 = create(:anti_habit, user: user1, is_public: true)
           anti_habit2 = create(:anti_habit, user: user2, is_public: true)
           [ anti_habit1, anti_habit2 ].each do |ah|
             5.times { |i| create(:anti_habit_record, anti_habit: ah, recorded_on: i.days.ago) }
           end
 
-          # 2位: 3日連続（2名）
+          # 2位: 今週3日達成（2名）
           anti_habit3 = create(:anti_habit, user: user3, is_public: true)
           anti_habit4 = create(:anti_habit, user: user4, is_public: true)
           [ anti_habit3, anti_habit4 ].each do |ah|
             3.times { |i| create(:anti_habit_record, anti_habit: ah, recorded_on: i.days.ago) }
           end
 
-          # 3位: 1日連続（1名）
+          # 3位: 今週1日達成（1名）
           anti_habit5 = create(:anti_habit, user: user5, is_public: true)
           create(:anti_habit_record, anti_habit: anti_habit5, recorded_on: Time.zone.today)
 
-          result = AntiHabit.top_consecutive_achievers_with_ranks
+          result = AntiHabit.top_weekly_achievers_with_ranks
           expect(result.size).to eq(2)
           expect(result[0][:rank]).to eq(1)
-          expect(result[0][:consecutive_days]).to eq(5)
+          expect(result[0][:weekly_days]).to eq(5)
           expect(result[0][:anti_habits].size).to eq(2)
           expect(result[1][:rank]).to eq(3)
-          expect(result[1][:consecutive_days]).to eq(3)
+          expect(result[1][:weekly_days]).to eq(3)
           expect(result[1][:anti_habits].size).to eq(2)
         end
       end
@@ -439,39 +455,37 @@ RSpec.describe AntiHabit, type: :model do
 
     context '1位が3名未満、1位+2位も3名未満の場合' do
       it '上位3つの順位グループを表示する' do
-        travel_to Time.zone.today do
-          # 1位: 5日連続（1名）
+        travel_to this_sunday do
+          # 1位: 今週5日達成（1名）
           anti_habit1 = create(:anti_habit, user: user1, is_public: true)
           5.times { |i| create(:anti_habit_record, anti_habit: anti_habit1, recorded_on: i.days.ago) }
 
-          # 2位: 3日連続（1名）
+          # 2位: 今週3日達成（1名）
           anti_habit2 = create(:anti_habit, user: user2, is_public: true)
           3.times { |i| create(:anti_habit_record, anti_habit: anti_habit2, recorded_on: i.days.ago) }
 
-          # 3位: 1日連続（1名）
+          # 3位: 今週1日達成（2名）
           anti_habit3 = create(:anti_habit, user: user3, is_public: true)
           create(:anti_habit_record, anti_habit: anti_habit3, recorded_on: Time.zone.today)
 
-          # 4位: 1日連続（1名）※表示されない
           anti_habit4 = create(:anti_habit, user: user4, is_public: true)
           create(:anti_habit_record, anti_habit: anti_habit4, recorded_on: Time.zone.today)
 
-          result = AntiHabit.top_consecutive_achievers_with_ranks
+          result = AntiHabit.top_weekly_achievers_with_ranks
           expect(result.size).to eq(3)
           expect(result[0][:rank]).to eq(1)
-          expect(result[0][:consecutive_days]).to eq(5)
+          expect(result[0][:weekly_days]).to eq(5)
           expect(result[1][:rank]).to eq(2)
-          expect(result[1][:consecutive_days]).to eq(3)
+          expect(result[1][:weekly_days]).to eq(3)
           expect(result[2][:rank]).to eq(3)
-          expect(result[2][:consecutive_days]).to eq(1)
+          expect(result[2][:weekly_days]).to eq(1)
         end
       end
     end
 
-    context '同じ連続達成日数の場合' do
+    context '同じ週間達成日数の場合' do
       it 'created_atでソートされる' do
-        travel_to Time.zone.today do
-          # 全て5日連続だが、作成日時が異なる
+        travel_to this_sunday do
           anti_habit1 = create(:anti_habit, user: user1, is_public: true, created_at: 3.days.ago)
           anti_habit2 = create(:anti_habit, user: user2, is_public: true, created_at: 2.days.ago)
           anti_habit3 = create(:anti_habit, user: user3, is_public: true, created_at: 1.day.ago)
@@ -480,7 +494,7 @@ RSpec.describe AntiHabit, type: :model do
             5.times { |i| create(:anti_habit_record, anti_habit: ah, recorded_on: i.days.ago) }
           end
 
-          result = AntiHabit.top_consecutive_achievers_with_ranks
+          result = AntiHabit.top_weekly_achievers_with_ranks
           expect(result.size).to eq(1)
           expect(result[0][:rank]).to eq(1)
           expect(result[0][:anti_habits][0]).to eq(anti_habit1)
@@ -492,19 +506,19 @@ RSpec.describe AntiHabit, type: :model do
 
     context 'rankの計算が正しい' do
       it '次の順位は前の順位+人数になる' do
-        travel_to Time.zone.today do
-          # 1位: 5日連続（2名）
+        travel_to this_sunday do
+          # 1位: 今週5日達成（2名）
           anti_habit1 = create(:anti_habit, user: user1, is_public: true)
           anti_habit2 = create(:anti_habit, user: user2, is_public: true)
           [ anti_habit1, anti_habit2 ].each do |ah|
             5.times { |i| create(:anti_habit_record, anti_habit: ah, recorded_on: i.days.ago) }
           end
 
-          # 2位（実際のrankは3）: 3日連続（1名）
+          # 2位（実際のrankは3）: 今週3日達成（1名）
           anti_habit3 = create(:anti_habit, user: user3, is_public: true)
           3.times { |i| create(:anti_habit_record, anti_habit: anti_habit3, recorded_on: i.days.ago) }
 
-          result = AntiHabit.top_consecutive_achievers_with_ranks
+          result = AntiHabit.top_weekly_achievers_with_ranks
           expect(result[0][:rank]).to eq(1)
           expect(result[1][:rank]).to eq(3) # 1位が2名いるので、次は3位
         end
