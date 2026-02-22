@@ -29,46 +29,44 @@ class AntiHabit < ApplicationRecord
 
   attr_accessor :tag_names
 
-  def self.top_consecutive_achievers_with_ranks
-    # 公開されている悪習慣で連続達成日数が1以上のものを取得
+  def self.top_weekly_achievers_with_ranks
+    start_of_week = Time.zone.today.beginning_of_week(:monday)
+    end_of_week = [ Time.zone.today, start_of_week + 6.days ].min
+
+    weekly_counts = AntiHabitRecord
+      .where(recorded_on: start_of_week..end_of_week)
+      .group(:anti_habit_id)
+      .select(:anti_habit_id, "COUNT(*) AS count")
+
     candidates = publicly_visible
       .includes(:user)
-      .select { |anti_habit| anti_habit.consecutive_days_achieved > 0 }
+      .joins("INNER JOIN (#{weekly_counts.to_sql}) weekly ON weekly.anti_habit_id = anti_habits.id")
+      .select("anti_habits.*, weekly.count AS weekly_days_count")
+      .order("weekly.count DESC")
 
-    # 連続達成日数でグループ化し、降順でソート
     grouped = candidates
-      .group_by(&:consecutive_days_achieved) # 連続達成日数とAntiHabit配列のハッシュ
+      .group_by(&:weekly_days_count) # 今週の合計達成日数とAntiHabit配列のハッシュ
       .sort_by { |days, _| -days }
 
-    # 順位付きデータを作成
     ranked_data = []
     current_rank = 1
-
     grouped.each do |days, anti_habits|
       ranked_data << {
         rank: current_rank,
-        consecutive_days: days,
-        anti_habits: anti_habits.sort_by { |ah| ah.created_at }
+        weekly_days: days,
+        anti_habits: anti_habits.sort_by(&:created_at)
       }
       current_rank += anti_habits.size
     end
 
-    # フィルタリングロジック
-    # 1位の人数をチェック
     first_place_count = ranked_data.first&.dig(:anti_habits)&.size || 0
-
     if first_place_count >= 3
-      # 1位が3名以上なら1位のみ表示（インデックス0のみ）
       ranked_data.take(1)
     else
-      # 1位が3名未満の場合、1位+2位の合計をチェック
-      first_two_count = ranked_data.take(2).sum { |data| data[:anti_habits].size }
-
+      first_two_count = ranked_data.take(2).sum { |d| d[:anti_habits].size }
       if first_two_count >= 3
-        # 1位+2位が3名以上なら上位2つの順位グループを表示（インデックス0-1）
         ranked_data.take(2)
       else
-        # それ以外は上位3つの順位グループを表示（インデックス0-2）
         ranked_data.take(3)
       end
     end
