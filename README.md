@@ -167,7 +167,7 @@ https://anti-habits.com/
     <th>ブックマーク</th>
   </tr>
   <tr>
-    <td><img width="800" alt="Image" src="./docs/images/bookmark.**gif**" /></td>
+    <td><img width="800" alt="Image" src="./docs/images/bookmark.gif" /></td>
   </tr>
   <tr>
     <td>同じ悪習慣を取り除こうとしている投稿や、特に監視したい投稿に関してブックマークをすることができます。</td>
