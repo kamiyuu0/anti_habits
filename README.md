@@ -45,7 +45,7 @@ https://anti-habits.com/
     <th>悪習慣一覧</th>
   </tr>
   <tr>
-    <td><img width="800" alt="Image" src="https://github.com/user-attachments/assets/01cad3b9-e5f0-4674-9aa3-794daff89e72" /></td>
+    <td><img width="800" alt="Image" src="./docs/images/anti_habits_index_page.gif" /></td>
   </tr>
   <tr>
     <td>ユーザーの投稿をまとめて確認できます。</td>
@@ -57,7 +57,7 @@ https://anti-habits.com/
     <th>ランキング</th>
   </tr>
   <tr>
-    <td><img width="800" alt="Image" src="https://github.com/user-attachments/assets/c58eb07a-84fb-4ae8-b23e-e583ecfc9dd3" /></td>
+    <td><img width="800" alt="Image" src="./docs/images/ranking.png" /></td>
   </tr>
   <tr>
     <td>ユーザーの投稿の中で今週に悪習慣を行わなかった日数のランキングを表示します。</td>
@@ -69,7 +69,7 @@ https://anti-habits.com/
     <th>悪習慣登録</th>
   </tr>
   <tr>
-    <td><img width="800" alt="Image" src="https://github.com/user-attachments/assets/c448d253-b6d5-40c6-8a17-cb90e6d44ce4" /></td>
+    <td><img width="800" alt="Image" src="./docs/images/anti_habit_new_page.gif" /></td>
   </tr>
   <tr>
     <td>取り除きたい悪習慣を登録します。何日連続で行わないことを目標にするか設定し、目標達成を目指しましょう。</td>
@@ -81,8 +81,8 @@ https://anti-habits.com/
     <th colspan="2">Xシェア</th>
   </tr>
   <tr>
-    <td><img width="400" alt="CleanShot 2026-01-14 at 10 09 33@2x" src="https://github.com/user-attachments/assets/be462ebe-4db5-4d02-9815-32844d5d0027" /></td>
-    <td><img width="400" alt="Image" src="https://github.com/user-attachments/assets/8776e077-aa65-4309-b640-29f2c220f188" /></td>
+    <td><img width="400" alt="Image" src="./docs/images/x_share_1.png" /></td>
+    <td><img width="400" alt="Image" src="./docs/images/x_share_2.png" /></td>
   </tr>
   <tr>
     <td colspan="2">Xシェアを通して悪習慣を取り除く宣言ができます</td>
@@ -94,8 +94,8 @@ https://anti-habits.com/
     <th colspan="2">LINE通知</th>
   </tr>
   <tr>
-    <td><img width="400" alt="CleanShot 2026-01-14 at 10 36 25@2x" src="https://github.com/user-attachments/assets/f4023622-f9c1-4495-9211-6815962218eb" /></td>
-    <td><img width="400" alt="Image" src="https://github.com/user-attachments/assets/060b9806-8a7a-420f-92af-d13c03f9d795" /></td>
+    <td><img width="400" alt="Image" src="./docs/images/notificationsetting_page.png" /></td>
+    <td><img width="400" alt="Image" src="./docs/images/line.png" /></td>
   </tr>
   <tr>
     <td colspan="2">特定の悪習慣に対してLINEに通知することができます。<br>悪習慣が行われそうな時刻の少し前に設定しておくことでリマインド効果も期待できます。</td>
@@ -107,7 +107,7 @@ https://anti-habits.com/
     <th>毎日の習慣記録</th>
   </tr>
   <tr>
-    <td><img width="800" alt="Image" src="https://github.com/user-attachments/assets/afabe4d6-d705-49b6-b403-dd735aa804c5" /></td>
+    <td><img width="800" alt="Image" src="./docs/images/record.gif" /></td>
   </tr>
   <tr>
     <td>投稿した悪習慣に対して、1日1回行わなかったかどうかの記録を行えます。<br>毎日続けることで連続達成日数がカウントされていきます。</td>
@@ -119,7 +119,7 @@ https://anti-habits.com/
     <th>ヒートマップ</th>
   </tr>
   <tr>
-    <td><img width="800" alt="Image" src="https://github.com/user-attachments/assets/6e95872d-7f4b-439d-92ee-e1e78d7c006e" /></td>
+    <td><img width="800" alt="Image" src="./docs/images/heatmap.png" /></td>
   </tr>
   <tr>
     <td>悪習慣を行わなかった日を視覚的に確認できます。<br>連続記録を途切れさせたくないという抵抗感を味方に目標達成の手助けをしてくれます。</td>
@@ -131,7 +131,7 @@ https://anti-habits.com/
     <th>目標達成</th>
   </tr>
   <tr>
-    <td><img width="800" alt="Image" src="https://github.com/user-attachments/assets/637cb413-df8e-44e6-829e-3241fb3b83f1" /></td>
+    <td><img width="800" alt="Image" src="./docs/images/goal.gif" /></td>
   </tr>
   <tr>
     <td>目標を達成すると、投稿に対してバッジが付与されます。<br>1つの通過点として達成感を味わえます。</td>
@@ -143,7 +143,7 @@ https://anti-habits.com/
     <th>リアクション</th>
   </tr>
   <tr>
-    <td><img width="800" alt="Image" src="https://github.com/user-attachments/assets/88f9d1e4-dc20-43a2-b3c4-97c09799aac7" /></td>
+    <td><img width="800" alt="Image" src="./docs/images/reaction.gif" /></td>
   </tr>
   <tr>
     <td>悪習慣に対してリアクションを送ることで、ユーザー同士で見守り合えます。<br>適度な緊張感と応援が、目標達成の手助けとなります。</td>
@@ -155,7 +155,7 @@ https://anti-habits.com/
     <th>コメント</th>
   </tr>
   <tr>
-    <td><img width="800" alt="Image" src="https://github.com/user-attachments/assets/eed52538-55bf-4dca-9be7-432217745171" /></td>
+    <td><img width="800" alt="Image" src="./docs/images/comment.gif" /></td>
   </tr>
   <tr>
     <td>悪習慣に対してコメントを行い、ユーザーとコミュニケーションをとることができます。</td>
@@ -167,7 +167,7 @@ https://anti-habits.com/
     <th>ブックマーク</th>
   </tr>
   <tr>
-    <td><img width="800" alt="Image" src="https://github.com/user-attachments/assets/85954122-5edd-470d-b41f-68acdbb7d352" /></td>
+    <td><img width="800" alt="Image" src="./docs/images/bookmark.**gif**" /></td>
   </tr>
   <tr>
     <td>同じ悪習慣を取り除こうとしている投稿や、特に監視したい投稿に関してブックマークをすることができます。</td>
