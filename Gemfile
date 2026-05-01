@@ -62,9 +62,7 @@ gem "kaminari"
 gem "ransack"
 
 # 非同期まわり
-gem "redis", ">= 4.0.1"
-gem "sidekiq", "~> 8.1"
-gem "sidekiq-cron"
+gem "solid_queue"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
