@@ -92,5 +92,5 @@ group :test do
   # Code coverage
   gem "simplecov", require: false
   # Test matchers
-  gem "shoulda-matchers", "~> 7.0"
+  gem "shoulda-matchers", "~> 8.0"
 end
