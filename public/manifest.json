@@ -1,0 +1,22 @@
+{
+  "name": "Anti Habits",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "/icon.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "scope": "/",
+  "description": "「Anti Habits」は、悪習慣排除を手助けするアプリです。",
+  "theme_color": "#edeff4",
+  "background_color": "#edeff4"
+}

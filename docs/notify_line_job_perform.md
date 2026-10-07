@@ -1,24 +1,21 @@
-# NotifyLineJob#perform
+# NotifyLineJob::handle
 
-`app/jobs/notify_line_job.rb` L4-41
+`app/Jobs/NotifyLineJob.php` L31-54
 
-非同期ジョブ。LINE Bot APIを使ってユーザーにプッシュ通知を送信する。
+非同期ジョブ。LINE Messaging API を使ってユーザーにプッシュ通知を送信する。
 
 ```mermaid
 flowchart TD
-    A[ジョブ実行<br>user_id, anti_habit_id] --> B[User.find user_id<br>AntiHabit.find anti_habit_id]
+    A[ジョブ実行<br>userId, antiHabitId] --> B[User::find / AntiHabit::find]
 
-    B --> C["デバッグログ出力<br>⚠️ putsが残っている"]
+    B --> C{uid と悪習慣が<br>存在する?}
+    C -- No --> Z[終了]
 
-    C --> D[line_notification呼び出し<br>uid, title を渡す]
+    C -- Yes --> D["LineMessagingClient::pushText<br>「今日の○○の記録をつけよう！」<br>LINE_CHANNEL_TOKEN使用"]
 
-    D --> E[LINE Bot API クライアント生成<br>LINE_CHANNEL_TOKEN使用]
-
-    E --> F["TextMessage作成<br>「今日の○○の記録をつけよう！」"]
-
-    F --> G[PushMessageRequest作成<br>to: uid<br>messages: message]
-
-    G --> H[push_message_with_http_info<br>LINE APIにリクエスト送信]
-
-    H --> I[終了]
+    D --> E{ステータス}
+    E -- "5xx / 429" --> F[LineApiServerError を投げる<br>最大5回までリトライ]
+    E -- "その他の 4xx" --> G[ログに警告を出して破棄]
+    E -- "2xx" --> Z
+    G --> Z
 ```

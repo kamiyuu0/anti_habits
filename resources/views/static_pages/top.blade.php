@@ -1,0 +1,165 @@
+@extends('layouts.app')
+
+@section('content')
+<div>
+  <!-- ヒーローセクション -->
+  <div class="hero min-h-screen">
+    <div class="hero-content text-center">
+      <div class="max-w-md">
+        <h1 class="text-5xl font-bold">Anti Habits</h1>
+        <p class="py-6">悪習慣を取り除く手助けをするサービス</p>
+        <p class="pb-6">
+          悪習慣を共有し、一定間隔で悪習慣をしていないか管理して目標達成を手助けします。<br>
+          他のユーザーから擬似的に監視されている感覚で、切磋琢磨しながら目標達成率を高められます。
+        </p>
+        <a href="{{ route('register') }}" class="btn btn-primary">はじめる</a>
+        <a href="{{ route('login') }}" class="btn btn-outline ml-4">ログイン</a>
+        <div class="mt-4">
+          <a href="{{ route('anti_habits.index') }}" class="link">悪習慣一覧を見る</a>
+        </div>
+        <div class="mt-16 animate-bounce">
+          ↓ Scroll
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 悪習慣の例 -->
+  <div class="py-16">
+    <div class="text-center mb-12 px-4">
+      <h2 class="text-3xl font-bold">こんな悪習慣、ありませんか？</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto px-4">
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title">夜更かし</h2>
+          <p>休日の前日につい夜更かししてしまう</p>
+        </div>
+      </div>
+      
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title">スマホ依存</h2>
+          <p>お風呂にスマホを持ち込んでしまう</p>
+        </div>
+      </div>
+      
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title">食べ過ぎ</h2>
+          <p>ダイエットしたいのに大盛りを頼んでしまう</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 使い方 -->
+  <div class="py-16">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold">使い方</h2>
+    </div>
+    <div class="max-w-6xl mx-auto px-4 space-y-16">
+      <!-- ステップ1 -->
+      <div class="hero">
+        <div class="hero-content flex-col lg:flex-row">
+          <div>
+            <h1 class="text-5xl font-bold">1</h1>
+            <h3 class="text-2xl font-bold py-6">悪習慣を登録</h3>
+            <p>やめたい悪習慣をタイトルと説明で登録します。タグをつけて分類することも可能です。</p>
+          </div>
+          <div class="card bg-base-100 shadow-xl">
+            <div class="card-body">
+              <p class="text-sm opacity-70">例：</p>
+              <h2 class="card-title">夜更かしをやめたい</h2>
+              <p>明日も早いのについYouTubeを見て夜更かししてしまいます...</p>
+              <div class="card-actions">
+                <div class="badge badge-outline">#睡眠</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ステップ2 -->
+      <div class="hero">
+        <div class="hero-content flex-col lg:flex-row-reverse">
+          <div>
+            <h1 class="text-5xl font-bold">2</h1>
+            <h3 class="text-2xl font-bold py-6">進捗を記録</h3>
+            <p>毎日LINEに通知が届くので、悪習慣を行ったかどうかを記録します。正直に報告することが大切です。</p>
+          </div>
+          <div class="card bg-base-100 shadow-xl">
+            <div class="card-body">
+              <p class="text-sm opacity-70 mb-4">今日の記録：</p>
+              <div class="space-y-2">
+                <button class="btn btn-block">やってしまった 😞</button>
+                <button class="btn btn-block">我慢できた 💪</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ステップ3 -->
+      <div class="hero">
+        <div class="hero-content flex-col lg:flex-row">
+          <div>
+            <h1 class="text-5xl font-bold">3</h1>
+            <h3 class="text-2xl font-bold py-6">みんなで応援</h3>
+            <p>他のユーザーから応援やコメントをもらえます。みんなに見られている感覚で目標達成率がアップします。</p>
+          </div>
+          <div class="card bg-base-100 shadow-xl">
+            <div class="card-body">
+              <div class="flex items-center gap-3 mb-3">
+                <i class="fas fa-user text-sm"></i>
+                <span>田中さん</span>
+              </div>
+              <p class="mb-3">頑張って！私も夜更かしやめたいです 💪</p>
+              <div class="flex gap-4">
+                <span>👍 5</span>
+                <span>💬 3</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 特徴 -->
+  <div class="py-16">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold">Anti Habitsの特徴</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto px-4">
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title">共有で効果アップ</h2>
+          <p>他のユーザーに悪習慣を共有することで、監視されている感覚を得られ目標達成率が向上します。</p>
+        </div>
+      </div>
+      
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title">応援機能</h2>
+          <p>他のユーザーからいいねやコメントで応援してもらえるので、モチベーションを維持できます。</p>
+        </div>
+      </div>
+      
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title">タグで分類</h2>
+          <p>悪習慣をタグで分類して、同じような習慣で悩む人を見つけやすくできます。</p>
+        </div>
+      </div>
+      
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title">LINE通知</h2>
+          <p>毎日決まった時間にLINEで通知が届くので、記録し忘れを防げます。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+@endsection

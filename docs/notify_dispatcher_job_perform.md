@@ -1,6 +1,6 @@
-# NotifyDispatcherJob#perform
+# NotifyDispatcherJob::handle
 
-`app/jobs/notify_dispatcher_job.rb` L4-23
+`app/Jobs/NotifyDispatcherJob.php` L19-41
 
 定期実行ジョブ。現在時刻に通知設定が一致するAntiHabitを検索し、LINE通知ジョブをキューに投入する。
 
@@ -19,7 +19,7 @@ flowchart TD
     F -- No --> G[終了]
     F -- Yes --> H{各AntiHabitをループ}
 
-    H --> I[NotifyLineJob.perform_later<br>user_id, anti_habit_id<br>をキューに投入]
+    H --> I[NotifyLineJob::dispatch<br>user_id, anti_habit_id<br>をキューに投入]
     I --> H
 
     H -- ループ完了 --> G

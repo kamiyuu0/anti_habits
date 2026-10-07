@@ -6,21 +6,23 @@ on:
     branches: [ main ]
 
 jobs:
-  scan_ruby:
+  scan:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
         with:
-          ruby-version: .ruby-version
-          bundler-cache: true
+          php-version: '8.3'
+          tools: composer:v2
 
-      - name: Scan for common Rails security vulnerabilities using static analysis
-        run: bin/brakeman --no-pager
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Audit dependencies for known vulnerabilities
+        run: composer audit
 
   lint:
     runs-on: ubuntu-latest
@@ -28,14 +30,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
         with:
-          ruby-version: .ruby-version
-          bundler-cache: true
+          php-version: '8.3'
+          tools: composer:v2
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
 
       - name: Lint code for consistent style
-        run: bin/rubocop -f github
+        run: vendor/bin/pint --test
 
   test:
     runs-on: ubuntu-latest
@@ -46,52 +51,47 @@ jobs:
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: anti_habits_test
         ports:
           - 5432:5432
         options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
-      - name: Install packages
-        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable curl libjemalloc2 libvips postgresql-client
-
       - name: Checkout code
         uses: actions/checkout@v6
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
         with:
-          ruby-version: .ruby-version
-          bundler-cache: true
+          php-version: '8.3'
+          extensions: pdo_pgsql, intl
+          tools: composer:v2
+          coverage: none
 
       - name: Set up Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: '20'
-          cache: 'yarn'
+          node-version-file: .node-version
+          cache: 'npm'
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
 
       - name: Install Node dependencies
-        run: yarn install --frozen-lockfile
+        run: npm ci
 
-      - name: Build CSS assets
-        run: bin/rails tailwindcss:build
-        env:
-          RAILS_ENV: test
+      - name: Build assets
+        run: npm run build
 
-      - name: Build JavaScript assets
-        run: yarn build
+      - name: Prepare environment
+        run: |
+          cp .env.example .env
+          php artisan key:generate
 
       - name: Run tests
         env:
-          RAILS_ENV: test
-          DATABASE_URL: postgres://postgres:postgres@localhost:5432/myapp_test
-        run: |
-          bin/rails db:test:prepare
-          bundle exec rspec
-
-      - name: Keep screenshots from failed system tests
-        uses: actions/upload-artifact@v7
-        if: failure()
-        with:
-          name: screenshots
-          path: ${{ github.workspace }}/tmp/screenshots
-          if-no-files-found: ignore
+          DB_HOST: 127.0.0.1
+          DB_PORT: 5432
+          DB_USERNAME: postgres
+          DB_PASSWORD: postgres
+        run: php artisan test

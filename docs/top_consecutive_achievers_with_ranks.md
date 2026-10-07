@@ -1,6 +1,6 @@
 # AntiHabit.top_consecutive_achievers_with_ranks
 
-`app/models/anti_habit.rb` L29-72
+> ⚠️ 現在は使用していない旧ランキング（週間達成ランキング `topWeeklyAchieversWithRanks` に置き換え済み）。
 
 ランキングアルゴリズム。公開されている悪習慣を連続達成日数でランク付けし、人数に応じて表示するランク数を動的に制御する。
 

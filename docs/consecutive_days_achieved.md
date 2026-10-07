@@ -1,6 +1,6 @@
-# AntiHabit#consecutive_days_achieved
+# AntiHabit::consecutiveDaysAchieved
 
-`app/models/anti_habit.rb` L81-104
+`app/Models/AntiHabit.php` L189-210
 
 今日または昨日を起点に、途切れずに記録された連続日数を計算する。
 
@@ -11,7 +11,7 @@ flowchart TD
     B -- Yes --> C[start_date = 今日]
     B -- No --> D[start_date = 昨日]
 
-    C --> E[start_date以前の記録を<br>日付降順で一括取得<br>pluck :recorded_on]
+    C --> E[start_date以前の記録を<br>日付降順で一括取得<br>pluck recorded_on]
     D --> E
 
     E --> F[count = 0<br>expected_date = start_date]
