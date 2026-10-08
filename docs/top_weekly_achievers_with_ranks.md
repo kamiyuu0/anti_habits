@@ -1,6 +1,6 @@
-# AntiHabit.top_weekly_achievers_with_ranks
+# AntiHabit::topWeeklyAchieversWithRanks
 
-`app/models/anti_habit.rb` L32-73
+`app/Models/AntiHabit.php` L134-179
 
 週間達成ランキングアルゴリズム。今週（月曜〜本日）の達成日数をSQLで集計し、公開中の悪習慣をランク付けする。人数に応じて表示するランク数を動的に制御する。
 

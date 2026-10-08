@@ -1,0 +1,9 @@
+@import 'tailwindcss';
+@import '@yaireo/tagify/dist/tagify.css';
+
+@source '../views';
+@source '../js';
+
+@plugin "daisyui" {
+    themes: light --default, dark --prefersdark, nord;
+}

@@ -1,21 +1,26 @@
 {
-  "name": "app",
-  "private": true,
-  "devDependencies": {
-    "esbuild": "^0.25.6"
-  },
-  "scripts": {
-    "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",
-    "build:css": "npx @tailwindcss/cli -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css --minify"
-  },
-  "dependencies": {
-    "@hotwired/stimulus": "^3.2.2",
-    "@hotwired/turbo-rails": "^8.0.16",
-    "@tailwindcss/cli": "^4.1.11",
-    "@yaireo/tagify": "^4.35.5",
-    "daisyui": "^5.1.5",
-    "echarts": "^6.0.0",
-    "stimulus-autocomplete": "^3.1.0",
-    "tailwindcss": "^4.1.11"
-  }
+    "$schema": "https://www.schemastore.org/package.json",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "vite build",
+        "dev": "vite"
+    },
+    "devDependencies": {
+        "@tailwindcss/vite": "^4.0.0",
+        "concurrently": "^10.0.3",
+        "laravel-vite-plugin": "^3.1",
+        "tailwindcss": "^4.0.0",
+        "vite": "^8.0.0",
+        "daisyui": "^5.1.5"
+    },
+    "optionalDependencies": {
+        "@laravel/multiplex": "^0.4.1"
+    },
+    "dependencies": {
+        "@hotwired/stimulus": "^3.2.2",
+        "@hotwired/turbo": "^8.0.16",
+        "@yaireo/tagify": "^4.35.5",
+        "echarts": "^6.0.0"
+    }
 }

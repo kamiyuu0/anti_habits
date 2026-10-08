@@ -1,38 +1,41 @@
 services:
-  db:
-    image: postgres
-    restart: always
-    environment:
-      TZ: Asia/Tokyo
-      POSTGRES_PASSWORD: password
-    volumes:
-      - postgresql_data:/var/lib/postgresql
-    ports:
-      - 5432:5432
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -d myapp_development -U postgres"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-  web:
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
-    command: bash -c "bundle install && bundle exec rails db:prepare && rm -f tmp/pids/server.pid && ./bin/dev"
-    tty: true
-    stdin_open: true
-    volumes:
-      - .:/myapp
-      - bundle_data:/usr/local/bundle:cached
-      - node_modules:/myapp/node_modules
-    environment:
-      TZ: Asia/Tokyo
-    ports:
-      - "3000:3000"
-    depends_on:
-      db:
-        condition: service_healthy
+    db:
+        image: postgres
+        restart: always
+        environment:
+            TZ: Asia/Tokyo
+            POSTGRES_PASSWORD: password
+            POSTGRES_DB: myapp_development
+        volumes:
+            - postgresql_data:/var/lib/postgresql
+        ports:
+            - 5432:5432
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U postgres"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+    web:
+        build:
+            context: .
+            dockerfile: Dockerfile.dev
+        command: bash -c "composer install && npm install && ([ -f .env ] || (cp .env.example .env && php artisan key:generate)) && php artisan migrate && npx concurrently -n web,vite,schedule 'php artisan serve --host=0.0.0.0 --port=8000' 'npm run dev -- --host 0.0.0.0' 'php artisan schedule:work'"
+        tty: true
+        stdin_open: true
+        volumes:
+            - .:/myapp
+            - vendor:/myapp/vendor
+            - node_modules:/myapp/node_modules
+        environment:
+            TZ: Asia/Tokyo
+            DB_HOST: db
+        ports:
+            - "8000:8000"
+            - "5173:5173"
+        depends_on:
+            db:
+                condition: service_healthy
 volumes:
-  bundle_data:
-  postgresql_data:
-  node_modules:
+    postgresql_data:
+    vendor:
+    node_modules:

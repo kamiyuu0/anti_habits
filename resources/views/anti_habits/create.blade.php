@@ -1,0 +1,16 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="container mx-auto max-w-4xl px-4 py-8">
+  <div class="text-center mb-8">
+    <h1 class="text-3xl font-bold text-base-content">新しい悪習慣の投稿</h1>
+    <p class="text-base-content/70 mt-2">やめたい習慣を投稿して、みんなで応援し合いましょう</p>
+  </div>
+
+  <div class="card bg-base-100 shadow-xl">
+    <div class="card-body">
+      @include('anti_habits._form', ['antiHabit' => $antiHabit])
+    </div>
+  </div>
+</div>
+@endsection

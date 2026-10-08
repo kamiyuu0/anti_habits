@@ -1,0 +1,18 @@
+<div class="card bg-base-100 shadow-md mb-6">
+  <div class="card-body">
+    <!-- ユーザー情報 -->
+    <div class="flex items-center gap-3 mb-3">
+      <div class="flex items-center">
+        <i class="fas fa-user text-lg mr-3"></i>
+      </div>
+      <div class="flex-1">
+        <h4 class="font-semibold text-base-content">{{ $comment->user->name }}</h4>
+      </div>
+    </div>
+
+    <!-- コメント内容 -->
+    <div class="ml-5">
+      <p class="text-base-content/80 leading-relaxed whitespace-pre-wrap">{{ $comment->body }}</p>
+    </div>
+  </div>
+</div>
