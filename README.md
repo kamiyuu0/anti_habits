@@ -233,6 +233,11 @@ docker compose up
 初回起動時に `.env` の作成・マイグレーションまで自動で行います。開発用データは `docker compose exec web php artisan db:seed` で投入できます。
 
 ### ローカルの PHP / Node.js を使う場合
+PostgreSQL が必要です。手元に無い場合は DB だけ Docker で起動してください（`127.0.0.1:5432` で接続できます）。
+```bash
+docker compose up -d db
+```
+
 ```bash
 composer install
 npm install
